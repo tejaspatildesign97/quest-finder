@@ -1,0 +1,20 @@
+# iOS
+ios/.DS_Store
+ios/Pods/
+ios/*.xcworkspace
+ios/DerivedData/
+ios/*.ipa
+ios/*.dSYM.zip
+ios/*.dSYM
+
+# Android
+android/.gradle/
+android/local.properties
+android/*.iml
+android/.idea/
+android/app/build/
+android/build/
+
+# General
+.DS_Store
+*.log
