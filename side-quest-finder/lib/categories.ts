@@ -1,5 +1,6 @@
 import {
-  TreePine, UtensilsCrossed, MessagesSquare, Palette, GraduationCap, Leaf,
+  Mountain, HeartHandshake, Shield, Palette, Compass, UtensilsCrossed,
+  GraduationCap, Leaf, Moon, MessagesSquare,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -14,11 +15,17 @@ export interface CategoryStyle {
 }
 
 export const CATEGORY_STYLES: Record<string, CategoryStyle> = {
-  Outdoor: {
-    Icon: TreePine,
+  Adventure: {
+    Icon: Mountain,
     gradient: 'linear-gradient(135deg, #34d399 0%, #059669 100%)',
     tile: 'bg-emerald-400/15',
     iconColor: 'text-emerald-300',
+  },
+  Discovery: {
+    Icon: Compass,
+    gradient: 'linear-gradient(135deg, #22d3ee 0%, #0891b2 100%)',
+    tile: 'bg-cyan-400/15',
+    iconColor: 'text-cyan-300',
   },
   Food: {
     Icon: UtensilsCrossed,
@@ -32,7 +39,7 @@ export const CATEGORY_STYLES: Record<string, CategoryStyle> = {
     tile: 'bg-pink-400/15',
     iconColor: 'text-pink-300',
   },
-  Creative: {
+  Creativity: {
     Icon: Palette,
     gradient: 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)',
     tile: 'bg-violet-400/15',
@@ -50,8 +57,26 @@ export const CATEGORY_STYLES: Record<string, CategoryStyle> = {
     tile: 'bg-teal-400/15',
     iconColor: 'text-teal-300',
   },
+  Community: {
+    Icon: HeartHandshake,
+    gradient: 'linear-gradient(135deg, #fbbf24 0%, #d97706 100%)',
+    tile: 'bg-amber-400/15',
+    iconColor: 'text-amber-300',
+  },
+  Courage: {
+    Icon: Shield,
+    gradient: 'linear-gradient(135deg, #f87171 0%, #dc2626 100%)',
+    tile: 'bg-red-400/15',
+    iconColor: 'text-red-300',
+  },
+  'Night Quest': {
+    Icon: Moon,
+    gradient: 'linear-gradient(135deg, #6366f1 0%, #312e81 100%)',
+    tile: 'bg-indigo-400/15',
+    iconColor: 'text-indigo-300',
+  },
 }
 
 export function getCategoryStyle(category: string): CategoryStyle {
-  return CATEGORY_STYLES[category] ?? CATEGORY_STYLES.Outdoor
+  return CATEGORY_STYLES[category] ?? CATEGORY_STYLES.Discovery
 }

@@ -8,8 +8,9 @@ import { QUESTS } from '@/lib/quests'
 import type { Quest } from '@/lib/types'
 import QuestCard from '@/components/ui/QuestCard'
 import QuestForge from '@/components/QuestForge'
+import { CATEGORY_STYLES } from '@/lib/categories'
 
-const CATEGORIES = ['All', 'Outdoor', 'Food', 'Social', 'Creative', 'Learning', 'Mindfulness']
+const CATEGORIES = ['All', ...Object.keys(CATEGORY_STYLES)]
 const DIFFICULTIES = ['All', 'Easy', 'Medium', 'Hard', 'Legendary']
 const TABS = ['Available', 'Active', 'Completed'] as const
 

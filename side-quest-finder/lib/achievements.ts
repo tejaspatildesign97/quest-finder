@@ -7,9 +7,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'ach-003', title: 'On a Roll',        icon: '🔥',  rarity: 'Common',    description: 'Maintain a 3-day streak.',            condition: '3-day streak' },
   { id: 'ach-004', title: 'Foodie',           icon: '🍽️',  rarity: 'Common',    description: 'Complete 3 Food quests.',             condition: 'Complete 3 Food quests' },
   { id: 'ach-005', title: 'Social Butterfly', icon: '🦋',  rarity: 'Common',    description: 'Complete 5 Social quests.',           condition: 'Complete 5 Social quests' },
-  { id: 'ach-006', title: 'Nature Lover',     icon: '🌿',  rarity: 'Common',    description: 'Complete 5 Outdoor quests.',          condition: 'Complete 5 Outdoor quests' },
+  { id: 'ach-006', title: 'Nature Lover',     icon: '🌿',  rarity: 'Common',    description: 'Complete 5 Discovery quests.',          condition: 'Complete 5 Discovery quests' },
   { id: 'ach-007', title: 'Mind Palace',      icon: '🧘',  rarity: 'Common',    description: 'Complete 3 Mindfulness quests.',      condition: 'Complete 3 Mindfulness quests' },
-  { id: 'ach-008', title: 'Artisan',          icon: '🎨',  rarity: 'Common',    description: 'Complete 3 Creative quests.',         condition: 'Complete 3 Creative quests' },
+  { id: 'ach-008', title: 'Artisan',          icon: '🎨',  rarity: 'Common',    description: 'Complete 3 Creativity quests.',         condition: 'Complete 3 Creativity quests' },
 
   // ── Rare ──────────────────────────────────────────────────────────────────
   { id: 'ach-009', title: 'Streak Keeper',    icon: '📅',  rarity: 'Rare',      description: 'Maintain a 7-day streak.',            condition: '7-day streak' },

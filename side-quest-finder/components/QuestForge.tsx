@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Hammer, Dices, Clock, Snowflake, MessagesSquare, Palette, Mountain, Search, Shuffle, type LucideIcon } from 'lucide-react'
-import type { Mood, Quest } from '@/lib/types'
+import type { ForgeMood, Quest } from '@/lib/types'
 import { forgeQuests } from '@/lib/forge'
 import { CATEGORY_STYLES } from '@/lib/categories'
 import { useStore } from '@/lib/store'
@@ -16,7 +16,7 @@ const TIMES: { label: string; minutes: number }[] = [
   { label: '2h+', minutes: Infinity },
 ]
 
-const MOODS: { value: Mood; label: string; Icon: LucideIcon; active: string }[] = [
+const MOODS: { value: ForgeMood; label: string; Icon: LucideIcon; active: string }[] = [
   { value: 'chill',       label: 'Chill',       Icon: Snowflake,      active: 'bg-cyan-400 text-[#0c0c10] shadow-md shadow-cyan-400/40' },
   { value: 'social',      label: 'Social',      Icon: MessagesSquare, active: 'bg-pink-400 text-[#0c0c10] shadow-md shadow-pink-400/40' },
   { value: 'creative',    label: 'Creative',    Icon: Palette,        active: 'bg-violet-400 text-[#0c0c10] shadow-md shadow-violet-400/40' },
@@ -31,7 +31,7 @@ export default function QuestForge() {
   const { playMode, activeQuests, acceptQuest, completeQuest, abandonQuest, party } = useStore()
 
   const [time, setTime] = useState(30)
-  const [mood, setMood] = useState<Mood>('curious')
+  const [mood, setMood] = useState<ForgeMood>('curious')
   const [category, setCategory] = useState('Any')
   const [forged, setForged] = useState<Quest[] | null>(null)
   const [rolling, setRolling] = useState(false)

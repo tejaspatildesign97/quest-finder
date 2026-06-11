@@ -1,507 +1,2256 @@
 import type { Quest } from './types'
 
+// Quest library — imported from Side_Quest_Finder_100_Quests_Final.xlsx
 export const QUESTS: Quest[] = [
-  // ── SOLO ──────────────────────────────────────────────────────────────────
   {
-    id: 'sq-001',
-    title: 'The Hidden Trail',
-    description: 'Find and explore a local trail you\'ve never visited.',
-    lore: 'Every path holds secrets for those brave enough to wander off the beaten track.',
-    difficulty: 'Easy', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 100, icon: '🌿', tags: ['nature','walking'], repeatable: false,
-    duration: 60, moods: ['chill','adventurous','curious'],
+    "id": "sq-001",
+    "title": "The Secret Menu",
+    "description": "Ask a café employee what they personally order and buy it.",
+    "lore": "The greatest treasures rarely appear on the map.",
+    "difficulty": "Easy",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious",
+      "adventurous"
+    ],
+    "tags": [
+      "food",
+      "local",
+      "secrets"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-002',
-    title: 'Talk to a Stranger',
-    description: 'Strike up a conversation with someone you\'ve never met and learn one surprising fact about them.',
-    lore: 'Every soul carries a story the world has never heard.',
-    difficulty: 'Medium', category: 'Social', mode: ['solo'],
-    xp: 120, icon: '🗣️', tags: ['social','brave'], repeatable: true,
-    duration: 15, moods: ['social','adventurous'],
+    "id": "sq-002",
+    "title": "Accidental Tourist",
+    "description": "Get off public transport three stops early and explore.",
+    "lore": "The world rewards wrong turns.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 90,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "exploration",
+      "city"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-003',
-    title: 'The Blind Bite',
-    description: 'Eat something you\'ve never tried before — no googling, no research. Pure courage.',
-    lore: 'The oracle says your destiny smells vaguely of spice.',
-    difficulty: 'Easy', category: 'Food', mode: ['solo','duo','group'],
-    xp: 80, icon: '🍽️', tags: ['food','brave'], repeatable: false,
-    duration: 30, moods: ['chaotic','curious','adventurous'],
+    "id": "sq-003",
+    "title": "The Stranger's Story",
+    "description": "Ask someone over 60 for advice they wish they'd heard at your age.",
+    "lore": "The oldest libraries walk among us.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 30,
+    "moods": [
+      "thoughtful",
+      "social"
+    ],
+    "tags": [
+      "wisdom",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-004',
-    title: 'The Phonestack Pact',
-    description: 'Sit somewhere beautiful for 20 minutes with your phone face-down. No peeking.',
-    lore: 'Even legendary heroes needed to sit quietly and stare at a tree sometimes.',
-    difficulty: 'Easy', category: 'Mindfulness', mode: ['solo','duo','group'],
-    xp: 70, icon: '🍃', tags: ['mindfulness','stillness'], repeatable: true,
-    duration: 20, moods: ['chill'],
+    "id": "sq-004",
+    "title": "Color Hunter",
+    "description": "Choose a color and photograph ten beautiful examples of it.",
+    "lore": "Every color hides its own ecosystem.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 45,
+    "moods": [
+      "creative",
+      "chill"
+    ],
+    "tags": [
+      "photography",
+      "art"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-005',
-    title: 'Polyglot\'s Greeting',
-    description: 'Learn to say "hello" in 5 different languages and use them all before sundown.',
-    lore: 'The ancient linguist-mages said: a greeting opens every door.',
-    difficulty: 'Medium', category: 'Learning', mode: ['solo'],
-    xp: 150, icon: '🌍', tags: ['languages','social'], repeatable: false,
-    duration: 45, moods: ['curious','social'],
+    "id": "sq-005",
+    "title": "Sunset Summit",
+    "description": "Find the highest publicly accessible place nearby and watch sunset.",
+    "lore": "Every kingdom deserves a throne room view.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 140,
+    "duration": 60,
+    "moods": [
+      "peaceful",
+      "adventurous"
+    ],
+    "tags": [
+      "sunset",
+      "viewpoint"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-006',
-    title: 'The Oldest Stone',
-    description: 'Find the oldest building or structure in your neighbourhood. Document it.',
-    lore: 'History whispers from walls if you know how to listen.',
-    difficulty: 'Hard', category: 'Outdoor', mode: ['solo','duo'],
-    xp: 200, icon: '🏛️', tags: ['history','explore'], repeatable: false,
-    duration: 90, moods: ['curious','adventurous'],
+    "id": "sq-006",
+    "title": "Human Playlist",
+    "description": "Ask three people for a song that changed their life and listen to them.",
+    "lore": "Music remembers what people forget.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "reflective",
+      "social"
+    ],
+    "tags": [
+      "music",
+      "conversation"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-007',
-    title: 'Commuter Haiku',
-    description: 'Write a haiku about your journey today. 5-7-5. No cheating.',
-    lore: 'The great poet-wanderers wrote on napkins, ticket stubs, and receipts.',
-    difficulty: 'Easy', category: 'Creative', mode: ['solo'],
-    xp: 60, icon: '✍️', tags: ['writing','creative'], repeatable: true,
-    duration: 10, moods: ['chill','creative'],
+    "id": "sq-007",
+    "title": "One-Hour Foreigner",
+    "description": "Spend an hour acting like a tourist in your own city.",
+    "lore": "Home is the easiest place to stop seeing.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 120,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "playful"
+    ],
+    "tags": [
+      "travel",
+      "city"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-008',
-    title: 'Memento Mori Dish',
-    description: 'Recreate a dish entirely from memory. No recipe, no peeking. Serve with confidence.',
-    lore: 'The ancient chefs cooked only from memory — and they were terrifying.',
-    difficulty: 'Hard', category: 'Food', mode: ['solo','duo'],
-    xp: 250, icon: '👨‍🍳', tags: ['cooking','memory'], repeatable: false,
-    duration: 90, moods: ['creative','chaotic'],
+    "id": "sq-008",
+    "title": "Future Relic",
+    "description": "Leave a positive handwritten note for a stranger to discover.",
+    "lore": "Every civilization leaves artifacts behind.",
+    "difficulty": "Easy",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "hopeful",
+      "creative"
+    ],
+    "tags": [
+      "kindness",
+      "mystery"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-009',
-    title: 'The Spontaneous 30',
-    description: 'Do something completely spontaneous in the next 30 minutes. You cannot plan it.',
-    lore: 'Chaos is just adventure without an itinerary.',
-    difficulty: 'Legendary', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 500, icon: '⚡', tags: ['spontaneous','chaos'], repeatable: false, timeLimit: 30,
-    duration: 30, moods: ['chaotic','adventurous'],
+    "id": "sq-009",
+    "title": "The Recommendation Chain",
+    "description": "Ask three strangers where you should go next and visit the winner.",
+    "lore": "Follow enough breadcrumbs and you'll find magic.",
+    "difficulty": "Hard",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 280,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "social"
+    ],
+    "tags": [
+      "exploration",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-010',
-    title: 'Secondhand Treasure Hunt',
-    description: 'Visit a thrift store or market and find the strangest object you can for under $5.',
-    lore: 'Every cursed artefact begins as someone else\'s donation.',
-    difficulty: 'Easy', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 90, icon: '🛒', tags: ['thrift','treasure'], repeatable: true,
-    duration: 45, moods: ['curious','chaotic'],
+    "id": "sq-010",
+    "title": "The Honest Question",
+    "description": "Ask someone what they're most excited about right now.",
+    "lore": "Hope reveals more than history.",
+    "difficulty": "Easy",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 80,
+    "duration": 15,
+    "moods": [
+      "positive",
+      "social"
+    ],
+    "tags": [
+      "conversation",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-011',
-    title: 'The Sky Report',
-    description: 'Lie on your back somewhere outside and watch clouds for 10 minutes. Describe three shapes you saw.',
-    lore: 'Ancient navigators charted courses entirely by cloud formation. You\'re basically a sailor.',
-    difficulty: 'Easy', category: 'Mindfulness', mode: ['solo','duo','group'],
-    xp: 60, icon: '☁️', tags: ['sky','mindfulness'], repeatable: true,
-    duration: 15, moods: ['chill'],
+    "id": "sq-011",
+    "title": "Budget Banquet",
+    "description": "Create the best meal possible using a strict budget.",
+    "lore": "Great feasts begin with humble coin purses.",
+    "difficulty": "Medium",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 160,
+    "duration": 60,
+    "moods": [
+      "creative",
+      "playful"
+    ],
+    "tags": [
+      "food",
+      "challenge"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-012',
-    title: 'Midnight Sketch',
-    description: 'Draw something from your immediate surroundings using only a single pen. No erasing.',
-    lore: 'Da Vinci\'s most beloved sketches were done on the back of receipts.',
-    difficulty: 'Medium', category: 'Creative', mode: ['solo'],
-    xp: 130, icon: '✏️', tags: ['art','sketch'], repeatable: true,
-    duration: 30, moods: ['creative','chill'],
+    "id": "sq-012",
+    "title": "Street Oracle",
+    "description": "Ask five strangers what everyone should try at least once.",
+    "lore": "Wisdom travels anonymously.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "advice",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-013',
-    title: 'The Sunrise Oath',
-    description: 'Wake up before sunrise and be somewhere outside when it happens.',
-    lore: 'The early wanderer catches the first light — and mild frostbite.',
-    difficulty: 'Hard', category: 'Outdoor', mode: ['solo','duo'],
-    xp: 300, icon: '🌅', tags: ['sunrise','nature'], repeatable: false,
-    duration: 60, moods: ['adventurous','chill'],
+    "id": "sq-013",
+    "title": "The Long Way Home",
+    "description": "Take the most scenic route home possible.",
+    "lore": "Journeys matter more than efficiency.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 45,
+    "moods": [
+      "chill",
+      "reflective"
+    ],
+    "tags": [
+      "exploration",
+      "walk"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-014',
-    title: 'Random Act of Art',
-    description: 'Leave a small piece of art in a public place for a stranger to find.',
-    lore: 'Magic grows when it\'s given freely.',
-    difficulty: 'Medium', category: 'Creative', mode: ['solo','duo'],
-    xp: 160, icon: '🎨', tags: ['art','kindness'], repeatable: true,
-    duration: 45, moods: ['creative','social'],
+    "id": "sq-014",
+    "title": "Secret Rooftop",
+    "description": "Find a publicly accessible rooftop or terrace view.",
+    "lore": "The sky belongs to explorers.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "city",
+      "views"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-015',
-    title: 'The One-Mile Circle',
-    description: 'Walk in a circle of exactly one mile around your current location. Note 5 things you\'ve never noticed.',
-    lore: 'The smallest maps hide the greatest wonders.',
-    difficulty: 'Easy', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 100, icon: '🔵', tags: ['walking','observation'], repeatable: true,
-    duration: 30, moods: ['chill','curious'],
+    "id": "sq-015",
+    "title": "The Compliment Merchant",
+    "description": "Give five genuine compliments to five different people.",
+    "lore": "Kindness compounds faster than gold.",
+    "difficulty": "Medium",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 30,
+    "moods": [
+      "social",
+      "positive"
+    ],
+    "tags": [
+      "kindness",
+      "social"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-016',
-    title: 'Skill Swap',
-    description: 'Teach someone a skill you have. Any skill. Document the lesson.',
-    lore: 'Knowledge shared is power doubled.',
-    difficulty: 'Medium', category: 'Social', mode: ['solo'],
-    xp: 180, icon: '🤝', tags: ['teaching','skills'], repeatable: true,
-    duration: 60, moods: ['social','curious'],
+    "id": "sq-016",
+    "title": "The Local Legend",
+    "description": "Visit a family-owned business and learn how it started.",
+    "lore": "Every kingdom begins with one stubborn dream.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "inspired"
+    ],
+    "tags": [
+      "local",
+      "business"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-017',
-    title: 'Bookshop Oracle',
-    description: 'Enter a bookshop, close your eyes, pick a book at random. Read the first page. Buy it if it hooks you.',
-    lore: 'The books that choose you are always the most important ones.',
-    difficulty: 'Easy', category: 'Learning', mode: ['solo'],
-    xp: 90, icon: '📚', tags: ['books','random'], repeatable: true,
-    duration: 30, moods: ['curious','chill','chaotic'],
+    "id": "sq-017",
+    "title": "Rain Quest",
+    "description": "The next time it rains, spend ten minutes outside enjoying it.",
+    "lore": "Storms are invitations, not interruptions.",
+    "difficulty": "Easy",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 15,
+    "moods": [
+      "free",
+      "adventurous"
+    ],
+    "tags": [
+      "weather",
+      "nature"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-018',
-    title: 'The Phone-free Dinner',
-    description: 'Eat an entire meal, alone or with others, with no phone on the table.',
-    lore: 'The ancient feasts lasted days. No one checked their notifications.',
-    difficulty: 'Medium', category: 'Mindfulness', mode: ['solo','duo','group'],
-    xp: 120, icon: '🍷', tags: ['mindfulness','dinner'], repeatable: true,
-    duration: 60, moods: ['chill','social'],
+    "id": "sq-018",
+    "title": "Reverse Date",
+    "description": "Let a friend plan a mystery hour with no questions allowed.",
+    "lore": "Trust is the fastest travel method.",
+    "difficulty": "Hard",
+    "category": "Social",
+    "mode": [
+      "duo"
+    ],
+    "xp": 280,
+    "duration": 90,
+    "moods": [
+      "adventurous",
+      "social"
+    ],
+    "tags": [
+      "friendship",
+      "surprise"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-019',
-    title: 'Compliment Sniper',
-    description: 'Give 3 genuine, specific compliments to 3 different people. Watch their day change.',
-    lore: 'A well-aimed kind word pierces any armour.',
-    difficulty: 'Medium', category: 'Social', mode: ['solo'],
-    xp: 140, icon: '🎯', tags: ['kindness','brave'], repeatable: true,
-    duration: 30, moods: ['social','adventurous'],
+    "id": "sq-019",
+    "title": "Urban Treasure Hunt",
+    "description": "Find the weirdest thing within one kilometer of your location.",
+    "lore": "Every map contains glitches.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "chaotic"
+    ],
+    "tags": [
+      "exploration",
+      "city"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-020',
-    title: 'The Reverse Tourist',
-    description: 'Be a tourist in your own city: take 5 gloriously cheesy tourist photos at places locals ignore.',
-    lore: 'The locals never look up. The tourists never look down. Be both.',
-    difficulty: 'Easy', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 110, icon: '📸', tags: ['photo','explore'], repeatable: true,
-    duration: 60, moods: ['chaotic','curious','adventurous'],
+    "id": "sq-020",
+    "title": "The Last Photo",
+    "description": "Take one photo that perfectly captures today. Only one attempt.",
+    "lore": "Great artists fear unlimited retries.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 20,
+    "moods": [
+      "reflective",
+      "creative"
+    ],
+    "tags": [
+      "photography",
+      "memory"
+    ],
+    "repeatable": true,
+    "timeLimit": 20
   },
   {
-    id: 'sq-021',
-    title: 'NPC Mode',
-    description: 'Sit in a café and invent detailed secret backstories for 5 strangers. Write them down.',
-    lore: 'To you they\'re extras. To themselves they\'re the protagonist. Both are true.',
-    difficulty: 'Easy', category: 'Creative', mode: ['solo','duo'],
-    xp: 90, icon: '☕', tags: ['writing','people-watching'], repeatable: true,
-    duration: 30, moods: ['curious','creative','chill'],
+    "id": "sq-021",
+    "title": "Secret Feast",
+    "description": "Build an entire meal using recommendations from strangers.",
+    "lore": "The village still feeds its travelers.",
+    "difficulty": "Hard",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 320,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "social"
+    ],
+    "tags": [
+      "food",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-022',
-    title: 'The Forbidden Recipe',
-    description: 'Combine two foods that should never meet. Cook it. Eat at least three bites.',
-    lore: 'The alchemists were just chefs with no fear of judgement.',
-    difficulty: 'Hard', category: 'Food', mode: ['solo','duo','group'],
-    xp: 220, icon: '🧪', tags: ['cooking','chaos'], repeatable: true,
-    duration: 45, moods: ['chaotic'],
+    "id": "sq-022",
+    "title": "Random Expertise",
+    "description": "Ask someone to teach you a skill in under three minutes.",
+    "lore": "Skill is contagious.",
+    "difficulty": "Easy",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 20,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "learning",
+      "micro-skill"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-023',
-    title: 'Left Turn Only',
-    description: 'Go for a walk taking ONLY left turns for 20 minutes. See where the spiral takes you.',
-    lore: 'The labyrinth was never a prison. It was a dance.',
-    difficulty: 'Easy', category: 'Outdoor', mode: ['solo','duo'],
-    xp: 80, icon: '↪️', tags: ['walking','random'], repeatable: true,
-    duration: 20, moods: ['chaotic','curious'],
+    "id": "sq-023",
+    "title": "The View Nobody Uses",
+    "description": "Spend 15 minutes at a beautiful place nobody seems to notice.",
+    "lore": "Forgotten thrones await new rulers.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "calm",
+      "reflective"
+    ],
+    "tags": [
+      "mindfulness",
+      "quiet"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-024',
-    title: 'Time Traveler\'s Letter',
-    description: 'Write a letter to yourself 10 years from now. Seal it. Hide it somewhere you\'ll forget.',
-    lore: 'The future you is already waiting to read it.',
-    difficulty: 'Medium', category: 'Creative', mode: ['solo'],
-    xp: 150, icon: '⏳', tags: ['writing','future'], repeatable: false,
-    duration: 30, moods: ['chill','creative'],
+    "id": "sq-024",
+    "title": "Six Degrees",
+    "description": "Start a conversation and discover a mutual connection.",
+    "lore": "The world is smaller than its maps suggest.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 20,
+    "moods": [
+      "social",
+      "curious"
+    ],
+    "tags": [
+      "networking",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-025',
-    title: 'Silent Disco of One',
-    description: 'Put on headphones in a public place and dance to one full song. Commit completely.',
-    lore: 'The bards of old performed for kings. You perform for pigeons. Same energy.',
-    difficulty: 'Legendary', category: 'Social', mode: ['solo'],
-    xp: 450, icon: '🕺', tags: ['brave','chaos'], repeatable: false,
-    duration: 10, moods: ['chaotic','adventurous'],
+    "id": "sq-025",
+    "title": "Main Character Day",
+    "description": "Spend one hour behaving like today will become a movie scene.",
+    "lore": "Heroes rarely know which chapter matters most.",
+    "difficulty": "Legendary",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 500,
+    "duration": 60,
+    "moods": [
+      "confident",
+      "adventurous"
+    ],
+    "tags": [
+      "storytelling",
+      "legendary"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-026',
-    title: 'The Great Barter',
-    description: 'Start with a paperclip-tier object. Trade it up 3 times with 3 different people.',
-    lore: 'A kingdom was once won with a single red paperclip. Probably.',
-    difficulty: 'Legendary', category: 'Social', mode: ['solo','group'],
-    xp: 550, icon: '🔄', tags: ['trading','social','brave'], repeatable: false,
-    duration: 120, moods: ['social','chaotic','adventurous'],
+    "id": "sq-026",
+    "title": "The Last Train",
+    "description": "Ride a train, metro, or bus to the final stop and explore for 30 minutes.",
+    "lore": "Every map ends somewhere. Few people ever see where.",
+    "difficulty": "Hard",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 300,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "transit",
+      "exploration",
+      "travel"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-027',
-    title: 'The 5-Song Sprint',
-    description: 'Pick 5 high-energy songs. Declutter and clean as much as humanly possible before they end.',
-    lore: 'The hero\'s montage requires no gym. Only a playlist.',
-    difficulty: 'Easy', category: 'Mindfulness', mode: ['solo'],
-    xp: 85, icon: '🧹', tags: ['home','energy'], repeatable: true,
-    duration: 20, moods: ['chaotic','chill'],
+    "id": "sq-027",
+    "title": "Passport Mode",
+    "description": "Visit three places as if you're seeing your city for the first time.",
+    "lore": "Familiar places hide behind unfamiliar eyes.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "playful"
+    ],
+    "tags": [
+      "tourism",
+      "city"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-028',
-    title: 'Menu Roulette',
-    description: 'At any eatery, order the 7th item on the menu. No substitutions. No mercy.',
-    lore: 'The number 7 is lucky. The 7th menu item is... a gamble.',
-    difficulty: 'Easy', category: 'Food', mode: ['solo','duo','group'],
-    xp: 95, icon: '🎰', tags: ['food','random'], repeatable: true,
-    duration: 45, moods: ['chaotic','curious'],
+    "id": "sq-028",
+    "title": "The Brave Question",
+    "description": "Ask a question you've been avoiding for weeks.",
+    "lore": "Truth favors the courageous.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 300,
+    "duration": 20,
+    "moods": [
+      "brave",
+      "anxious"
+    ],
+    "tags": [
+      "courage",
+      "communication"
+    ],
+    "repeatable": false
   },
   {
-    id: 'sq-029',
-    title: 'Ghost Mode',
-    description: 'A full day with zero social media. Vanish. Let the timeline wonder.',
-    lore: 'The strongest magic is the unread notification.',
-    difficulty: 'Hard', category: 'Mindfulness', mode: ['solo'],
-    xp: 280, icon: '👻', tags: ['digital-detox','willpower'], repeatable: true,
-    duration: 480, moods: ['chill'],
+    "id": "sq-029",
+    "title": "Midnight Dessert",
+    "description": "Find dessert after 10 PM and eat it somewhere unusual.",
+    "lore": "Moonlight improves all recipes.",
+    "difficulty": "Medium",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo",
+      "group"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "chaotic"
+    ],
+    "tags": [
+      "dessert",
+      "night"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-030',
-    title: 'Pen Pal Revival',
-    description: 'Message someone you haven\'t spoken to in 3+ years. Ask them one real question.',
-    lore: 'Old bridges don\'t burn. They just wait.',
-    difficulty: 'Medium', category: 'Social', mode: ['solo'],
-    xp: 160, icon: '💌', tags: ['reconnect','brave'], repeatable: true,
-    duration: 15, moods: ['social','chill'],
+    "id": "sq-030",
+    "title": "The Coin Flip Journey",
+    "description": "Let a coin make every major decision for one hour.",
+    "lore": "Fate enjoys practical jokes.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 280,
+    "duration": 90,
+    "moods": [
+      "chaotic",
+      "adventurous"
+    ],
+    "tags": [
+      "randomness",
+      "explore"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-031',
-    title: 'Museum Speedrun',
-    description: 'Enter any museum or gallery. You have 30 minutes to find the single weirdest thing in it.',
-    lore: 'Somewhere in every collection hides one object that makes no sense. Find it.',
-    difficulty: 'Medium', category: 'Learning', mode: ['solo','duo','group'],
-    xp: 140, icon: '🏺', tags: ['culture','speedrun'], repeatable: true, timeLimit: 30,
-    duration: 30, moods: ['curious','chaotic'],
+    "id": "sq-031",
+    "title": "Museum of Forgotten Things",
+    "description": "Photograph ten objects everyone ignores.",
+    "lore": "Beauty survives without witnesses.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "creative",
+      "reflective"
+    ],
+    "tags": [
+      "photography",
+      "urban"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-032',
-    title: 'The Sunset Chase',
-    description: 'Find the best possible viewpoint you can reach before the sun goes down. Race it.',
-    lore: 'The sun waits for no one. That\'s the whole point.',
-    difficulty: 'Medium', category: 'Outdoor', mode: ['solo','duo','group'],
-    xp: 170, icon: '🌇', tags: ['nature','race'], repeatable: true,
-    duration: 60, moods: ['adventurous','chill'],
+    "id": "sq-032",
+    "title": "The Empty Stage",
+    "description": "Spend five minutes singing, speaking, or performing somewhere public.",
+    "lore": "Every legend starts before the audience arrives.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 320,
+    "duration": 15,
+    "moods": [
+      "brave",
+      "playful"
+    ],
+    "tags": [
+      "performance",
+      "fear"
+    ],
+    "repeatable": true
   },
   {
-    id: 'sq-033',
-    title: 'One-Word Poetry Slam',
-    description: 'Ask 5 people for one random word each. Write a poem using all 5. Read it aloud to someone.',
-    lore: 'The muses speak through strangers. Mostly nonsense, occasionally genius.',
-    difficulty: 'Hard', category: 'Creative', mode: ['solo','group'],
-    xp: 240, icon: '🎤', tags: ['writing','social','brave'], repeatable: true,
-    duration: 60, moods: ['creative','social','chaotic'],
-  },
-
-  // ── COUPLES (duo) ─────────────────────────────────────────────────────────
-  {
-    id: 'dq-001',
-    title: 'The First Date Remake',
-    description: 'Recreate your first date together entirely from memory. Every detail counts.',
-    lore: 'Time is a circle. Love is a loop.',
-    difficulty: 'Medium', category: 'Social', mode: ['duo'],
-    xp: 200, icon: '💑', tags: ['couples','memory','romance'], repeatable: false,
-    duration: 120, moods: ['chill','social'],
-  },
-  {
-    id: 'dq-002',
-    title: 'Portrait Without Looking',
-    description: 'Each of you draws a portrait of the other without looking at your paper. No peeking. Frame the results.',
-    lore: 'The truest portraits are drawn with the eyes closed.',
-    difficulty: 'Easy', category: 'Creative', mode: ['duo'],
-    xp: 100, icon: '🎭', tags: ['art','couples'], repeatable: true,
-    duration: 20, moods: ['creative','chaotic','chill'],
+    "id": "sq-033",
+    "title": "Breakfast Expedition",
+    "description": "Eat breakfast somewhere you've never been before.",
+    "lore": "Mornings deserve new scenery.",
+    "difficulty": "Easy",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "adventurous",
+      "chill"
+    ],
+    "tags": [
+      "breakfast",
+      "food"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-003',
-    title: 'The Unknown Neighbourhood',
-    description: 'Navigate to a part of your city neither of you has visited. No destination — just wander for an hour.',
-    lore: 'Adventure is a place you haven\'t mapped yet.',
-    difficulty: 'Medium', category: 'Outdoor', mode: ['duo'],
-    xp: 180, icon: '🗺️', tags: ['explore','couples'], repeatable: true,
-    duration: 90, moods: ['adventurous','curious'],
+    "id": "sq-034",
+    "title": "The Stranger's Favorite Place",
+    "description": "Ask someone where they'd go if they had one free afternoon. Then go there.",
+    "lore": "Borrowing adventures is still adventure.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 90,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "local",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-004',
-    title: 'Cuisine of the Unknown',
-    description: 'Cook a meal from a country neither of you has eaten food from. No shortcuts.',
-    lore: 'The ancient spice traders said: cook what you don\'t know, learn who you are.',
-    difficulty: 'Hard', category: 'Food', mode: ['duo'],
-    xp: 280, icon: '🌶️', tags: ['cooking','couples','culture'], repeatable: false,
-    duration: 120, moods: ['curious','creative'],
+    "id": "sq-035",
+    "title": "Reverse Bucket List",
+    "description": "Finally do something you've postponed for years.",
+    "lore": "Delayed quests still grant XP.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 350,
+    "duration": 180,
+    "moods": [
+      "determined",
+      "brave"
+    ],
+    "tags": [
+      "goals",
+      "life"
+    ],
+    "repeatable": false
   },
   {
-    id: 'dq-005',
-    title: 'The Admiration Pact',
-    description: 'Tell each other 3 things you genuinely admire about them. Then do one thing together that celebrates one of those traits.',
-    lore: 'Even the mightiest heroes need to be reminded of their power.',
-    difficulty: 'Legendary', category: 'Social', mode: ['duo'],
-    xp: 500, icon: '💛', tags: ['connection','couples','deep'], repeatable: false,
-    duration: 90, moods: ['chill','social'],
+    "id": "sq-036",
+    "title": "One Degree Away",
+    "description": "Spend time with someone whose life is completely different from yours.",
+    "lore": "New worlds rarely require passports.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "thoughtful"
+    ],
+    "tags": [
+      "perspective",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-006',
-    title: 'The Silence Walk',
-    description: 'Go for a 20-minute walk together in total silence. No phones. Communicate only with gestures.',
-    lore: 'The oldest form of communication predates language.',
-    difficulty: 'Medium', category: 'Mindfulness', mode: ['duo'],
-    xp: 150, icon: '🤫', tags: ['silence','connection'], repeatable: true,
-    duration: 20, moods: ['chill'],
+    "id": "sq-037",
+    "title": "Tiny Festival",
+    "description": "Celebrate something absurdly small as if it were a major holiday.",
+    "lore": "Joy scales surprisingly well.",
+    "difficulty": "Easy",
+    "category": "Community",
+    "mode": [
+      "duo",
+      "group"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "playful",
+      "chaotic"
+    ],
+    "tags": [
+      "celebration",
+      "fun"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-007',
-    title: 'Swap & Tell',
-    description: 'Each of you introduces the other to one thing you love (music, film, book, place). Engage with it together.',
-    lore: 'Shared worlds are built one exchange at a time.',
-    difficulty: 'Easy', category: 'Social', mode: ['duo'],
-    xp: 120, icon: '🔄', tags: ['sharing','couples'], repeatable: true,
-    duration: 60, moods: ['chill','curious','social'],
+    "id": "sq-038",
+    "title": "Rooftop Philosopher",
+    "description": "Watch the city from above and write down five thoughts.",
+    "lore": "Great ideas enjoy elevation.",
+    "difficulty": "Medium",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "reflective",
+      "chill"
+    ],
+    "tags": [
+      "journaling",
+      "views"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-008',
-    title: 'The Unplanned Picnic',
-    description: 'Buy ingredients from the next shop you pass and find a green space. No planning allowed.',
-    lore: 'The best feasts are improvised.',
-    difficulty: 'Easy', category: 'Food', mode: ['duo'],
-    xp: 130, icon: '🧺', tags: ['picnic','spontaneous','couples'], repeatable: true,
-    duration: 90, moods: ['chill','adventurous','chaotic'],
+    "id": "sq-039",
+    "title": "Secret Ingredient",
+    "description": "Buy a food ingredient you've never heard of and cook with it.",
+    "lore": "Culinary magic begins with curiosity.",
+    "difficulty": "Medium",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 90,
+    "moods": [
+      "creative",
+      "curious"
+    ],
+    "tags": [
+      "cooking",
+      "food"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-009',
-    title: 'Dream Map',
-    description: 'Each draw a map of where you want to be in 5 years. Then compare them.',
-    lore: 'Two maps, one journey.',
-    difficulty: 'Hard', category: 'Creative', mode: ['duo'],
-    xp: 320, icon: '🗺️', tags: ['future','couples','creative'], repeatable: false,
-    duration: 60, moods: ['creative','chill'],
+    "id": "sq-040",
+    "title": "The Human Library II",
+    "description": "Ask someone about a turning point in their life.",
+    "lore": "Every person contains a plot twist.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 30,
+    "moods": [
+      "thoughtful",
+      "social"
+    ],
+    "tags": [
+      "stories",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-010',
-    title: 'Accent Hour',
-    description: 'Order food, run errands, exist — while both committing to terrible fake accents for one hour.',
-    lore: 'The kingdom\'s greatest spies were just couples who refused to break character.',
-    difficulty: 'Hard', category: 'Social', mode: ['duo'],
-    xp: 260, icon: '🎭', tags: ['couples','chaos','brave'], repeatable: true,
-    duration: 60, moods: ['chaotic','social'],
+    "id": "sq-041",
+    "title": "The 100-Rupee Adventure",
+    "description": "Create the best possible adventure with ₹100 or less.",
+    "lore": "Creativity thrives under constraints.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 280,
+    "duration": 120,
+    "moods": [
+      "playful",
+      "creative"
+    ],
+    "tags": [
+      "budget",
+      "challenge"
+    ],
+    "repeatable": true
   },
   {
-    id: 'dq-011',
-    title: 'The Blindfold Taste Test',
-    description: 'One of you blindfolded, the other picks 5 mystery foods. Guess them all. Then swap.',
-    lore: 'Trust is letting someone feed you something while you cannot see it.',
-    difficulty: 'Easy', category: 'Food', mode: ['duo'],
-    xp: 110, icon: '🙈', tags: ['couples','food','trust'], repeatable: true,
-    duration: 30, moods: ['chaotic','social','curious'],
-  },
-
-  // ── FRIENDS (group) ───────────────────────────────────────────────────────
-  {
-    id: 'gq-001',
-    title: 'The Brave Order',
-    description: 'Everyone at the table orders something they\'ve never tried. No one is exempt.',
-    lore: 'The fellowship that eats strange food together stays together.',
-    difficulty: 'Easy', category: 'Food', mode: ['group'],
-    xp: 90, icon: '🍜', tags: ['food','brave','group'], repeatable: true,
-    duration: 60, moods: ['social','curious','chaotic'],
-  },
-  {
-    id: 'gq-002',
-    title: 'Landmark of Legends',
-    description: 'Find the most unusual landmark within walking distance. Group photo required.',
-    lore: 'The hero\'s journey always ends with a photo.',
-    difficulty: 'Medium', category: 'Outdoor', mode: ['group','duo'],
-    xp: 160, icon: '📸', tags: ['photo','landmark','group'], repeatable: true,
-    duration: 60, moods: ['adventurous','curious','social'],
+    "id": "sq-042",
+    "title": "Secret Sunrise",
+    "description": "Wake before sunrise and witness the city wake up.",
+    "lore": "Dawn belongs to a different civilization.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 260,
+    "duration": 90,
+    "moods": [
+      "peaceful",
+      "adventurous"
+    ],
+    "tags": [
+      "sunrise",
+      "morning"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-003',
-    title: 'The Skill Parliament',
-    description: 'Each person teaches the group one skill they have, however small. You have 5 minutes each.',
-    lore: 'In the ancient guilds, knowledge was the highest currency.',
-    difficulty: 'Hard', category: 'Learning', mode: ['group'],
-    xp: 260, icon: '🧠', tags: ['skills','teaching','group'], repeatable: false,
-    duration: 60, moods: ['curious','social'],
+    "id": "sq-043",
+    "title": "The Local Celebrity",
+    "description": "Find the most interesting person in a neighborhood and learn their story.",
+    "lore": "Legends often live next door.",
+    "difficulty": "Hard",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 320,
+    "duration": 90,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "storytelling",
+      "people"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-004',
-    title: 'The Collective Sketch',
-    description: 'Pass a paper around. Each person adds one element to a group illustration without seeing what others drew.',
-    lore: 'No great work of art was ever made alone. Or was it? Yes. But this one isn\'t.',
-    difficulty: 'Medium', category: 'Creative', mode: ['group'],
-    xp: 140, icon: '🖼️', tags: ['art','group','collaborative'], repeatable: true,
-    duration: 30, moods: ['creative','chaotic','social'],
+    "id": "sq-044",
+    "title": "Reverse Recommendation",
+    "description": "Recommend your favorite local place to a stranger.",
+    "lore": "Maps improve when shared.",
+    "difficulty": "Easy",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 15,
+    "moods": [
+      "social",
+      "positive"
+    ],
+    "tags": [
+      "kindness",
+      "local"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-005',
-    title: 'The Dice Destination',
-    description: 'Roll a die to pick a direction. Walk for the number of minutes shown. Repeat twice.',
-    lore: 'The dice gods are unpredictable but rarely boring.',
-    difficulty: 'Legendary', category: 'Outdoor', mode: ['group','duo'],
-    xp: 480, icon: '🎲', tags: ['random','explore','group'], repeatable: true,
-    duration: 90, moods: ['chaotic','adventurous'],
+    "id": "sq-045",
+    "title": "Silent Café",
+    "description": "Spend 30 minutes in a café without using your phone.",
+    "lore": "Attention is a rare currency.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 30,
+    "moods": [
+      "calm",
+      "reflective"
+    ],
+    "tags": [
+      "digital-detox"
+    ],
+    "repeatable": true,
+    "timeLimit": 30
   },
   {
-    id: 'gq-006',
-    title: 'The Group Confession',
-    description: 'Everyone shares one thing they\'ve never admitted to the group. No judgement. All secrets stay in the quest.',
-    lore: 'The truest bonds are forged in vulnerability.',
-    difficulty: 'Hard', category: 'Social', mode: ['group'],
-    xp: 280, icon: '🔐', tags: ['trust','deep','group'], repeatable: false,
-    duration: 60, moods: ['social','chill'],
+    "id": "sq-046",
+    "title": "The Open Door",
+    "description": "Enter a store, gallery, or café you've walked past 50 times but never entered.",
+    "lore": "Mystery hides in plain sight.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "exploration",
+      "local"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-007',
-    title: 'Scavenger Hunt: No Clues',
-    description: 'Each person creates one riddle that leads to a location. Solve each other\'s riddles.',
-    lore: 'The oldest games were also the most dangerous.',
-    difficulty: 'Legendary', category: 'Outdoor', mode: ['group'],
-    xp: 600, icon: '🔍', tags: ['puzzle','explore','group'], repeatable: false,
-    duration: 120, moods: ['curious','adventurous','chaotic'],
+    "id": "sq-047",
+    "title": "The Adventure Relay",
+    "description": "Each member of your group chooses the next destination.",
+    "lore": "Shared stories require shared chaos.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "group"
+    ],
+    "xp": 220,
+    "duration": 120,
+    "moods": [
+      "social",
+      "chaotic"
+    ],
+    "tags": [
+      "friends",
+      "group"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-008',
-    title: 'The Potluck Challenge',
-    description: 'Each person brings a dish from a cuisine assigned randomly by another member. No repeats.',
-    lore: 'The great feasts of legend were always potlucks.',
-    difficulty: 'Medium', category: 'Food', mode: ['group'],
-    xp: 200, icon: '🥘', tags: ['cooking','food','group'], repeatable: true,
-    duration: 120, moods: ['social','creative'],
+    "id": "sq-048",
+    "title": "The Honest Toast",
+    "description": "Tell someone exactly why you appreciate them.",
+    "lore": "Gratitude grows stronger when spoken aloud.",
+    "difficulty": "Medium",
+    "category": "Community",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 15,
+    "moods": [
+      "heartfelt",
+      "positive"
+    ],
+    "tags": [
+      "gratitude",
+      "relationships"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-009',
-    title: 'Karaoke Russian Roulette',
-    description: 'Everyone adds 2 songs to a hat. Each person must perform whatever they draw. Fully.',
-    lore: 'The bards feared no ballad. Be the bard.',
-    difficulty: 'Hard', category: 'Social', mode: ['group'],
-    xp: 270, icon: '🎤', tags: ['music','brave','group'], repeatable: true,
-    duration: 90, moods: ['chaotic','social'],
+    "id": "sq-049",
+    "title": "The Night Cartographer",
+    "description": "Create a map of interesting places you discover after dark.",
+    "lore": "The city changes characters at sunset.",
+    "difficulty": "Hard",
+    "category": "Night Quest",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 300,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "night",
+      "exploration"
+    ],
+    "repeatable": true
   },
   {
-    id: 'gq-010',
-    title: 'The Statue Game',
-    description: 'In a public space, the group freezes in dramatic poses for 2 full minutes whenever one member yells "GALLERY!"',
-    lore: 'Museums hate this one trick.',
-    difficulty: 'Medium', category: 'Social', mode: ['group'],
-    xp: 180, icon: '🗿', tags: ['chaos','public','group'], repeatable: true,
-    duration: 45, moods: ['chaotic'],
+    "id": "sq-050",
+    "title": "Tiny Revolution",
+    "description": "Convince at least three strangers to participate in something harmless and fun.",
+    "lore": "Every movement starts with one believer.",
+    "difficulty": "Legendary",
+    "category": "Social",
+    "mode": [
+      "solo",
+      "group"
+    ],
+    "xp": 550,
+    "duration": 120,
+    "moods": [
+      "brave",
+      "chaotic",
+      "social"
+    ],
+    "tags": [
+      "leadership",
+      "fun",
+      "people"
+    ],
+    "repeatable": true,
+    "timeLimit": 120
   },
   {
-    id: 'gq-011',
-    title: 'Budget Banquet',
-    description: 'Split up with $5 each. 20 minutes to buy one course. Reassemble and feast on the chaos menu.',
-    lore: 'Five coins, five champions, one questionable banquet.',
-    difficulty: 'Medium', category: 'Food', mode: ['group'],
-    xp: 190, icon: '💸', tags: ['food','challenge','group'], repeatable: true, timeLimit: 20,
-    duration: 60, moods: ['chaotic','social','adventurous'],
+    "id": "sq-051",
+    "title": "The Secret Password",
+    "description": "Ask a local business owner what regular customers always know to order or do.",
+    "lore": "Every guild has secrets.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 30,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "local",
+      "business",
+      "secrets"
+    ],
+    "repeatable": true
   },
-]
+  {
+    "id": "sq-052",
+    "title": "The Fortune Cookie",
+    "description": "Ask five strangers what they think you'll be doing in ten years.",
+    "lore": "Prophecies are more entertaining when crowdsourced.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "playful",
+      "curious"
+    ],
+    "tags": [
+      "future",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-053",
+    "title": "Parallel Lives",
+    "description": "Spend 30 minutes imagining the life story of someone you observe in public.",
+    "lore": "Every stranger is the protagonist of another story.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 30,
+    "moods": [
+      "reflective",
+      "creative"
+    ],
+    "tags": [
+      "observation",
+      "storytelling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-054",
+    "title": "The Forgotten Review",
+    "description": "Leave a thoughtful positive review for a small business you genuinely like.",
+    "lore": "Heroes don't always wear capes. Sometimes they leave reviews.",
+    "difficulty": "Easy",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 80,
+    "duration": 15,
+    "moods": [
+      "positive",
+      "helpful"
+    ],
+    "tags": [
+      "local",
+      "kindness"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-055",
+    "title": "Three Doors",
+    "description": "Enter the third interesting place you discover while walking.",
+    "lore": "Adventure rewards commitment.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "adventurous"
+    ],
+    "tags": [
+      "spontaneity",
+      "explore"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-056",
+    "title": "The Local Myth Hunter",
+    "description": "Find a local ghost story, rumor, or urban legend and investigate it.",
+    "lore": "Cities remember strange things.",
+    "difficulty": "Hard",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 300,
+    "duration": 120,
+    "moods": [
+      "curious",
+      "adventurous"
+    ],
+    "tags": [
+      "folklore",
+      "mystery"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-057",
+    "title": "Reverse Interview",
+    "description": "Let someone ask you any five questions they want.",
+    "lore": "Sometimes being understood is the adventure.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 30,
+    "moods": [
+      "vulnerable",
+      "social"
+    ],
+    "tags": [
+      "conversation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-058",
+    "title": "The Celebration Chain",
+    "description": "Start a chain of compliments between strangers.",
+    "lore": "Positive energy spreads faster than expected.",
+    "difficulty": "Hard",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 45,
+    "moods": [
+      "positive",
+      "social"
+    ],
+    "tags": [
+      "kindness",
+      "community"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-059",
+    "title": "The Tiny Gallery",
+    "description": "Create a temporary art installation from found objects.",
+    "lore": "Great museums begin with one exhibit.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo",
+      "group"
+    ],
+    "xp": 200,
+    "duration": 45,
+    "moods": [
+      "creative",
+      "playful"
+    ],
+    "tags": [
+      "art",
+      "creation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-060",
+    "title": "Borrowed Book",
+    "description": "Ask someone to recommend a book and read the first chapter today.",
+    "lore": "Wisdom enjoys referrals.",
+    "difficulty": "Easy",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "reflective"
+    ],
+    "tags": [
+      "books",
+      "learning"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-061",
+    "title": "The Hidden Menu II",
+    "description": "Order the staff favorite at a restaurant. No questions asked.",
+    "lore": "Trust the experts.",
+    "difficulty": "Easy",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "food",
+      "recommendation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-062",
+    "title": "The Unfamiliar Route",
+    "description": "Navigate somewhere without using GPS.",
+    "lore": "Ancient explorers managed somehow.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "adventurous",
+      "confident"
+    ],
+    "tags": [
+      "navigation",
+      "challenge"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-063",
+    "title": "The Five-Minute Friend",
+    "description": "Have a meaningful conversation with someone you've never met.",
+    "lore": "Friendships often start unexpectedly.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 20,
+    "moods": [
+      "social",
+      "curious"
+    ],
+    "tags": [
+      "people",
+      "connection"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-064",
+    "title": "The Dessert Quest",
+    "description": "Visit a dessert place you've never heard of and try their signature item.",
+    "lore": "Every town hides a sugar wizard.",
+    "difficulty": "Easy",
+    "category": "Food",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "playful",
+      "happy"
+    ],
+    "tags": [
+      "food",
+      "dessert"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-065",
+    "title": "The Lost Skill",
+    "description": "Learn a skill that was common 100 years ago.",
+    "lore": "Old knowledge never truly disappears.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "thoughtful"
+    ],
+    "tags": [
+      "history",
+      "skills"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-066",
+    "title": "The Observation Deck",
+    "description": "Spend 20 minutes observing life from a busy public place.",
+    "lore": "Civilization is an endless performance.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "reflective",
+      "chill"
+    ],
+    "tags": [
+      "observation",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-067",
+    "title": "Secret Mission",
+    "description": "Have a friend secretly assign you a harmless challenge. Complete it.",
+    "lore": "Great agents require great missions.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "duo"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "adventurous"
+    ],
+    "tags": [
+      "mystery",
+      "friendship"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-068",
+    "title": "The Time Traveler",
+    "description": "Visit a place that hasn't changed much in decades.",
+    "lore": "Some locations resist time itself.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "nostalgic",
+      "curious"
+    ],
+    "tags": [
+      "history",
+      "city"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-069",
+    "title": "Reverse Restaurant",
+    "description": "Let a stranger choose what you eat today.",
+    "lore": "Surrendering control has flavor.",
+    "difficulty": "Hard",
+    "category": "Food",
+    "mode": [
+      "solo"
+    ],
+    "xp": 260,
+    "duration": 60,
+    "moods": [
+      "adventurous",
+      "social"
+    ],
+    "tags": [
+      "food",
+      "randomness"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-070",
+    "title": "One Good Deed",
+    "description": "Complete a meaningful act of kindness anonymously.",
+    "lore": "Anonymous heroes still gain XP.",
+    "difficulty": "Medium",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 30,
+    "moods": [
+      "positive",
+      "hopeful"
+    ],
+    "tags": [
+      "kindness",
+      "giving"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-071",
+    "title": "The Adventure Auction",
+    "description": "Each friend contributes one challenge. Draw one at random.",
+    "lore": "Chaos is best when collaborative.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "group"
+    ],
+    "xp": 280,
+    "duration": 90,
+    "moods": [
+      "chaotic",
+      "social"
+    ],
+    "tags": [
+      "friends",
+      "random"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-072",
+    "title": "The Memory Exchange",
+    "description": "Trade a favorite childhood memory with someone.",
+    "lore": "Stories become stronger when shared.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 30,
+    "moods": [
+      "nostalgic",
+      "social"
+    ],
+    "tags": [
+      "memories",
+      "conversation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-073",
+    "title": "Hidden Talent Show",
+    "description": "Showcase a skill most people don't know you have.",
+    "lore": "Secret powers deserve daylight.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo",
+      "group"
+    ],
+    "xp": 300,
+    "duration": 30,
+    "moods": [
+      "brave",
+      "playful"
+    ],
+    "tags": [
+      "talent",
+      "confidence"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-074",
+    "title": "The Human Compass",
+    "description": "Let strangers decide your next destination through votes.",
+    "lore": "Democracy can be adventurous.",
+    "difficulty": "Hard",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 90,
+    "moods": [
+      "curious",
+      "chaotic"
+    ],
+    "tags": [
+      "travel",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-075",
+    "title": "The Impossible Day",
+    "description": "Spend one hour saying \"yes\" to every reasonable opportunity that appears.",
+    "lore": "Some adventures only happen to the available.",
+    "difficulty": "Legendary",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 550,
+    "duration": 60,
+    "moods": [
+      "adventurous",
+      "bold"
+    ],
+    "tags": [
+      "spontaneity",
+      "legendary"
+    ],
+    "repeatable": true,
+    "timeLimit": 60
+  },
+  {
+    "id": "sq-076",
+    "title": "The Secret Society",
+    "description": "Spend an hour participating in a community, club, meetup, or gathering you've never attended before.",
+    "lore": "Every city contains hidden guilds.",
+    "difficulty": "Hard",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 300,
+    "duration": 120,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "meetup",
+      "community"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-077",
+    "title": "The Lost Conversation",
+    "description": "Call someone you haven't spoken to in over two years.",
+    "lore": "Some bridges only need one traveler.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 30,
+    "moods": [
+      "nostalgic",
+      "social"
+    ],
+    "tags": [
+      "friendship",
+      "reconnect"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "sq-078",
+    "title": "The Curiosity Tax",
+    "description": "For every question you ask today, find the answer.",
+    "lore": "Curiosity demands payment.",
+    "difficulty": "Hard",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 180,
+    "moods": [
+      "curious",
+      "reflective"
+    ],
+    "tags": [
+      "learning",
+      "research"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-079",
+    "title": "The Last Customer",
+    "description": "Visit a small business just before closing and hear the owner's story.",
+    "lore": "Shops hold different conversations at the end of the day.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "business",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-080",
+    "title": "The Memory Tourist",
+    "description": "Visit three places that shaped your childhood.",
+    "lore": "Old checkpoints still exist.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 90,
+    "moods": [
+      "nostalgic",
+      "reflective"
+    ],
+    "tags": [
+      "memories",
+      "city"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-081",
+    "title": "The Reverse Mentor",
+    "description": "Ask someone younger than you to teach you something.",
+    "lore": "Wisdom does not check age requirements.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 30,
+    "moods": [
+      "curious",
+      "humble"
+    ],
+    "tags": [
+      "learning",
+      "generations"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-082",
+    "title": "The Unexpected Yes",
+    "description": "Accept an invitation you would normally decline.",
+    "lore": "Opportunity often arrives poorly disguised.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 300,
+    "duration": 120,
+    "moods": [
+      "brave",
+      "adventurous"
+    ],
+    "tags": [
+      "growth",
+      "opportunity"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-083",
+    "title": "The Third Place",
+    "description": "Spend an hour in a place that is neither home nor work.",
+    "lore": "Civilization happens between destinations.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 60,
+    "moods": [
+      "chill",
+      "reflective"
+    ],
+    "tags": [
+      "café",
+      "park",
+      "community"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-084",
+    "title": "The Compliment Heist",
+    "description": "Make someone's day noticeably better without revealing yourself.",
+    "lore": "Anonymous heroes still earn XP.",
+    "difficulty": "Medium",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 30,
+    "moods": [
+      "positive",
+      "hopeful"
+    ],
+    "tags": [
+      "kindness",
+      "anonymous"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-085",
+    "title": "The One-Day Collector",
+    "description": "Collect five tiny memories from today and document them.",
+    "lore": "Great stories are built from small moments.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "reflective",
+      "creative"
+    ],
+    "tags": [
+      "journaling",
+      "memory"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-086",
+    "title": "The Alternate Reality",
+    "description": "Spend one hour pretending you're living a completely different life.",
+    "lore": "Imagination is temporary teleportation.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "creative"
+    ],
+    "tags": [
+      "roleplay",
+      "storytelling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-087",
+    "title": "The Midnight Philosopher",
+    "description": "Have a deep conversation after 11 PM.",
+    "lore": "The best questions wake up late.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "duo"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "reflective",
+      "social"
+    ],
+    "tags": [
+      "night",
+      "conversation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-088",
+    "title": "The Stranger's Quest",
+    "description": "Ask someone to give you a challenge. Complete it today.",
+    "lore": "The universe occasionally outsources quests.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 320,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "chaotic"
+    ],
+    "tags": [
+      "challenge",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-089",
+    "title": "The Tiny Road Trip",
+    "description": "Travel to a nearby place you've never visited and spend an hour there.",
+    "lore": "Distance is relative to curiosity.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo",
+      "duo",
+      "group"
+    ],
+    "xp": 220,
+    "duration": 180,
+    "moods": [
+      "adventurous",
+      "curious"
+    ],
+    "tags": [
+      "travel",
+      "exploration"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-090",
+    "title": "The Gratitude Debt",
+    "description": "Thank someone whose contribution is usually unnoticed.",
+    "lore": "Recognition is a rare treasure.",
+    "difficulty": "Easy",
+    "category": "Community",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "positive",
+      "heartfelt"
+    ],
+    "tags": [
+      "gratitude",
+      "kindness"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-091",
+    "title": "The Parallel Meal",
+    "description": "Eat exactly what the person before you ordered.",
+    "lore": "Chance has a surprisingly good palate.",
+    "difficulty": "Medium",
+    "category": "Food",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "adventurous",
+      "playful"
+    ],
+    "tags": [
+      "food",
+      "random"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-092",
+    "title": "The Last Photograph",
+    "description": "Capture a photo that represents this chapter of your life.",
+    "lore": "Every era deserves a cover image.",
+    "difficulty": "Hard",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 260,
+    "duration": 60,
+    "moods": [
+      "reflective",
+      "creative"
+    ],
+    "tags": [
+      "photography",
+      "life"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "sq-093",
+    "title": "The Hidden Expert",
+    "description": "Find someone passionate about an obscure topic and learn from them.",
+    "lore": "Every niche has its master.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "inspired"
+    ],
+    "tags": [
+      "expertise",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-094",
+    "title": "The Human Time Capsule",
+    "description": "Ask three people what they hope the future looks like.",
+    "lore": "Tomorrow is built from imagination.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "hopeful",
+      "curious"
+    ],
+    "tags": [
+      "future",
+      "conversation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-095",
+    "title": "The 24-Hour Mission",
+    "description": "Give yourself a challenge that must be completed within a day.",
+    "lore": "Deadlines sharpen destiny.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 320,
+    "duration": 1440,
+    "moods": [
+      "determined",
+      "focused"
+    ],
+    "tags": [
+      "challenge",
+      "self-growth"
+    ],
+    "repeatable": true,
+    "timeLimit": 1440
+  },
+  {
+    "id": "sq-096",
+    "title": "The Hidden Doorway",
+    "description": "Enter a place you've always wondered about but never visited.",
+    "lore": "Mystery loses power once explored.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "exploration",
+      "local"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-097",
+    "title": "The Adventure Dealer",
+    "description": "Create a quest for a friend and have them complete it.",
+    "lore": "Great adventures deserve sequels.",
+    "difficulty": "Medium",
+    "category": "Community",
+    "mode": [
+      "duo"
+    ],
+    "xp": 200,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "social"
+    ],
+    "tags": [
+      "friendship",
+      "challenge"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-098",
+    "title": "The Legend Interview",
+    "description": "Ask someone what the most interesting thing they've ever done is.",
+    "lore": "Most legends are waiting to be asked.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 30,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "storytelling",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sq-099",
+    "title": "The Unrepeatable Day",
+    "description": "Spend one hour doing something you'll probably never do again.",
+    "lore": "Some experiences are meant to happen once.",
+    "difficulty": "Legendary",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo"
+    ],
+    "xp": 500,
+    "duration": 60,
+    "moods": [
+      "adventurous",
+      "bold"
+    ],
+    "tags": [
+      "bucket-list",
+      "unique"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "sq-100",
+    "title": "The Story Worth Telling",
+    "description": "Create a day that ends with a story you'll want to tell for years. Document it.",
+    "lore": "The ultimate quest was never completion. It was remembrance.",
+    "difficulty": "Legendary",
+    "category": "Adventure",
+    "mode": [
+      "solo",
+      "duo",
+      "group"
+    ],
+    "xp": 600,
+    "duration": 240,
+    "moods": [
+      "adventurous",
+      "inspired"
+    ],
+    "tags": [
+      "storytelling",
+      "legendary",
+      "life"
+    ],
+    "repeatable": false
+  }
+] as Quest[]
 
 export function getQuestsForMode(mode: 'solo' | 'duo' | 'group'): Quest[] {
   return QUESTS.filter(q => q.mode.includes(mode))

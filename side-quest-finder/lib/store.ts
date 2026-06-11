@@ -156,9 +156,9 @@ export const useStore = create<StoreState>()(
         const categories = (cat: string) => completed.filter(q => QUESTS.find(x => x.id === q.questId)?.category === cat).length
         if (categories('Food') >= 3)       unlock('ach-004')
         if (categories('Social') >= 5)     unlock('ach-005')
-        if (categories('Outdoor') >= 5)    unlock('ach-006')
+        if (categories('Discovery') >= 5)    unlock('ach-006')
         if (categories('Mindfulness') >= 3) unlock('ach-007')
-        if (categories('Creative') >= 3)   unlock('ach-008')
+        if (categories('Creativity') >= 3)   unlock('ach-008')
         if (categories('Learning') >= 5)   unlock('ach-012')
 
         // Difficulty counts

@@ -16,7 +16,9 @@ export interface Character {
 
 export type QuestMode = 'solo' | 'duo' | 'group'
 export type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Legendary'
-export type Mood = 'chill' | 'social' | 'creative' | 'adventurous' | 'curious' | 'chaotic'
+/** Quest moods are free-form (27 distinct in the library); the Forge groups them into 6 picker vibes. */
+export type Mood = string
+export type ForgeMood = 'chill' | 'social' | 'creative' | 'adventurous' | 'curious' | 'chaotic'
 
 export interface Quest {
   id: string
