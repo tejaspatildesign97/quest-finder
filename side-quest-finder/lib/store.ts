@@ -34,8 +34,11 @@ interface StoreState {
 
   // Quests
   acceptQuest: (questId: string) => void
-  completeQuest: (questId: string) => void
+  completeQuest: (questId: string, note?: string, mediaIds?: string[]) => void
   abandonQuest: (questId: string) => void
+  /** quest id currently in the completion modal */
+  completingQuestId: string | null
+  setCompletingQuest: (id: string | null) => void
 
   // Party
   createParty: (party: Party) => void
@@ -79,7 +82,10 @@ export const useStore = create<StoreState>()(
         get().checkAchievements()
       },
 
-      completeQuest: (questId) => {
+      completingQuestId: null,
+      setCompletingQuest: (id) => set({ completingQuestId: id }),
+
+      completeQuest: (questId, note, mediaIds) => {
         const { activeQuests, character, party } = get()
         const quest = QUESTS.find(q => q.id === questId)
         if (!quest || !character) return
@@ -99,10 +105,10 @@ export const useStore = create<StoreState>()(
         }
 
         const updatedQuests = activeQuests.map(q =>
-          q.questId === questId ? { ...q, status: 'completed' as const, completedAt: new Date().toISOString(), xpEarned: earned } : q
+          q.questId === questId ? { ...q, status: 'completed' as const, completedAt: new Date().toISOString(), xpEarned: earned, note, mediaIds } : q
         )
 
-        set({ character: updatedCharacter, activeQuests: updatedQuests })
+        set({ character: updatedCharacter, activeQuests: updatedQuests, completingQuestId: null })
 
         get().addToast({ type: 'xp', message: `+${earned} XP earned!`, icon: '⚡' })
 
@@ -224,6 +230,13 @@ export const useStore = create<StoreState>()(
     {
       name: 'side-quest-store',
       onRehydrateStorage: () => (state) => { state?.setHasHydrated(true) },
+      partialize: (s) => ({
+        character: s.character,
+        activeQuests: s.activeQuests,
+        unlockedAchievements: s.unlockedAchievements,
+        party: s.party,
+        playMode: s.playMode,
+      }) as StoreState,
     }
   )
 )

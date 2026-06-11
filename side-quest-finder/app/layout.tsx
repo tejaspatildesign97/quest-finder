@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import Nav from '@/components/layout/Nav'
 import ToastContainer from '@/components/ui/Toast'
 import LevelUpModal from '@/components/ui/LevelUpModal'
+import CompleteQuestModal from '@/components/CompleteQuestModal'
 
 const anton = Anton({
   variable: '--font-anton',
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <ToastContainer />
         <LevelUpModal />
+        <CompleteQuestModal />
       </body>
     </html>
   )

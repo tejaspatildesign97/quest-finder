@@ -2,15 +2,16 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Compass, Trophy, User, Swords } from 'lucide-react'
+import { Home, Compass, BookOpen, Trophy, User, Swords } from 'lucide-react'
 import { useStore } from '@/lib/store'
 
 const NAV_ITEMS = [
-  { href: '/dashboard',    Icon: Home,    label: 'Home',    activeBg: 'bg-[var(--pastel-orange)]', activeText: 'text-amber-400' },
-  { href: '/quests',       Icon: Compass, label: 'Quests',  activeBg: 'bg-[var(--pastel-mint)]',   activeText: 'text-emerald-400' },
-  { href: '/achievements', Icon: Trophy,  label: 'Awards',  activeBg: 'bg-[var(--pastel-blue)]',   activeText: 'text-blue-400' },
-  { href: '/profile',      Icon: User,    label: 'Profile', activeBg: 'bg-[var(--pastel-pink)]',   activeText: 'text-pink-400' },
-  { href: '/party',        Icon: Swords,  label: 'Party',   activeBg: 'bg-[var(--pastel-purple)]', activeText: 'text-violet-400' },
+  { href: '/dashboard',    Icon: Home,     label: 'Home',    activeBg: 'bg-[var(--pastel-orange)]', activeText: 'text-amber-400' },
+  { href: '/quests',       Icon: Compass,  label: 'Quests',  activeBg: 'bg-[var(--pastel-mint)]',   activeText: 'text-emerald-400' },
+  { href: '/journal',      Icon: BookOpen, label: 'Diary',   activeBg: 'bg-[var(--pastel-blue)]',   activeText: 'text-cyan-400' },
+  { href: '/achievements', Icon: Trophy,   label: 'Awards',  activeBg: 'bg-[var(--pastel-blue)]',   activeText: 'text-blue-400' },
+  { href: '/profile',      Icon: User,     label: 'Profile', activeBg: 'bg-[var(--pastel-pink)]',   activeText: 'text-pink-400' },
+  { href: '/party',        Icon: Swords,   label: 'Party',   activeBg: 'bg-[var(--pastel-purple)]', activeText: 'text-violet-400' },
 ]
 
 const MODE_COLOR: Record<string, string> = {
@@ -34,9 +35,9 @@ export default function Nav() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all duration-150"
+              className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 transition-all duration-150"
             >
-              <span className={`relative px-3.5 py-1 rounded-full transition-all ${active ? activeBg : ''}`}>
+              <span className={`relative px-3 py-1 rounded-full transition-all ${active ? activeBg : ''}`}>
                 <Icon
                   size={21}
                   strokeWidth={active ? 2.5 : 2}

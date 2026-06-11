@@ -13,7 +13,7 @@ import QuestCard from '@/components/ui/QuestCard'
 
 export default function PartyPage() {
   const router = useRouter()
-  const { character, party, playMode, setPlayMode, createParty, leaveParty, activeQuests, acceptQuest, completeQuest, abandonQuest, _hasHydrated } = useStore()
+  const { character, party, playMode, setPlayMode, createParty, leaveParty, activeQuests, acceptQuest, setCompletingQuest, abandonQuest, _hasHydrated } = useStore()
 
   const [partyName, setPartyName] = useState('')
   const [partyMode, setPartyMode] = useState<PartyMode>('friends')
@@ -79,7 +79,7 @@ export default function PartyPage() {
               quest={q}
               activeQuest={activeQuests.find(a => a.questId === q.id)}
               onAccept={quest => acceptQuest(quest.id)}
-              onComplete={completeQuest}
+              onComplete={setCompletingQuest}
               onAbandon={abandonQuest}
               isParty={true}
             />

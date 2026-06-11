@@ -16,7 +16,7 @@ const TABS = ['Available', 'Active', 'Completed'] as const
 
 export default function QuestsPage() {
   const router = useRouter()
-  const { character, activeQuests, playMode, acceptQuest, completeQuest, abandonQuest, party, _hasHydrated } = useStore()
+  const { character, activeQuests, playMode, acceptQuest, setCompletingQuest, abandonQuest, party, _hasHydrated } = useStore()
 
   const [tab, setTab]           = useState<typeof TABS[number]>('Available')
   const [category, setCategory] = useState('All')
@@ -127,7 +127,7 @@ export default function QuestsPage() {
                   quest={q}
                   activeQuest={activeQuests.find(a => a.questId === q.id)}
                   onAccept={(quest: Quest) => acceptQuest(quest.id)}
-                  onComplete={completeQuest}
+                  onComplete={setCompletingQuest}
                   onAbandon={abandonQuest}
                   isParty={!!party}
                 />

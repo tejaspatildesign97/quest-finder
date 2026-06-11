@@ -28,7 +28,7 @@ const MOODS: { value: ForgeMood; label: string; Icon: LucideIcon; active: string
 const CATEGORIES = ['Any', ...Object.keys(CATEGORY_STYLES)]
 
 export default function QuestForge() {
-  const { playMode, activeQuests, acceptQuest, completeQuest, abandonQuest, party } = useStore()
+  const { playMode, activeQuests, acceptQuest, setCompletingQuest, abandonQuest, party } = useStore()
 
   const [time, setTime] = useState(30)
   const [mood, setMood] = useState<ForgeMood>('curious')
@@ -127,7 +127,7 @@ export default function QuestForge() {
                 quest={q}
                 activeQuest={activeQuests.find(a => a.questId === q.id && a.status !== 'abandoned')}
                 onAccept={quest => acceptQuest(quest.id)}
-                onComplete={completeQuest}
+                onComplete={setCompletingQuest}
                 onAbandon={abandonQuest}
                 isParty={!!party}
               />

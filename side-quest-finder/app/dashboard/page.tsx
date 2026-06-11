@@ -31,7 +31,7 @@ function hoursLeftToday() {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, completeQuest, abandonQuest, updateStreak, party, _hasHydrated } = useStore()
+  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, abandonQuest, updateStreak, party, _hasHydrated } = useStore()
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -54,12 +54,7 @@ export default function DashboardPage() {
     pickDaily(modePool.filter(q => q.difficulty === 'Medium'), 2),
     pickDaily(modePool.filter(q => q.difficulty === 'Hard' || q.difficulty === 'Legendary'), 3),
   ].filter((q, i, arr): q is NonNullable<typeof q> => !!q && arr.findIndex(x => x?.id === q.id) === i)
-  const dailyIds = dailyQuests.map(q => q.id)
   const dailyDoneCount = dailyQuests.filter(q => activeQuests.find(a => a.questId === q.id)?.status === 'completed').length
-
-  const recommended = QUESTS
-    .filter(q => q.mode.includes(playMode) && !activeQuests.find(a => a.questId === q.id) && !dailyIds.includes(q.id))
-    .slice(0, 6)
 
   return (
     <div className="space-y-6">
@@ -100,59 +95,34 @@ export default function DashboardPage() {
               const done = state?.status === 'completed'
               const cat = getCategoryStyle(dq.category)
               return (
-                <div key={dq.id} className={`flex items-center gap-3 rounded-3xl p-3.5 ${done ? 'bg-[var(--pastel-mint)] opacity-80' : 'bg-[var(--surface-2)] shadow-[0_1px_3px_rgba(0,0,0,0.5),0_8px_24px_rgba(0,0,0,0.5)]'}`}>
-                  <span className="w-11 h-11 flex items-center justify-center rounded-2xl shadow-md shrink-0"
-                    style={{ background: cat.gradient }}>
-                    <cat.Icon size={20} className="text-white" strokeWidth={2.2} />
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-display text-sm truncate">{dq.title}</div>
-                    <div className="flex gap-1.5 mt-1">
-                      <Badge variant={dq.difficulty === 'Easy' ? 'forest' : dq.difficulty === 'Medium' ? 'gold' : dq.difficulty === 'Hard' ? 'danger' : 'magic'}>{dq.difficulty}</Badge>
-                      <Badge variant="gold" icon={<Zap size={11} className="fill-amber-500 text-amber-500" />}>+{dq.xp}</Badge>
+                <div key={dq.id} className={`rounded-3xl p-3.5 ${done ? 'bg-[var(--pastel-mint)] opacity-80' : 'bg-[var(--surface-2)] shadow-[0_1px_3px_rgba(0,0,0,0.5),0_8px_24px_rgba(0,0,0,0.5)]'}`}>
+                  <div className="flex items-start gap-3">
+                    <span className="w-11 h-11 flex items-center justify-center rounded-2xl shadow-md shrink-0"
+                      style={{ background: cat.gradient }}>
+                      <cat.Icon size={20} className="text-white" strokeWidth={2.2} />
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-display text-sm">{dq.title}</div>
+                      <p className="text-xs font-semibold text-[var(--stone)] leading-relaxed mt-0.5">{dq.description}</p>
+                      <p className="text-xs italic text-[var(--stone-light)] mt-0.5">"{dq.lore}"</p>
+                      <div className="flex flex-wrap gap-1.5 mt-1.5">
+                        <Badge variant={dq.difficulty === 'Easy' ? 'forest' : dq.difficulty === 'Medium' ? 'gold' : dq.difficulty === 'Hard' ? 'danger' : 'magic'}>{dq.difficulty}</Badge>
+                        <Badge variant="gold" icon={<Zap size={11} className="fill-amber-500 text-amber-500" />}>+{dq.xp}</Badge>
+                        <Badge variant="stone" icon={<Clock size={11} />}>{dq.duration >= 120 ? '2h+' : dq.duration >= 60 ? `${Math.round(dq.duration / 60)}h` : `${dq.duration}m`}</Badge>
+                        <Badge variant="stone">{dq.category}</Badge>
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      {done ? (
+                        <CheckCircle2 size={26} className="text-emerald-500" />
+                      ) : state?.status === 'active' ? (
+                        <Button size="sm" variant="primary" onClick={() => setCompletingQuest(dq.id)}>Done!</Button>
+                      ) : (
+                        <Button size="sm" variant="secondary" onClick={() => acceptQuest(dq.id)}>Start</Button>
+                      )}
                     </div>
                   </div>
-                  {done ? (
-                    <CheckCircle2 size={26} className="text-emerald-500 shrink-0" />
-                  ) : state?.status === 'active' ? (
-                    <Button size="sm" variant="primary" onClick={() => completeQuest(dq.id)}>Done!</Button>
-                  ) : (
-                    <Button size="sm" variant="secondary" onClick={() => acceptQuest(dq.id)}>Start</Button>
-                  )}
                 </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Recommended carousel */}
-      {recommended.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="font-display font-semibold text-[var(--ink)]">Recommended for you</p>
-            <Link href="/quests" className="flex items-center text-xs font-extrabold text-[var(--quest-gold)]">
-              View all <ChevronRight size={14} />
-            </Link>
-          </div>
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {recommended.map(q => {
-              const cat = getCategoryStyle(q.category)
-              return (
-                <Link key={q.id} href="/quests"
-                  className="snap-start shrink-0 w-36 rounded-3xl p-4 text-white shadow-lg flex flex-col justify-between min-h-44 hover:scale-[1.03] transition-transform"
-                  style={{ background: cat.gradient }}>
-                  <cat.Icon size={28} strokeWidth={2.2} className="opacity-90" />
-                  <div>
-                    <div className="font-display font-semibold text-sm leading-tight">{q.title}</div>
-                    <div className="flex items-center gap-1 mt-2">
-                      <span className="text-[0.65rem] font-extrabold bg-white/25 rounded-full px-2 py-0.5">{q.difficulty}</span>
-                    </div>
-                    <div className="flex items-center gap-1 mt-1.5 text-xs font-extrabold">
-                      <Zap size={12} className="fill-white" /> +{q.xp} XP
-                    </div>
-                  </div>
-                </Link>
               )
             })}
           </div>
@@ -168,7 +138,7 @@ export default function DashboardPage() {
             if (!q) return null
             return (
               <QuestCard key={aq.questId} quest={q} activeQuest={aq}
-                onComplete={completeQuest} onAbandon={abandonQuest} isParty={!!party} />
+                onComplete={setCompletingQuest} onAbandon={abandonQuest} isParty={!!party} />
             )
           })}
         </div>

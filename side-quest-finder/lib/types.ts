@@ -48,6 +48,10 @@ export interface ActiveQuest {
   acceptedAt: string
   completedAt?: string
   xpEarned?: number
+  /** journal entry written on completion */
+  note?: string
+  /** IndexedDB keys of attached photos/videos */
+  mediaIds?: string[]
 }
 
 export type AchievementRarity = 'Common' | 'Rare' | 'Epic' | 'Legendary'
