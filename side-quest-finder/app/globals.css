@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark surfaces */
+  --parchment: #0c0c10;        /* app background — near black */
+  --parchment-dark: #16161c;   /* card surface */
+  --surface: #16161c;
+  --surface-2: #1f1f27;        /* raised surface */
+  --ink: #f5f5f7;              /* primary text — near white */
+
+  /* Neon accents */
+  --quest-gold: #fbbf24;       /* amber */
+  --quest-gold-light: #fde047;
+  --forest: #a3e635;           /* acid green (Letterboxd vibe) */
+  --forest-light: #bef264;
+  --danger: #f43f5e;           /* hot rose */
+  --danger-light: #fb7185;
+  --stone: #9b9ba6;            /* muted gray */
+  --stone-light: #6b6b76;
+  --magic: #a855f7;            /* neon purple */
+  --magic-light: #c084fc;
+  --neon-pink: #ec4899;
+  --neon-cyan: #22d3ee;
+
+  /* Translucent neon tints (used where pastels were) */
+  --pastel-orange: rgba(251, 191, 36, 0.14);
+  --pastel-pink:   rgba(236, 72, 153, 0.14);
+  --pastel-purple: rgba(168, 85, 247, 0.16);
+  --pastel-mint:   rgba(163, 230, 53, 0.14);
+  --pastel-blue:   rgba(34, 211, 238, 0.14);
+
+  /* Gradients */
+  --grad-hero: linear-gradient(135deg, #2e1065 0%, #701a75 45%, #0e7490 100%);
+  --grad-orange: linear-gradient(135deg, #fbbf24 0%, #f97316 60%, #ec4899 100%);
+  --grad-purple: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --grad-synth: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #22d3ee 100%);
+  --grad-acid: linear-gradient(135deg, #a3e635 0%, #22c55e 100%);
+}
+
+@theme inline {
+  --color-background: var(--parchment);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-grotesk);
+  --font-display: var(--font-anton);
+}
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-grotesk), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+/* Film-grain overlay for the poster look */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-anton), Impact, sans-serif;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+/* Dark glass card */
+.scroll-border {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quest-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.quest-divider::before { display: none; }
+.quest-divider::after { content: ''; flex: 1; height: 0; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.shimmer-text {
+  background: var(--grad-synth);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+.float { animation: float 3s ease-in-out infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 16px 2px rgba(168, 85, 247, 0.35); }
+  50%       { box-shadow: 0 0 32px 10px rgba(236, 72, 153, 0.45); }
+}
+.glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Neon ring used on active/selected elements */
+.neon-ring {
+  box-shadow: 0 0 0 2px rgba(163, 230, 53, 0.9), 0 0 24px rgba(163, 230, 53, 0.35);
+}
+
+.safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
+main { padding-bottom: 7rem; }
