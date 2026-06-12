@@ -205,11 +205,11 @@ export const useStore = create<StoreState>()(
 
         // Modes
         const soloCompleted  = completed.filter(q => { const quest = QUESTS.find(x => x.id === q.questId); return quest?.mode.includes('solo') }).length
-        const duoCompleted   = completed.filter(q => { const quest = QUESTS.find(x => x.id === q.questId); return quest?.mode.length === 1 && quest.mode[0] === 'duo' }).length
-        const groupCompleted = completed.filter(q => { const quest = QUESTS.find(x => x.id === q.questId); return quest?.mode.length === 1 && quest.mode[0] === 'group' }).length
-        if (duoCompleted >= 5)   unlock('ach-014')
-        if (groupCompleted >= 5) unlock('ach-015')
-        if (soloCompleted >= 1 && duoCompleted >= 1 && groupCompleted >= 1) unlock('ach-028')
+        const coupleCompleted = completed.filter(q => { const quest = QUESTS.find(x => x.id === q.questId); return quest?.mode.length === 1 && quest.mode[0] === 'couple' }).length
+        const friendsCompleted = completed.filter(q => { const quest = QUESTS.find(x => x.id === q.questId); return quest?.mode.length === 1 && quest.mode[0] === 'friends' }).length
+        if (coupleCompleted >= 5)  unlock('ach-014')
+        if (friendsCompleted >= 5) unlock('ach-015')
+        if (soloCompleted >= 1 && coupleCompleted >= 1 && friendsCompleted >= 1) unlock('ach-028')
       },
 
       addToast: (t) => {
@@ -235,6 +235,14 @@ export const useStore = create<StoreState>()(
     }),
     {
       name: 'side-quest-store',
+      version: 1,
+      migrate: (persisted: unknown) => {
+        // v0 → v1: play modes renamed duo→couple, group→friends
+        const s = persisted as { playMode?: string } & Record<string, unknown>
+        if (s?.playMode === 'duo') s.playMode = 'couple'
+        if (s?.playMode === 'group') s.playMode = 'friends'
+        return s as unknown as StoreState
+      },
       onRehydrateStorage: () => (state) => { state?.setHasHydrated(true) },
       partialize: (s) => ({
         character: s.character,

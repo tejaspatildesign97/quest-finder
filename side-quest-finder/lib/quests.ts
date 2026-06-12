@@ -1,6 +1,7 @@
 import type { Quest } from './types'
 
-// Quest library — imported from Side_Quest_Finder_100_Quests_Final.xlsx
+// Quest library — merged from Side_Quest_Finder_100_Quests_Final.xlsx
+// and Side_Quest_Finder_Couple_solo_Quests_30.xlsx
 export const QUESTS: Quest[] = [
   {
     "id": "sq-001",
@@ -11,7 +12,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 120,
     "duration": 30,
@@ -35,7 +36,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 90,
@@ -102,7 +103,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 140,
     "duration": 60,
@@ -147,7 +148,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 120,
     "duration": 60,
@@ -192,7 +193,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 280,
     "duration": 120,
@@ -237,7 +238,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 160,
     "duration": 60,
@@ -304,7 +305,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 60,
@@ -349,7 +350,7 @@ export const QUESTS: Quest[] = [
     "category": "Learning",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 45,
@@ -393,7 +394,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Hard",
     "category": "Social",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 280,
     "duration": 90,
@@ -416,7 +417,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 45,
@@ -462,7 +463,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 320,
     "duration": 120,
@@ -551,7 +552,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 500,
     "duration": 60,
@@ -574,7 +575,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 300,
     "duration": 120,
@@ -598,7 +599,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 60,
@@ -643,8 +644,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo",
-      "group"
+      "friends"
     ],
     "xp": 180,
     "duration": 60,
@@ -667,7 +667,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 280,
     "duration": 90,
@@ -734,7 +734,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 120,
     "duration": 45,
@@ -822,8 +822,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Easy",
     "category": "Community",
     "mode": [
-      "duo",
-      "group"
+      "friends"
     ],
     "xp": 100,
     "duration": 20,
@@ -868,7 +867,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 90,
@@ -913,7 +912,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 280,
     "duration": 120,
@@ -936,7 +935,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 260,
     "duration": 90,
@@ -1045,7 +1044,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Adventure",
     "mode": [
-      "group"
+      "friends"
     ],
     "xp": 220,
     "duration": 120,
@@ -1068,7 +1067,7 @@ export const QUESTS: Quest[] = [
     "category": "Community",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 15,
@@ -1091,7 +1090,7 @@ export const QUESTS: Quest[] = [
     "category": "Night Quest",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 300,
     "duration": 120,
@@ -1114,7 +1113,7 @@ export const QUESTS: Quest[] = [
     "category": "Social",
     "mode": [
       "solo",
-      "group"
+      "friends"
     ],
     "xp": 550,
     "duration": 120,
@@ -1140,7 +1139,7 @@ export const QUESTS: Quest[] = [
     "category": "Social",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 30,
@@ -1252,7 +1251,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 300,
     "duration": 120,
@@ -1274,7 +1273,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Social",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 30,
@@ -1318,7 +1317,7 @@ export const QUESTS: Quest[] = [
     "category": "Creativity",
     "mode": [
       "solo",
-      "group"
+      "friends"
     ],
     "xp": 200,
     "duration": 45,
@@ -1363,7 +1362,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 120,
     "duration": 45,
@@ -1430,7 +1429,7 @@ export const QUESTS: Quest[] = [
     "category": "Food",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 120,
     "duration": 45,
@@ -1496,7 +1495,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Adventure",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 220,
     "duration": 60,
@@ -1519,7 +1518,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 60,
@@ -1585,7 +1584,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Hard",
     "category": "Adventure",
     "mode": [
-      "group"
+      "friends"
     ],
     "xp": 280,
     "duration": 90,
@@ -1607,7 +1606,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Social",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 30,
@@ -1630,7 +1629,7 @@ export const QUESTS: Quest[] = [
     "category": "Courage",
     "mode": [
       "solo",
-      "group"
+      "friends"
     ],
     "xp": 300,
     "duration": 30,
@@ -1675,7 +1674,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 550,
     "duration": 60,
@@ -1765,7 +1764,7 @@ export const QUESTS: Quest[] = [
     "category": "Social",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 220,
     "duration": 45,
@@ -1788,7 +1787,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 90,
@@ -1922,7 +1921,7 @@ export const QUESTS: Quest[] = [
     "category": "Creativity",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 180,
     "duration": 60,
@@ -1944,7 +1943,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Social",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 220,
     "duration": 60,
@@ -1989,8 +1988,7 @@ export const QUESTS: Quest[] = [
     "category": "Discovery",
     "mode": [
       "solo",
-      "duo",
-      "group"
+      "friends"
     ],
     "xp": 220,
     "duration": 180,
@@ -2166,7 +2164,7 @@ export const QUESTS: Quest[] = [
     "difficulty": "Medium",
     "category": "Community",
     "mode": [
-      "duo"
+      "friends"
     ],
     "xp": 200,
     "duration": 60,
@@ -2211,7 +2209,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo"
+      "friends"
     ],
     "xp": 500,
     "duration": 60,
@@ -2234,8 +2232,7 @@ export const QUESTS: Quest[] = [
     "category": "Adventure",
     "mode": [
       "solo",
-      "duo",
-      "group"
+      "friends"
     ],
     "xp": 600,
     "duration": 240,
@@ -2249,10 +2246,1299 @@ export const QUESTS: Quest[] = [
       "life"
     ],
     "repeatable": false
+  },
+  {
+    "id": "cq-001",
+    "title": "The First Date Remix",
+    "description": "Recreate your first date with one intentional upgrade.",
+    "lore": "Even legendary quests deserve remasters.",
+    "difficulty": "Medium",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 200,
+    "duration": 120,
+    "moods": [
+      "nostalgic",
+      "romantic"
+    ],
+    "tags": [
+      "date",
+      "relationship"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "cq-002",
+    "title": "Future Postcard",
+    "description": "Write postcards to your future selves and open them in one year.",
+    "lore": "Time is the longest-distance relationship.",
+    "difficulty": "Medium",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "reflective",
+      "romantic"
+    ],
+    "tags": [
+      "future",
+      "memories"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "cq-003",
+    "title": "Stranger's Date Night",
+    "description": "Let strangers choose your date itinerary.",
+    "lore": "Fate occasionally moonlights as a matchmaker.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 320,
+    "duration": 180,
+    "moods": [
+      "adventurous",
+      "chaotic"
+    ],
+    "tags": [
+      "date",
+      "people"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-004",
+    "title": "Memory Auction",
+    "description": "Each partner bids on their favorite shared memory.",
+    "lore": "The richest couples collect moments.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "nostalgic",
+      "heartfelt"
+    ],
+    "tags": [
+      "memories"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-005",
+    "title": "The Love Interview",
+    "description": "Ask each other 20 questions you've never asked before.",
+    "lore": "Every person is still partially undiscovered.",
+    "difficulty": "Medium",
+    "category": "Connection",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "intimate",
+      "curious"
+    ],
+    "tags": [
+      "communication"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-006",
+    "title": "Secret Mission",
+    "description": "Plan a surprise mini-adventure for your partner.",
+    "lore": "Love enjoys plot twists.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 250,
+    "duration": 90,
+    "moods": [
+      "playful",
+      "romantic"
+    ],
+    "tags": [
+      "surprise"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-007",
+    "title": "The Couple Time Capsule",
+    "description": "Gather 5 items representing your relationship today.",
+    "lore": "History deserves preservation.",
+    "difficulty": "Medium",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "nostalgic",
+      "reflective"
+    ],
+    "tags": [
+      "keepsake"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "cq-008",
+    "title": "Reverse Date",
+    "description": "Each partner plans a date they'd normally never choose.",
+    "lore": "New worlds hide beyond preferences.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 120,
+    "moods": [
+      "curious",
+      "playful"
+    ],
+    "tags": [
+      "challenge",
+      "date"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-009",
+    "title": "The $20 Adventure",
+    "description": "Create the best date possible on a tiny budget.",
+    "lore": "Creativity beats currency.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 280,
+    "duration": 120,
+    "moods": [
+      "playful",
+      "creative"
+    ],
+    "tags": [
+      "budget",
+      "date"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-010",
+    "title": "Parallel Lives",
+    "description": "Spend an hour imagining how you'd meet in another universe.",
+    "lore": "Destiny enjoys alternate endings.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "couple"
+    ],
+    "xp": 140,
+    "duration": 45,
+    "moods": [
+      "romantic",
+      "creative"
+    ],
+    "tags": [
+      "storytelling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-011",
+    "title": "The Compliment Duel",
+    "description": "Alternate giving increasingly specific compliments.",
+    "lore": "Charisma is stronger in pairs.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 120,
+    "duration": 20,
+    "moods": [
+      "positive",
+      "romantic"
+    ],
+    "tags": [
+      "appreciation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-012",
+    "title": "Local Legends",
+    "description": "Find the oldest restaurant in town and share a meal.",
+    "lore": "Love stories appreciate historic settings.",
+    "difficulty": "Medium",
+    "category": "Food",
+    "mode": [
+      "couple"
+    ],
+    "xp": 180,
+    "duration": 120,
+    "moods": [
+      "romantic",
+      "curious"
+    ],
+    "tags": [
+      "food",
+      "history"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-013",
+    "title": "The Photo Scavenger Hunt",
+    "description": "Capture 10 photos representing your relationship.",
+    "lore": "Every relationship has symbols.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 90,
+    "moods": [
+      "playful",
+      "creative"
+    ],
+    "tags": [
+      "photography"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-014",
+    "title": "The No-Phone Quest",
+    "description": "Spend three hours together without any screens.",
+    "lore": "Ancient couples survived this challenge.",
+    "difficulty": "Medium",
+    "category": "Mindfulness",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 180,
+    "moods": [
+      "connected",
+      "present"
+    ],
+    "tags": [
+      "digital-detox"
+    ],
+    "repeatable": true,
+    "timeLimit": "180"
+  },
+  {
+    "id": "cq-015",
+    "title": "Secret Café",
+    "description": "Enter the first café you've never noticed before.",
+    "lore": "Familiar cities hide unfamiliar corners.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "couple"
+    ],
+    "xp": 140,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "chill"
+    ],
+    "tags": [
+      "exploration"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-016",
+    "title": "The Gratitude Exchange",
+    "description": "Exchange handwritten letters of appreciation.",
+    "lore": "Written words level up over time.",
+    "difficulty": "Medium",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 45,
+    "moods": [
+      "heartfelt",
+      "romantic"
+    ],
+    "tags": [
+      "letters"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "cq-017",
+    "title": "The Adventure Jar",
+    "description": "Fill a jar with 20 future adventures together.",
+    "lore": "Future memories deserve planning.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "hopeful",
+      "romantic"
+    ],
+    "tags": [
+      "bucket-list"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-018",
+    "title": "Couple Karaoke Roulette",
+    "description": "Randomly choose songs for each other to perform.",
+    "lore": "Courage sounds better as a duet.",
+    "difficulty": "Hard",
+    "category": "Chaos",
+    "mode": [
+      "couple"
+    ],
+    "xp": 280,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "chaotic"
+    ],
+    "tags": [
+      "music",
+      "fun"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-019",
+    "title": "The Dream Map",
+    "description": "Draw your ideal future together.",
+    "lore": "Architects build twice.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "hopeful",
+      "creative"
+    ],
+    "tags": [
+      "future",
+      "planning"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-020",
+    "title": "Sunset Pact",
+    "description": "Watch a sunset somewhere neither of you have visited.",
+    "lore": "Shared sunsets grant bonus XP.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 140,
+    "duration": 60,
+    "moods": [
+      "romantic",
+      "peaceful"
+    ],
+    "tags": [
+      "sunset"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-021",
+    "title": "The Human Playlist",
+    "description": "Build a playlist of songs that define your relationship.",
+    "lore": "Soundtracks preserve stories.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "nostalgic",
+      "romantic"
+    ],
+    "tags": [
+      "music"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-022",
+    "title": "Memory Lane",
+    "description": "Visit three locations important to your relationship.",
+    "lore": "Checkpoints reveal progress.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 120,
+    "moods": [
+      "nostalgic",
+      "romantic"
+    ],
+    "tags": [
+      "memories"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-023",
+    "title": "The Trust Quest",
+    "description": "One partner chooses the destination, the other follows blindly.",
+    "lore": "Trust is fast travel.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 320,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "trusting"
+    ],
+    "tags": [
+      "surprise"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-024",
+    "title": "Future Dinner",
+    "description": "Plan a celebration meal you'll have five years from now.",
+    "lore": "Hope deserves reservations.",
+    "difficulty": "Easy",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "hopeful",
+      "romantic"
+    ],
+    "tags": [
+      "future"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-025",
+    "title": "The Story Collector",
+    "description": "Gather three stories from couples older than you.",
+    "lore": "Wisdom travels through generations.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 90,
+    "moods": [
+      "curious",
+      "reflective"
+    ],
+    "tags": [
+      "relationships"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-026",
+    "title": "The Couple Challenge Swap",
+    "description": "Each partner creates a challenge for the other.",
+    "lore": "Growth is more fun together.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "playful",
+      "brave"
+    ],
+    "tags": [
+      "challenge"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-027",
+    "title": "The Midnight Walk",
+    "description": "Take a safe late-night walk and discuss your biggest dreams.",
+    "lore": "Night asks better questions.",
+    "difficulty": "Medium",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "intimate",
+      "reflective"
+    ],
+    "tags": [
+      "dreams"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-028",
+    "title": "The Relationship Museum",
+    "description": "Create a mini exhibit of relationship artifacts.",
+    "lore": "Every love story belongs in a museum.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "couple"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "nostalgic",
+      "creative"
+    ],
+    "tags": [
+      "memories"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "cq-029",
+    "title": "The Impossible Day",
+    "description": "Say yes to each other's reasonable suggestions for one day.",
+    "lore": "Adventure favors agreement.",
+    "difficulty": "Legendary",
+    "category": "Adventure",
+    "mode": [
+      "couple"
+    ],
+    "xp": 550,
+    "duration": 480,
+    "moods": [
+      "adventurous",
+      "chaotic"
+    ],
+    "tags": [
+      "spontaneity"
+    ],
+    "repeatable": true,
+    "timeLimit": "480"
+  },
+  {
+    "id": "cq-030",
+    "title": "The Love Story Worth Telling",
+    "description": "Create a day designed to become a future favorite memory.",
+    "lore": "Some days become legends.",
+    "difficulty": "Legendary",
+    "category": "Romance",
+    "mode": [
+      "couple"
+    ],
+    "xp": 600,
+    "duration": 240,
+    "moods": [
+      "romantic",
+      "adventurous"
+    ],
+    "tags": [
+      "storytelling",
+      "legendary"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "sqs-001",
+    "title": "The 7th Turn",
+    "description": "At the seventh turn you encounter today, take it and explore.",
+    "lore": "Destiny occasionally hides in detours.",
+    "difficulty": "Medium",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "adventurous"
+    ],
+    "tags": [
+      "exploration",
+      "random"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-002",
+    "title": "Window Stories",
+    "description": "Invent stories for five windows you pass.",
+    "lore": "Every window frames another world.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "creative",
+      "curious"
+    ],
+    "tags": [
+      "imagination",
+      "observation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-003",
+    "title": "The One-Question Day",
+    "description": "Ask everyone the same meaningful question.",
+    "lore": "Patterns reveal themselves through repetition.",
+    "difficulty": "Medium",
+    "category": "Social",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "social"
+    ],
+    "tags": [
+      "conversation"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-004",
+    "title": "Borrowed Routine",
+    "description": "Adopt a routine from someone you admire for one day.",
+    "lore": "Greatness leaves footprints.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 1440,
+    "moods": [
+      "inspired",
+      "curious"
+    ],
+    "tags": [
+      "habits",
+      "self-growth"
+    ],
+    "repeatable": true,
+    "timeLimit": 1440
+  },
+  {
+    "id": "sqs-005",
+    "title": "The Unfamiliar Aisle",
+    "description": "Spend 20 minutes exploring a section of a store you've never visited.",
+    "lore": "Unknown kingdoms exist everywhere.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "exploration",
+      "shopping"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-006",
+    "title": "Soundtrack Walk",
+    "description": "Create a soundtrack for your neighborhood while walking through it.",
+    "lore": "Every world deserves background music.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "reflective",
+      "creative"
+    ],
+    "tags": [
+      "music",
+      "walking"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-007",
+    "title": "The Observer's Notebook",
+    "description": "Record 25 unusual details you notice today.",
+    "lore": "Attention is a superpower.",
+    "difficulty": "Medium",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "reflective",
+      "curious"
+    ],
+    "tags": [
+      "awareness",
+      "journaling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-008",
+    "title": "The Courage Coupon",
+    "description": "Do one small thing you've been putting off.",
+    "lore": "Delayed quests still count.",
+    "difficulty": "Medium",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 30,
+    "moods": [
+      "brave",
+      "determined"
+    ],
+    "tags": [
+      "fear",
+      "growth"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-009",
+    "title": "Forgotten Skill",
+    "description": "Practice a skill you haven't used in years.",
+    "lore": "Rust is temporary.",
+    "difficulty": "Easy",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 45,
+    "moods": [
+      "nostalgic",
+      "inspired"
+    ],
+    "tags": [
+      "hobbies",
+      "skills"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-010",
+    "title": "Reverse Commute",
+    "description": "Travel somewhere with no destination in mind.",
+    "lore": "Wandering is a valid strategy.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 120,
+    "moods": [
+      "adventurous",
+      "free"
+    ],
+    "tags": [
+      "travel",
+      "explore"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-011",
+    "title": "The Hidden Floor",
+    "description": "Visit a floor of a building you've never been on.",
+    "lore": "New perspectives are often one staircase away.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "architecture",
+      "explore"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-012",
+    "title": "Personal Museum",
+    "description": "Gather five objects that represent who you are today.",
+    "lore": "Curators know themselves best.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "reflective"
+    ],
+    "tags": [
+      "identity",
+      "memories"
+    ],
+    "repeatable": false
+  },
+  {
+    "id": "sqs-013",
+    "title": "The Reverse Expert",
+    "description": "Learn about a topic you normally avoid.",
+    "lore": "Curiosity grows strongest at the edges.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 60,
+    "moods": [
+      "curious",
+      "open-minded"
+    ],
+    "tags": [
+      "education"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-014",
+    "title": "The Silent Meal",
+    "description": "Eat an entire meal without any entertainment or distractions.",
+    "lore": "Flavor improves when attention arrives.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "calm",
+      "present"
+    ],
+    "tags": [
+      "food",
+      "mindfulness"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-015",
+    "title": "Tiny Documentary",
+    "description": "Create a one-minute documentary about something ordinary.",
+    "lore": "Every subject becomes interesting with enough attention.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 90,
+    "moods": [
+      "creative",
+      "playful"
+    ],
+    "tags": [
+      "video",
+      "storytelling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-016",
+    "title": "The Unknown Name",
+    "description": "Learn the name and story behind a local landmark.",
+    "lore": "Places remember their origins.",
+    "difficulty": "Easy",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "history",
+      "local"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-017",
+    "title": "The Question Trail",
+    "description": "Follow a chain of five questions until you discover something unexpected.",
+    "lore": "Answers create more questions.",
+    "difficulty": "Medium",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 200,
+    "duration": 45,
+    "moods": [
+      "curious",
+      "thoughtful"
+    ],
+    "tags": [
+      "research"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-018",
+    "title": "Weather Chaser",
+    "description": "Spend time outside specifically because of today's weather.",
+    "lore": "Every forecast is an invitation.",
+    "difficulty": "Easy",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "adventurous",
+      "free"
+    ],
+    "tags": [
+      "nature",
+      "weather"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-019",
+    "title": "The Alternate Schedule",
+    "description": "Rearrange your day completely differently.",
+    "lore": "Routine is merely a suggestion.",
+    "difficulty": "Medium",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 220,
+    "duration": 720,
+    "moods": [
+      "playful",
+      "curious"
+    ],
+    "tags": [
+      "routine",
+      "experiment"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-020",
+    "title": "Public Sketchbook",
+    "description": "Sketch or write observations in a public place.",
+    "lore": "Artists collect moments.",
+    "difficulty": "Medium",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 45,
+    "moods": [
+      "creative",
+      "reflective"
+    ],
+    "tags": [
+      "drawing",
+      "writing"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-021",
+    "title": "The Five-Minute Hero",
+    "description": "Solve a small problem for yourself immediately.",
+    "lore": "Progress prefers action.",
+    "difficulty": "Easy",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 15,
+    "moods": [
+      "productive",
+      "determined"
+    ],
+    "tags": [
+      "action",
+      "growth"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-022",
+    "title": "The Forgotten Route",
+    "description": "Walk a street you've never walked before.",
+    "lore": "Exploration begins one block away.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "neighborhood"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-023",
+    "title": "The Curiosity Purchase",
+    "description": "Spend a small amount on something purely because it interests you.",
+    "lore": "Wonder deserves investment.",
+    "difficulty": "Easy",
+    "category": "Discovery",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 20,
+    "moods": [
+      "curious",
+      "playful"
+    ],
+    "tags": [
+      "shopping",
+      "explore"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-024",
+    "title": "The Time Audit",
+    "description": "Document exactly how you spend one hour.",
+    "lore": "Awareness changes behavior.",
+    "difficulty": "Medium",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 180,
+    "duration": 60,
+    "moods": [
+      "reflective"
+    ],
+    "tags": [
+      "productivity",
+      "self-awareness"
+    ],
+    "repeatable": true,
+    "timeLimit": 60
+  },
+  {
+    "id": "sqs-025",
+    "title": "The Impossible Introduction",
+    "description": "Introduce yourself in a memorable way.",
+    "lore": "First impressions are tiny performances.",
+    "difficulty": "Hard",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 20,
+    "moods": [
+      "brave",
+      "playful"
+    ],
+    "tags": [
+      "confidence",
+      "social"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-026",
+    "title": "Secret Sunrise Spot",
+    "description": "Find a sunrise location you've never visited before.",
+    "lore": "Dawn favors explorers.",
+    "difficulty": "Hard",
+    "category": "Adventure",
+    "mode": [
+      "solo"
+    ],
+    "xp": 280,
+    "duration": 90,
+    "moods": [
+      "peaceful",
+      "adventurous"
+    ],
+    "tags": [
+      "sunrise"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-027",
+    "title": "The Story Seed",
+    "description": "Write the first paragraph of a story inspired by today.",
+    "lore": "Great tales begin with observation.",
+    "difficulty": "Easy",
+    "category": "Creativity",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 20,
+    "moods": [
+      "creative"
+    ],
+    "tags": [
+      "writing",
+      "storytelling"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-028",
+    "title": "The Reverse Search",
+    "description": "Pick a random object and learn its history.",
+    "lore": "Every object has an origin story.",
+    "difficulty": "Easy",
+    "category": "Learning",
+    "mode": [
+      "solo"
+    ],
+    "xp": 120,
+    "duration": 30,
+    "moods": [
+      "curious"
+    ],
+    "tags": [
+      "history",
+      "research"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-029",
+    "title": "The Solo Celebration",
+    "description": "Celebrate something only you know about.",
+    "lore": "Personal victories still deserve fireworks.",
+    "difficulty": "Easy",
+    "category": "Mindfulness",
+    "mode": [
+      "solo"
+    ],
+    "xp": 100,
+    "duration": 20,
+    "moods": [
+      "joyful",
+      "reflective"
+    ],
+    "tags": [
+      "celebration"
+    ],
+    "repeatable": true
+  },
+  {
+    "id": "sqs-030",
+    "title": "The New Chapter",
+    "description": "Start something you've been meaning to begin for months.",
+    "lore": "Every journey has a first step.",
+    "difficulty": "Legendary",
+    "category": "Courage",
+    "mode": [
+      "solo"
+    ],
+    "xp": 500,
+    "duration": 120,
+    "moods": [
+      "determined",
+      "inspired"
+    ],
+    "tags": [
+      "goals",
+      "life-change"
+    ],
+    "repeatable": false
   }
 ] as Quest[]
 
-export function getQuestsForMode(mode: 'solo' | 'duo' | 'group'): Quest[] {
+export function getQuestsForMode(mode: 'solo' | 'couple' | 'friends'): Quest[] {
   return QUESTS.filter(q => q.mode.includes(mode))
 }
 

@@ -1,6 +1,6 @@
 import {
   Mountain, HeartHandshake, Shield, Palette, Compass, UtensilsCrossed,
-  GraduationCap, Leaf, Moon, MessagesSquare,
+  GraduationCap, Leaf, Moon, MessagesSquare, Heart, Link2, Shuffle,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -74,6 +74,24 @@ export const CATEGORY_STYLES: Record<string, CategoryStyle> = {
     gradient: 'linear-gradient(135deg, #6366f1 0%, #312e81 100%)',
     tile: 'bg-indigo-400/15',
     iconColor: 'text-indigo-300',
+  },
+  Romance: {
+    Icon: Heart,
+    gradient: 'linear-gradient(135deg, #fb7185 0%, #be123c 100%)',
+    tile: 'bg-rose-400/15',
+    iconColor: 'text-rose-300',
+  },
+  Connection: {
+    Icon: Link2,
+    gradient: 'linear-gradient(135deg, #e879f9 0%, #a21caf 100%)',
+    tile: 'bg-fuchsia-400/15',
+    iconColor: 'text-fuchsia-300',
+  },
+  Chaos: {
+    Icon: Shuffle,
+    gradient: 'linear-gradient(135deg, #facc15 0%, #ea580c 100%)',
+    tile: 'bg-yellow-400/15',
+    iconColor: 'text-yellow-300',
   },
 }
 

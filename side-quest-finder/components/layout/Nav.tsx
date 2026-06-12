@@ -16,8 +16,8 @@ const NAV_ITEMS = [
 
 const MODE_COLOR: Record<string, string> = {
   solo:  'bg-[var(--quest-gold)]',
-  duo:   'bg-pink-400',
-  group: 'bg-[var(--magic)]',
+  couple:  'bg-pink-400',
+  friends: 'bg-[var(--magic)]',
 }
 
 export default function Nav() {

@@ -22,7 +22,7 @@ export default function QuestsPage() {
       <div className="text-center">
         <h2 className="text-2xl">Quest Board</h2>
         <p className="text-sm font-semibold text-[var(--stone)]">
-          {playMode === 'solo' ? 'Solo quests' : playMode === 'duo' ? 'Couples quests' : 'Friends quests'}
+          {playMode === 'solo' ? 'Solo quests' : playMode === 'couple' ? 'Couples quests' : 'Friends quests'}
           {activeCount > 0 && ` · ${activeCount} active`}
         </p>
       </div>

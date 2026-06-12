@@ -11,8 +11,8 @@ interface ModeToggleProps {
 
 const MODES: { value: PlayMode; label: string; Icon: LucideIcon; desc: string; bg: string; ring: string; iconBg: string; iconColor: string }[] = [
   { value: 'solo',  label: 'Solo',    Icon: User,  desc: 'Your adventure alone', bg: 'bg-[var(--pastel-orange)]', ring: 'ring-amber-400/60',  iconBg: 'bg-amber-400',  iconColor: 'text-white' },
-  { value: 'duo',   label: 'Couples', Icon: Heart, desc: 'With your partner',    bg: 'bg-[var(--pastel-pink)]',   ring: 'ring-pink-400/60',   iconBg: 'bg-pink-400',   iconColor: 'text-white' },
-  { value: 'group', label: 'Friends', Icon: Users, desc: 'With your crew',       bg: 'bg-[var(--pastel-purple)]', ring: 'ring-violet-400/60', iconBg: 'bg-violet-400', iconColor: 'text-white' },
+  { value: 'couple',  label: 'Couples', Icon: Heart, desc: 'With your partner',    bg: 'bg-[var(--pastel-pink)]',   ring: 'ring-pink-400/60',   iconBg: 'bg-pink-400',   iconColor: 'text-white' },
+  { value: 'friends', label: 'Friends', Icon: Users, desc: 'With your crew',       bg: 'bg-[var(--pastel-purple)]', ring: 'ring-violet-400/60', iconBg: 'bg-violet-400', iconColor: 'text-white' },
 ]
 
 export default function ModeToggle({ value, onChange, className = '' }: ModeToggleProps) {

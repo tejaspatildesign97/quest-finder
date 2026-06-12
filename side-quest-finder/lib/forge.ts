@@ -14,11 +14,11 @@ const DIFFICULTIES: Difficulty[] = ['Easy', 'Medium', 'Hard', 'Legendary']
 
 /** Maps each Forge picker vibe to the quest moods it covers. */
 export const MOOD_GROUPS: Record<ForgeMood, string[]> = {
-  chill:       ['chill', 'calm', 'peaceful', 'reflective', 'nostalgic', 'humble', 'anxious'],
-  social:      ['social', 'heartfelt', 'helpful', 'vulnerable', 'positive', 'happy'],
+  chill:       ['chill', 'calm', 'peaceful', 'reflective', 'nostalgic', 'humble', 'anxious', 'present'],
+  social:      ['social', 'heartfelt', 'helpful', 'vulnerable', 'positive', 'happy', 'romantic', 'intimate', 'connected', 'trusting', 'joyful'],
   creative:    ['creative', 'inspired', 'playful'],
   adventurous: ['adventurous', 'bold', 'brave', 'free', 'confident', 'determined', 'hopeful'],
-  curious:     ['curious', 'thoughtful', 'focused'],
+  curious:     ['curious', 'thoughtful', 'focused', 'open-minded', 'productive'],
   chaotic:     ['chaotic', 'playful', 'bold', 'free'],
 }
 

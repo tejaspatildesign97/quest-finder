@@ -17,8 +17,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'ach-011', title: 'Hard Boiled',      icon: '💪',  rarity: 'Rare',      description: 'Complete 3 Hard quests.',             condition: 'Complete 3 Hard quests' },
   { id: 'ach-012', title: 'Scholar',          icon: '📚',  rarity: 'Rare',      description: 'Complete 5 Learning quests.',         condition: 'Complete 5 Learning quests' },
   { id: 'ach-013', title: 'Level Up!',        icon: '⬆️',  rarity: 'Rare',      description: 'Reach level 5.',                      condition: 'Reach level 5' },
-  { id: 'ach-014', title: 'Duo Dynamic',      icon: '👫',  rarity: 'Rare',      description: 'Complete 5 quests in Couples mode.', condition: 'Complete 5 duo quests' },
-  { id: 'ach-015', title: 'Fellowship',       icon: '👥',  rarity: 'Rare',      description: 'Complete 5 quests in Friends mode.', condition: 'Complete 5 group quests' },
+  { id: 'ach-014', title: 'Duo Dynamic',      icon: '👫',  rarity: 'Rare',      description: 'Complete 5 quests in Couples mode.', condition: 'Complete 5 couple quests' },
+  { id: 'ach-015', title: 'Fellowship',       icon: '👥',  rarity: 'Rare',      description: 'Complete 5 quests in Friends mode.', condition: 'Complete 5 friends quests' },
   { id: 'ach-016', title: 'Globe Trotter',    icon: '🌍',  rarity: 'Rare',      description: 'Complete quests in 4 categories.',   condition: 'Complete quests in 4 different categories' },
 
   // ── Epic ──────────────────────────────────────────────────────────────────

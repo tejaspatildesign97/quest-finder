@@ -37,7 +37,7 @@ export default function PartyPage() {
       activeQuestIds: [],
       createdAt: new Date().toISOString(),
     })
-    setPlayMode(partyMode === 'couples' ? 'duo' : 'group')
+    setPlayMode(partyMode === 'couples' ? 'couple' : 'friends')
   }
 
   const addMember = () => {
@@ -48,7 +48,7 @@ export default function PartyPage() {
   }
 
   const partyQuests = party
-    ? QUESTS.filter(q => q.mode.includes(party.mode === 'couples' ? 'duo' : 'group'))
+    ? QUESTS.filter(q => q.mode.includes(party.mode === 'couples' ? 'couple' : 'friends'))
     : []
 
   if (party) {
