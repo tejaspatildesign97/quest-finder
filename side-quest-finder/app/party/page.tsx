@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Heart, Users, UserRound, Plus, X, Swords } from 'lucide-react'
+import { Heart, Users, UserRound, Plus, X, Swords, Crown } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import type { PartyMode } from '@/lib/types'
@@ -26,14 +26,20 @@ export default function PartyPage() {
   }, [_hasHydrated, character])
   if (!_hasHydrated || !character) return null
 
+  // Couples are exactly 2 people: you + 1 partner
+  const memberLimit = partyMode === 'couples' ? 1 : Infinity
+  const atLimit = members.length >= memberLimit
+
   const handleCreate = () => {
     if (!partyName.trim()) return
-    const allMembers = [character.name, ...members.filter(Boolean)]
+    if (partyMode === 'couples' && members.length !== 1) return
+    const allMembers = [character.name, ...members.filter(Boolean).slice(0, memberLimit)]
     createParty({
       id: Math.random().toString(36).slice(2),
       name: partyName.trim(),
       mode: partyMode,
       members: allMembers,
+      leader: character.name,
       activeQuestIds: [],
       createdAt: new Date().toISOString(),
     })
@@ -41,10 +47,16 @@ export default function PartyPage() {
   }
 
   const addMember = () => {
+    if (atLimit) return
     if (memberName.trim() && !members.includes(memberName.trim())) {
       setMembers(m => [...m, memberName.trim()])
       setMemberName('')
     }
+  }
+
+  const pickMode = (m: PartyMode) => {
+    setPartyMode(m)
+    if (m === 'couples') setMembers(ms => ms.slice(0, 1))
   }
 
   const partyQuests = party
@@ -65,7 +77,10 @@ export default function PartyPage() {
           </Badge>
           <div className="flex flex-wrap justify-center gap-1.5 pt-1">
             {party.members.map(m => (
-              <Badge key={m} variant="stone" icon={<UserRound size={11} />}>{m}</Badge>
+              <Badge key={m} variant={m === party.leader ? 'gold' : 'stone'}
+                icon={m === party.leader ? <Crown size={11} /> : <UserRound size={11} />}>
+                {m}{m === party.leader ? ' · leader' : ''}
+              </Badge>
             ))}
           </div>
           <p className="text-xs text-[var(--quest-gold)] font-extrabold">+20% XP on all quests!</p>
@@ -105,7 +120,7 @@ export default function PartyPage() {
         {([['couples', Heart, 'Couples', 'Romantic duo quests', 'bg-pink-400'], ['friends', Users, 'Friends', 'Group adventure quests', 'bg-violet-400']] as const).map(([val, Icon, label, desc, iconBg]) => (
           <button
             key={val}
-            onClick={() => setPartyMode(val)}
+            onClick={() => pickMode(val)}
             className={`flex flex-col items-center gap-1.5 p-5 rounded-3xl transition-all
               ${partyMode === val
                 ? (val === 'couples' ? 'bg-[var(--pastel-pink)] ring-4 ring-pink-400/50 shadow-lg scale-[1.02]' : 'bg-[var(--pastel-purple)] ring-4 ring-violet-400/50 shadow-lg scale-[1.02]')
@@ -128,13 +143,25 @@ export default function PartyPage() {
       />
 
       <div className="space-y-2">
-        <p className="text-sm font-bold text-[var(--ink)]">Members (optional)</p>
-        <div className="flex gap-2">
-          <Input placeholder="Add member name..." value={memberName} onChange={e => setMemberName(e.target.value)} />
-          <Button variant="secondary" size="sm" onClick={addMember} className="shrink-0" icon={<Plus size={14} />}>Add</Button>
-        </div>
+        <p className="text-sm font-bold text-[var(--ink)]">
+          {partyMode === 'couples' ? 'Your Partner' : 'Members (optional)'}
+        </p>
+        {partyMode === 'couples' && (
+          <p className="text-xs font-semibold text-[var(--stone)]">A couples party is exactly the two of you.</p>
+        )}
+        {!atLimit && (
+          <div className="flex gap-2">
+            <Input
+              placeholder={partyMode === 'couples' ? "Your partner's name..." : 'Add member name...'}
+              value={memberName}
+              onChange={e => setMemberName(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && addMember()}
+            />
+            <Button variant="secondary" size="sm" onClick={addMember} className="shrink-0" icon={<Plus size={14} />}>Add</Button>
+          </div>
+        )}
         <div className="flex flex-wrap gap-1.5">
-          <Badge variant="gold" icon={<UserRound size={11} />}>{character.name} (you)</Badge>
+          <Badge variant="gold" icon={<Crown size={11} />}>{character.name} (leader)</Badge>
           {members.map(m => (
             <button key={m} onClick={() => setMembers(ms => ms.filter(x => x !== m))}>
               <Badge variant="stone" icon={<X size={11} />}>{m}</Badge>
@@ -143,9 +170,16 @@ export default function PartyPage() {
         </div>
       </div>
 
-      <Button variant="magic" size="lg" className="w-full" onClick={handleCreate} disabled={!partyName.trim()} icon={<Swords size={18} />}>
+      <Button
+        variant="magic" size="lg" className="w-full" onClick={handleCreate}
+        disabled={!partyName.trim() || (partyMode === 'couples' && members.length !== 1)}
+        icon={<Swords size={18} />}
+      >
         Form Party!
       </Button>
+      {partyMode === 'couples' && members.length !== 1 && partyName.trim() && (
+        <p className="text-xs font-semibold text-center text-[var(--stone)] -mt-2">Add your partner's name to continue</p>
+      )}
     </div>
   )
 }

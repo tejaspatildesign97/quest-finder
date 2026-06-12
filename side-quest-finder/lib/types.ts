@@ -73,6 +73,8 @@ export interface Party {
   name: string
   mode: PartyMode
   members: string[]
+  /** member name who controls party quests (the creator) */
+  leader: string
   activeQuestIds: string[]
   createdAt: string
 }
