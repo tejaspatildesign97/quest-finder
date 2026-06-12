@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X, Camera, Trash2, Check, Feather } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { getQuestById } from '@/lib/quests'
@@ -24,6 +24,15 @@ export default function CompleteQuestModal() {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const quest = completingQuestId ? getQuestById(completingQuestId) : undefined
+
+  // Lock background scroll while the modal is open
+  useEffect(() => {
+    if (!quest) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [quest])
+
   if (!quest) return null
   const cat = getCategoryStyle(quest.category)
 
@@ -70,9 +79,9 @@ export default function CompleteQuestModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="bg-[var(--surface)] border border-white/10 rounded-t-3xl sm:rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-5 space-y-4">
-        {/* Header */}
-        <div className="flex items-start gap-3">
+      <div className="bg-[var(--surface)] border border-white/10 rounded-t-3xl sm:rounded-3xl w-full max-w-lg max-h-[88dvh] flex flex-col overflow-hidden">
+        {/* Header — pinned */}
+        <div className="flex items-start gap-3 p-5 pb-3 shrink-0">
           <span className="w-12 h-12 flex items-center justify-center rounded-2xl shadow-md shrink-0" style={{ background: cat.gradient }}>
             <cat.Icon size={22} className="text-white" strokeWidth={2.2} />
           </span>
@@ -88,6 +97,8 @@ export default function CompleteQuestModal() {
           </button>
         </div>
 
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto px-5 space-y-4 min-h-0">
         {/* Story */}
         <div className="space-y-1.5">
           <p className="text-xs font-bold text-[var(--stone)] flex items-center gap-1.5">
@@ -133,12 +144,15 @@ export default function CompleteQuestModal() {
           <input ref={fileRef} type="file" accept="image/*,video/*" multiple hidden
             onChange={e => { addFiles(e.target.files); e.target.value = '' }} />
         </div>
+        </div>
 
-        {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
-
-        <Button variant="secondary" size="lg" className="w-full" onClick={submit} loading={saving} icon={<Check size={18} />}>
-          Complete Quest & Save Memory
-        </Button>
+        {/* Footer — pinned */}
+        <div className="p-5 pt-3 shrink-0 space-y-2 safe-area-bottom">
+          {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
+          <Button variant="secondary" size="lg" className="w-full" onClick={submit} loading={saving} icon={<Check size={18} />}>
+            Complete Quest & Save Memory
+          </Button>
+        </div>
       </div>
     </div>
   )
