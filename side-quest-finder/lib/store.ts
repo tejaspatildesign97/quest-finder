@@ -27,6 +27,7 @@ interface StoreState {
 
   // Character
   setCharacter: (c: Character) => void
+  updateCharacter: (patch: Partial<Pick<Character, 'name' | 'bio' | 'avatar' | 'class'>>) => void
   resetCharacter: () => void
 
   // Play mode
@@ -71,6 +72,11 @@ export const useStore = create<StoreState>()(
       setHasHydrated: (v) => set({ _hasHydrated: v }),
 
       setCharacter: (c) => set({ character: c }),
+      updateCharacter: (patch) => {
+        const { character } = get()
+        if (!character) return
+        set({ character: { ...character, ...patch } })
+      },
       resetCharacter: () => set({ character: null, activeQuests: [], unlockedAchievements: [], party: null, playMode: 'solo' }),
       setPlayMode: (m) => set({ playMode: m }),
 

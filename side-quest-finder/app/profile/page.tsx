@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Zap, Flame, CheckCircle2, Flag, RotateCcw } from 'lucide-react'
+import { Zap, Flame, CheckCircle2, Flag, RotateCcw, Pencil } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { getCategoryStyle } from '@/lib/categories'
@@ -10,10 +10,12 @@ import CharacterCard from '@/components/ui/CharacterCard'
 import StatCard from '@/components/ui/StatCard'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
+import EditProfileModal from '@/components/EditProfileModal'
 
 export default function ProfilePage() {
   const router = useRouter()
   const { character, activeQuests, resetCharacter, _hasHydrated } = useStore()
+  const [editing, setEditing] = useState(false)
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -36,7 +38,17 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <CharacterCard character={character} />
+      <div className="relative">
+        <CharacterCard character={character} />
+        <button
+          onClick={() => setEditing(true)}
+          className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink)] bg-white/15 backdrop-blur-sm hover:bg-white/25 rounded-full px-3 py-1.5 transition-all"
+        >
+          <Pencil size={12} /> Edit
+        </button>
+      </div>
+
+      <EditProfileModal open={editing} onClose={() => setEditing(false)} />
 
       {/* Stats */}
       <div className="space-y-2">
