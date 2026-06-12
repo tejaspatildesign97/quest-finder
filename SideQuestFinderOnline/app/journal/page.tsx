@@ -105,13 +105,39 @@ function DiaryEntry({ entry }: { entry: ActiveQuest }) {
 
 export default function JournalPage() {
   const router = useRouter()
-  const { character, activeQuests, setCompletingQuest, abandonQuest, party, _hasHydrated } = useStore()
+  const { character, activeQuests, setCompletingQuest, abandonQuest, party, _hasHydrated,
+          onlineParty, myUserId, claimedCompletionIds, claimCompletion } = useStore()
   const [tab, setTab] = useState<typeof TABS[number]>('Diary')
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) router.replace('/character/create')
   }, [_hasHydrated, character])
+
+  // Party sync: pull completions posted by party mates and claim XP + diary entries
+  useEffect(() => {
+    if (!onlineParty || !myUserId) return
+    let cancelled = false
+    const pull = async () => {
+      try {
+        const { fetchCompletions } = await import('@/lib/partySync')
+        const completions = await fetchCompletions(onlineParty.id)
+        if (cancelled) return
+        const { claimedCompletionIds: claimed } = useStore.getState()
+        completions
+          .filter(c => c.completedBy !== myUserId && !claimed.includes(c.id))
+          .forEach(c => claimCompletion(c))
+      } catch { /* offline or schema missing — retry on next visit */ }
+    }
+    pull()
+    let unsub: (() => void) | undefined
+    import('@/lib/partySync').then(({ subscribeCompletions }) => {
+      if (!cancelled) unsub = subscribeCompletions(onlineParty.id, pull)
+    })
+    return () => { cancelled = true; unsub?.() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onlineParty?.id, myUserId])
+
   if (!_hasHydrated || !character) return null
 
   const completed = activeQuests

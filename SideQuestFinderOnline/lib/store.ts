@@ -3,6 +3,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Character, ActiveQuest, Party, PlayMode, Quest, Difficulty } from './types'
+import { postCompletion, type OnlineParty, type OnlineCompletion } from './partySync'
 import { getLevelInfo, getNextLevelInfo, calcXP } from './levels'
 import { ACHIEVEMENTS } from './achievements'
 import { QUESTS } from './quests'
@@ -44,6 +45,15 @@ interface StoreState {
   // Party
   createParty: (party: Party) => void
   leaveParty: () => void
+
+  // Online party (Supabase-synced)
+  onlineParty: OnlineParty | null
+  myUserId: string | null
+  claimedCompletionIds: string[]
+  setOnlineParty: (p: OnlineParty | null) => void
+  setMyUserId: (id: string | null) => void
+  /** Apply a party-mate's completion to this device: XP + diary entry. */
+  claimCompletion: (c: OnlineCompletion) => void
 
   // Achievements
   unlockAchievement: (id: string) => void
@@ -116,6 +126,13 @@ export const useStore = create<StoreState>()(
 
         set({ character: updatedCharacter, activeQuests: updatedQuests, completingQuestId: null })
 
+        // Fan out to party members via Supabase (leader-only; RLS enforces)
+        const { onlineParty } = get()
+        if (onlineParty && (quest.mode.includes('couple') || quest.mode.includes('friends'))) {
+          postCompletion(onlineParty.id, questId, note ?? '', earned)
+            .catch(err => console.error('party sync failed:', err))
+        }
+
         get().addToast({ type: 'xp', message: `+${earned} XP earned!`, icon: '⚡' })
 
         if (newLevel.level > oldLevel.level) {
@@ -136,6 +153,36 @@ export const useStore = create<StoreState>()(
 
       createParty: (party) => set({ party }),
       leaveParty: () => set({ party: null }),
+
+      onlineParty: null,
+      myUserId: null,
+      claimedCompletionIds: [],
+      setOnlineParty: (p) => set({ onlineParty: p }),
+      setMyUserId: (id) => set({ myUserId: id }),
+
+      claimCompletion: (c) => {
+        const { character, claimedCompletionIds, activeQuests } = get()
+        if (!character || claimedCompletionIds.includes(c.id)) return
+        const newXP = character.xp + c.xp
+        const oldLevel = getLevelInfo(character.xp)
+        const newLevel = getLevelInfo(newXP)
+        const nextLevel = getNextLevelInfo(newXP)
+        set({
+          character: { ...character, xp: newXP, level: newLevel.level, xpToNextLevel: nextLevel?.xpRequired ?? character.xpToNextLevel },
+          claimedCompletionIds: [...claimedCompletionIds, c.id],
+          activeQuests: [...activeQuests, {
+            questId: c.questId,
+            status: 'completed',
+            acceptedAt: c.completedAt,
+            completedAt: c.completedAt,
+            xpEarned: c.xp,
+            note: `🤝 Completed with ${c.completedByName}: ${c.note}`,
+          }],
+        })
+        get().addToast({ type: 'xp', message: `Party quest! +${c.xp} XP from ${c.completedByName}`, icon: '🤝' })
+        if (newLevel.level > oldLevel.level) set({ pendingLevelUp: newLevel.title })
+        get().checkAchievements()
+      },
 
       unlockAchievement: (id) => {
         const { unlockedAchievements } = get()
@@ -250,6 +297,9 @@ export const useStore = create<StoreState>()(
         unlockedAchievements: s.unlockedAchievements,
         party: s.party,
         playMode: s.playMode,
+        onlineParty: s.onlineParty,
+        myUserId: s.myUserId,
+        claimedCompletionIds: s.claimedCompletionIds,
       }) as StoreState,
     }
   )
