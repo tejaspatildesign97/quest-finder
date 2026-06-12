@@ -4,12 +4,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Compass, Telescope, Sparkles, BookOpen, Music, Check, ArrowLeft, ArrowRight, Swords, type LucideIcon } from 'lucide-react'
 import { useStore } from '@/lib/store'
-import type { CharacterClass, PlayMode } from '@/lib/types'
+import type { CharacterClass } from '@/lib/types'
 import { getNextLevelInfo } from '@/lib/levels'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import { Input, Textarea } from '@/components/ui/Input'
-import ModeToggle from '@/components/ui/ModeToggle'
 import Avatar from '@/components/ui/Avatar'
 
 const CLASSES: { value: CharacterClass; Icon: LucideIcon; gradient: string; desc: string; perk: string }[] = [
@@ -35,7 +34,6 @@ export default function CharacterCreatePage() {
   const [avatar, setAvatar] = useState<string>('')
   const [name, setName] = useState('')
   const [bio, setBio] = useState('')
-  const [mode, setMode] = useState<PlayMode>('solo')
   const [nameError, setNameError] = useState('')
 
   const handleNext = () => {
@@ -65,7 +63,7 @@ export default function CharacterCreatePage() {
       lastActiveDate: now,
       createdAt: now,
     })
-    setPlayMode(mode)
+    setPlayMode('solo')
     updateStreak()
     router.push('/dashboard')
   }
@@ -177,10 +175,9 @@ export default function CharacterCreatePage() {
       {step === 3 && (
         <div className="space-y-4">
           <div className="text-center">
-            <h2 className="text-2xl font-display font-semibold">How Do You Quest?</h2>
-            <p className="text-sm font-semibold text-[var(--stone)] mt-1">You can change this anytime</p>
+            <h2 className="text-2xl font-display font-semibold">Ready to Quest?</h2>
+            <p className="text-sm font-semibold text-[var(--stone)] mt-1">You start solo — join a party later to unlock Couples & Friends quests</p>
           </div>
-          <ModeToggle value={mode} onChange={setMode} />
           <div className="scroll-border p-5 text-center space-y-3">
             <div className="w-24 h-24 mx-auto rounded-3xl bg-[var(--pastel-mint)] flex items-center justify-center overflow-hidden float">
               <Avatar value={avatar || 'luna'} size={88} />

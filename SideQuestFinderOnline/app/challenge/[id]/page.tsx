@@ -13,7 +13,7 @@ import Button from '@/components/ui/Button'
 export default function ChallengePage() {
   const router = useRouter()
   const { id } = useParams<{ id: string }>()
-  const { character, acceptQuest, addToast, _hasHydrated } = useStore()
+  const { character, acceptQuest, addToast, _hasHydrated, setMyUserId, recordAcceptedChallenge } = useStore()
 
   const [challenge, setChallenge] = useState<Challenge | null | 'missing'>(null)
   const [busy, setBusy] = useState(false)
@@ -45,7 +45,9 @@ export default function ChallengePage() {
     if (!character) { router.push('/character/create'); return }
     setBusy(true)
     try {
-      await acceptChallenge(challenge.id, character)
+      const uid = await acceptChallenge(challenge.id, character)
+      setMyUserId(uid)
+      recordAcceptedChallenge(quest.id, challenge.id)
       acceptQuest(quest.id)
       addToast({ type: 'xp', message: 'Dare accepted — go get it!', icon: '⚔️' })
       setChallenge({ ...challenge, status: 'accepted' })

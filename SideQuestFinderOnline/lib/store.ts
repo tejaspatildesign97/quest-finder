@@ -52,6 +52,9 @@ interface StoreState {
   claimedCompletionIds: string[]
   setOnlineParty: (p: OnlineParty | null) => void
   setMyUserId: (id: string | null) => void
+  /** questId → challengeId for dares this user accepted */
+  acceptedChallenges: Record<string, string>
+  recordAcceptedChallenge: (questId: string, challengeId: string) => void
   /** Apply a party-mate's completion to this device: XP + diary entry. */
   claimCompletion: (c: OnlineCompletion) => void
 
@@ -140,6 +143,19 @@ export const useStore = create<StoreState>()(
           ).catch(err => console.error('community share failed:', err))
         }
 
+        // Leaderboard XP event + close out any dare attached to this quest
+        const { acceptedChallenges } = get()
+        const challengeId = acceptedChallenges[questId]
+        import('./community').then(({ postXpEvent, completeChallenge }) => {
+          postXpEvent(updatedCharacter, earned).catch(() => {})
+          if (challengeId) completeChallenge(challengeId).catch(() => {})
+        }).catch(() => {})
+        if (challengeId) {
+          const rest = { ...acceptedChallenges }
+          delete rest[questId]
+          set({ acceptedChallenges: rest })
+        }
+
         get().addToast({ type: 'xp', message: `+${earned} XP earned!`, icon: '⚡' })
 
         if (newLevel.level > oldLevel.level) {
@@ -166,6 +182,9 @@ export const useStore = create<StoreState>()(
       claimedCompletionIds: [],
       setOnlineParty: (p) => set({ onlineParty: p }),
       setMyUserId: (id) => set({ myUserId: id }),
+      acceptedChallenges: {},
+      recordAcceptedChallenge: (questId, challengeId) =>
+        set(s => ({ acceptedChallenges: { ...s.acceptedChallenges, [questId]: challengeId } })),
 
       claimCompletion: (c) => {
         const { character, claimedCompletionIds, activeQuests } = get()
@@ -186,6 +205,10 @@ export const useStore = create<StoreState>()(
             note: `🤝 Completed with ${c.completedByName}: ${c.note}`,
           }],
         })
+        import('./community').then(({ postXpEvent }) => {
+          const ch = get().character
+          if (ch) postXpEvent(ch, c.xp).catch(() => {})
+        }).catch(() => {})
         get().addToast({ type: 'xp', message: `Party quest! +${c.xp} XP from ${c.completedByName}`, icon: '🤝' })
         if (newLevel.level > oldLevel.level) set({ pendingLevelUp: newLevel.title })
         get().checkAchievements()
@@ -307,6 +330,7 @@ export const useStore = create<StoreState>()(
         onlineParty: s.onlineParty,
         myUserId: s.myUserId,
         claimedCompletionIds: s.claimedCompletionIds,
+        acceptedChallenges: s.acceptedChallenges,
       }) as StoreState,
     }
   )

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Share2, Zap, Compass, Loader2 } from 'lucide-react'
+import { BookOpen, Share2, Zap, Compass, Loader2, Swords, Hourglass, Check, Flag } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { getQuestById } from '@/lib/quests'
 import type { ActiveQuest } from '@/lib/types'
@@ -13,8 +13,16 @@ import { generateStoryCard, shareCard, shareText, PLATFORM_LINKS } from '@/lib/s
 import QuestCard from '@/components/ui/QuestCard'
 import Badge from '@/components/ui/Badge'
 import MediaThumb from '@/components/MediaThumb'
+import { fetchSentChallenges, type SentChallenge } from '@/lib/community'
 
-const TABS = ['Diary', 'Active'] as const
+const DARE_STATUS: Record<string, { label: string; variant: 'stone' | 'gold' | 'forest' | 'danger'; Icon: typeof Check }> = {
+  pending:   { label: 'Waiting',   variant: 'stone',  Icon: Hourglass },
+  accepted:  { label: 'Accepted',  variant: 'gold',   Icon: Swords },
+  completed: { label: 'Completed', variant: 'forest', Icon: Check },
+  declined:  { label: 'Declined',  variant: 'danger', Icon: Flag },
+}
+
+const TABS = ['Diary', 'Active', 'Dares'] as const
 
 function DiaryEntry({ entry }: { entry: ActiveQuest }) {
   const { character, addToast } = useStore()
@@ -108,6 +116,7 @@ export default function JournalPage() {
   const { character, activeQuests, setCompletingQuest, abandonQuest, party, _hasHydrated,
           onlineParty, myUserId, claimedCompletionIds, claimCompletion } = useStore()
   const [tab, setTab] = useState<typeof TABS[number]>('Diary')
+  const [dares, setDares] = useState<SentChallenge[] | null>(null)
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -138,6 +147,11 @@ export default function JournalPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onlineParty?.id, myUserId])
 
+  useEffect(() => {
+    if (tab !== 'Dares' || !myUserId) return
+    fetchSentChallenges(myUserId).then(setDares).catch(() => setDares([]))
+  }, [tab, myUserId])
+
   if (!_hasHydrated || !character) return null
 
   const completed = activeQuests
@@ -160,7 +174,7 @@ export default function JournalPage() {
           <button key={t} onClick={() => setTab(t)}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all
               ${tab === t ? 'bg-[var(--surface-2)] text-[var(--ink)] shadow-sm' : 'text-[var(--stone)] hover:text-[var(--ink)]'}`}>
-            {t === 'Diary' ? `Diary (${completed.length})` : `Active (${active.length})`}
+            {t === 'Diary' ? `Diary (${completed.length})` : t === 'Active' ? `Active (${active.length})` : 'Dares ⚔'}
           </button>
         ))}
       </div>
@@ -207,6 +221,45 @@ export default function JournalPage() {
               return (
                 <QuestCard key={aq.questId} quest={q} activeQuest={aq}
                   onComplete={setCompletingQuest} onAbandon={abandonQuest} isParty={!!party} />
+              )
+            })}
+          </div>
+        )
+      )}
+
+      {/* Sent dares */}
+      {tab === 'Dares' && (
+        !myUserId ? (
+          <div className="text-center py-14 space-y-2">
+            <Swords size={28} className="mx-auto text-[var(--stone-light)]" />
+            <p className="text-sm font-bold text-[var(--stone)]">No dares sent yet.</p>
+            <p className="text-xs font-semibold text-[var(--stone-light)] max-w-xs mx-auto">Hit "Dare" on any quest card to challenge a friend — your sent dares and their fate show up here.</p>
+          </div>
+        ) : dares === null ? (
+          <div className="text-center py-14"><Loader2 size={26} className="animate-spin mx-auto text-[var(--stone)]" /></div>
+        ) : dares.length === 0 ? (
+          <div className="text-center py-14 space-y-2">
+            <Swords size={28} className="mx-auto text-[var(--stone-light)]" />
+            <p className="text-sm font-bold text-[var(--stone)]">No dares sent yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {dares.map(d => {
+              const q = getQuestById(d.questId)
+              if (!q) return null
+              const cat = getCategoryStyle(q.category)
+              const st = DARE_STATUS[d.status]
+              return (
+                <div key={d.id} className="flex items-center gap-3 bg-[var(--surface-2)] rounded-2xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+                  <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${cat.tile}`}>
+                    <cat.Icon size={17} className={cat.iconColor} />
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold truncate">{q.title}</p>
+                    <p className="text-xs font-semibold text-[var(--stone-light)]">Dared {new Date(d.createdAt).toLocaleDateString()}</p>
+                  </div>
+                  <Badge variant={st.variant} icon={<st.Icon size={11} />}>{st.label}</Badge>
+                </div>
               )
             })}
           </div>

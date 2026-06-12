@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper } from 'lucide-react'
+import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { ACHIEVEMENTS } from '@/lib/achievements'
@@ -13,7 +13,6 @@ import StreakCounter from '@/components/ui/StreakCounter'
 import StatCard from '@/components/ui/StatCard'
 import QuestCard from '@/components/ui/QuestCard'
 import AchievementCard from '@/components/ui/AchievementCard'
-import ModeToggle from '@/components/ui/ModeToggle'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 
@@ -31,13 +30,21 @@ function hoursLeftToday() {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, abandonQuest, updateStreak, party, _hasHydrated } = useStore()
+  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, abandonQuest, updateStreak, party, onlineParty, _hasHydrated } = useStore()
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) { router.replace('/character/create'); return }
     updateStreak()
   }, [_hasHydrated, character])
+
+  // Play mode is derived from party status: no party = solo
+  useEffect(() => {
+    if (!_hasHydrated) return
+    const target = onlineParty ? (onlineParty.mode === 'couples' ? 'couple' : 'friends') : 'solo'
+    if (playMode !== target) setPlayMode(target)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_hasHydrated, onlineParty?.id, onlineParty?.mode])
 
   if (!_hasHydrated || !character) return null
 
@@ -74,11 +81,24 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Play mode */}
-      <div className="space-y-2">
-        <p className="font-display font-semibold text-[var(--ink)]">Play Mode</p>
-        <ModeToggle value={playMode} onChange={setPlayMode} />
-      </div>
+      {/* Play mode — auto from party status */}
+      <Link href="/party" className="flex items-center gap-3 bg-[var(--surface-2)] rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] hover:bg-white/8 transition-all">
+        <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+          playMode === 'solo' ? 'bg-amber-400/15' : playMode === 'couple' ? 'bg-pink-400/15' : 'bg-violet-400/15'}`}>
+          {playMode === 'solo' ? <User size={17} className="text-amber-300" />
+            : playMode === 'couple' ? <Heart size={17} className="text-pink-300" />
+            : <Users size={17} className="text-violet-300" />}
+        </span>
+        <span className="flex-1">
+          <span className="font-display block text-sm">
+            {playMode === 'solo' ? 'Solo Mode' : playMode === 'couple' ? `Couples Mode${onlineParty ? ` · ${onlineParty.name}` : ''}` : `Friends Mode${onlineParty ? ` · ${onlineParty.name}` : ''}`}
+          </span>
+          <span className="text-xs font-semibold text-[var(--stone)]">
+            {onlineParty ? 'Set by your party' : 'Join or create a party to unlock Couples & Friends quests'}
+          </span>
+        </span>
+        <ChevronRight size={16} className="text-[var(--stone)]" />
+      </Link>
 
       {/* Daily quests — 3 per day */}
       {dailyQuests.length > 0 && (

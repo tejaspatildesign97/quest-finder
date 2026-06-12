@@ -8,7 +8,7 @@ import type { Quest } from '@/lib/types'
 
 /** "Dare a friend" — creates a challenge link and shares/copies it. */
 export default function ChallengeButton({ quest }: { quest: Quest }) {
-  const { character, addToast } = useStore()
+  const { character, addToast, setMyUserId } = useStore()
   const [busy, setBusy] = useState(false)
   const [link, setLink] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
@@ -18,7 +18,8 @@ export default function ChallengeButton({ quest }: { quest: Quest }) {
   const dare = async () => {
     setBusy(true)
     try {
-      const id = await createChallenge(character, quest.id, `${character.name} dares you!`)
+      const { id, userId } = await createChallenge(character, quest.id, `${character.name} dares you!`)
+      setMyUserId(userId)
       const url = `${window.location.origin}/challenge/${id}`
       const text = `⚔️ I dare you: "${quest.title}" (+${quest.xp} XP). Accept if you're brave enough → ${url}`
 
