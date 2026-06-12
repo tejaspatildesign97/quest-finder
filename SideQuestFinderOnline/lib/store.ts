@@ -36,7 +36,7 @@ interface StoreState {
 
   // Quests
   acceptQuest: (questId: string) => void
-  completeQuest: (questId: string, note?: string, mediaIds?: string[]) => void
+  completeQuest: (questId: string, note?: string, mediaIds?: string[], shareToCommunity?: boolean) => void
   abandonQuest: (questId: string) => void
   /** quest id currently in the completion modal */
   completingQuestId: string | null
@@ -101,7 +101,7 @@ export const useStore = create<StoreState>()(
       completingQuestId: null,
       setCompletingQuest: (id) => set({ completingQuestId: id }),
 
-      completeQuest: (questId, note, mediaIds) => {
+      completeQuest: (questId, note, mediaIds, shareToCommunity) => {
         const { activeQuests, character, party } = get()
         const quest = QUESTS.find(q => q.id === questId)
         if (!quest || !character) return
@@ -131,6 +131,13 @@ export const useStore = create<StoreState>()(
         if (onlineParty && (quest.mode.includes('couple') || quest.mode.includes('friends'))) {
           postCompletion(onlineParty.id, questId, note ?? '', earned)
             .catch(err => console.error('party sync failed:', err))
+        }
+
+        // Share to the public community feed (Explore tab)
+        if (shareToCommunity && note) {
+          import('./community').then(({ sharePost }) =>
+            sharePost(updatedCharacter, questId, note, earned)
+          ).catch(err => console.error('community share failed:', err))
         }
 
         get().addToast({ type: 'xp', message: `+${earned} XP earned!`, icon: '⚡' })

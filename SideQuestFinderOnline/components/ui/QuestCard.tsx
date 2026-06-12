@@ -5,6 +5,7 @@ import type { Quest, ActiveQuest } from '@/lib/types'
 import { getCategoryStyle } from '@/lib/categories'
 import Badge from './Badge'
 import Button from './Button'
+import ChallengeButton from '../ChallengeButton'
 
 interface QuestCardProps {
   quest: Quest
@@ -67,6 +68,7 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
               <Badge variant="stone">{quest.category}</Badge>
             </div>
             <div className="flex gap-1.5">
+              {!activeQuest && <ChallengeButton quest={quest} />}
               {!activeQuest && onAccept && (
                 <Button size="sm" variant="secondary" onClick={() => onAccept(quest)}>Accept</Button>
               )}

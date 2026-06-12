@@ -21,6 +21,7 @@ export default function CompleteQuestModal() {
   const [drafts, setDrafts] = useState<Draft[]>([])
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
+  const [shareToCommunity, setShareToCommunity] = useState(true)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const quest = completingQuestId ? getQuestById(completingQuestId) : undefined
@@ -69,7 +70,7 @@ export default function CompleteQuestModal() {
       const mediaIds: string[] = []
       for (const d of drafts) mediaIds.push(await saveMedia(d.blob))
       drafts.forEach(d => URL.revokeObjectURL(d.previewUrl))
-      completeQuest(quest.id, note.trim(), mediaIds)
+      completeQuest(quest.id, note.trim(), mediaIds, shareToCommunity)
       reset()
     } catch {
       setError('Could not save your media — try again or remove a file.')
@@ -144,6 +145,14 @@ export default function CompleteQuestModal() {
           <input ref={fileRef} type="file" accept="image/*,video/*" multiple hidden
             onChange={e => { addFiles(e.target.files); e.target.value = '' }} />
         </div>
+        {/* Community share toggle */}
+        <label className="flex items-center gap-2.5 cursor-pointer bg-white/5 rounded-2xl px-4 py-3">
+          <input type="checkbox" checked={shareToCommunity} onChange={e => setShareToCommunity(e.target.checked)}
+            className="accent-[var(--forest)] w-4 h-4" />
+          <span className="text-xs font-bold text-[var(--ink)]">Share to Community feed
+            <span className="block font-semibold text-[var(--stone-light)]">Your story (no photos) appears on the Explore tab</span>
+          </span>
+        </label>
         </div>
 
         {/* Footer — pinned */}

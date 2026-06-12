@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Zap, Flame, CheckCircle2, Flag, RotateCcw, Pencil } from 'lucide-react'
+import { Zap, Flame, CheckCircle2, Flag, RotateCcw, Pencil, Trophy, ChevronRight } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { getCategoryStyle } from '@/lib/categories'
@@ -49,6 +49,16 @@ export default function ProfilePage() {
       </div>
 
       <EditProfileModal open={editing} onClose={() => setEditing(false)} />
+
+      {/* Achievements link (moved out of nav for Explore) */}
+      <button onClick={() => router.push('/achievements')}
+        className="w-full flex items-center gap-3 bg-[var(--surface-2)] rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] hover:bg-white/8 transition-all">
+        <span className="w-9 h-9 rounded-xl bg-violet-400/15 flex items-center justify-center">
+          <Trophy size={17} className="text-violet-300" />
+        </span>
+        <span className="flex-1 text-left font-display text-sm">Achievements</span>
+        <ChevronRight size={16} className="text-[var(--stone)]" />
+      </button>
 
       {/* Stats */}
       <div className="space-y-2">
