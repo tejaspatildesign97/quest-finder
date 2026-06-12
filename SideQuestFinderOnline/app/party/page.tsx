@@ -2,21 +2,24 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Heart, Users, Swords, Crown, Copy, Check, LogIn, Lock } from 'lucide-react'
+import { Heart, Users, Swords, Crown, Copy, Check, LogIn, Lock, Hammer, Zap } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import type { PartyMode } from '@/lib/types'
-import { createOnlineParty, joinOnlineParty, leaveOnlineParty, refreshParty } from '@/lib/partySync'
+import { createOnlineParty, joinOnlineParty, leaveOnlineParty, refreshParty, fetchCompletions, type OnlineCompletion } from '@/lib/partySync'
 import { supabaseConfigured } from '@/lib/supabase'
 import Button from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import QuestCard from '@/components/ui/QuestCard'
+import Badge from '@/components/ui/Badge'
+import { getQuestById } from '@/lib/quests'
+import Link from 'next/link'
 import Avatar from '@/components/ui/Avatar'
 
 export default function PartyPage() {
   const router = useRouter()
   const { character, onlineParty, myUserId, setOnlineParty, setMyUserId, setPlayMode,
-          activeQuests, acceptQuest, setCompletingQuest, abandonQuest, _hasHydrated, addToast } = useStore()
+          activeQuests, setCompletingQuest, abandonQuest, _hasHydrated, addToast } = useStore()
 
   const [partyName, setPartyName] = useState('')
   const [partyMode, setPartyMode] = useState<PartyMode>('friends')
@@ -24,16 +27,18 @@ export default function PartyPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
+  const [history, setHistory] = useState<OnlineCompletion[] | null>(null)
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) router.replace('/character/create')
   }, [_hasHydrated, character])
 
-  // Refresh member list when viewing an existing party
+  // Refresh member list + shared history when viewing an existing party
   useEffect(() => {
     if (!onlineParty) return
     refreshParty(onlineParty.id).then(p => setOnlineParty(p)).catch(() => {})
+    fetchCompletions(onlineParty.id).then(setHistory).catch(() => setHistory([]))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onlineParty?.id])
 
@@ -82,7 +87,12 @@ export default function PartyPage() {
   // ── Active party view ──────────────────────────────────────────────────────
   if (onlineParty) {
     const isLeader = myUserId === onlineParty.leaderId
-    const partyQuests = QUESTS.filter(q => q.mode.includes(onlineParty.mode === 'couples' ? 'couple' : 'friends'))
+    const partyMode = onlineParty.mode === 'couples' ? 'couple' : 'friends'
+    const activePartyQuests = activeQuests.filter(a => {
+      if (a.status !== 'active') return false
+      const q = QUESTS.find(x => x.id === a.questId)
+      return q?.mode.includes(partyMode)
+    })
 
     return (
       <div className="space-y-5">
@@ -116,27 +126,62 @@ export default function PartyPage() {
           <p className="text-xs text-[var(--quest-gold)] font-extrabold">+20% XP on all quests!</p>
         </div>
 
+        {/* Active party quests (leader-run) */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="font-display font-semibold text-[var(--ink)]">Party Quests</p>
+            <p className="font-display font-semibold text-[var(--ink)]">Active Party Quests</p>
             {!isLeader && (
               <span className="flex items-center gap-1 text-xs font-bold text-[var(--stone)]">
                 <Lock size={11} /> Leader runs the quests
               </span>
             )}
           </div>
-          {partyQuests.map(q => (
-            <QuestCard
-              key={q.id}
-              quest={q}
-              activeQuest={activeQuests.find(a => a.questId === q.id)}
-              onAccept={isLeader ? quest => acceptQuest(quest.id) : undefined}
-              onComplete={isLeader ? setCompletingQuest : undefined}
-              onAbandon={isLeader ? abandonQuest : undefined}
-              isParty={true}
-            />
-          ))}
+          {isLeader ? (
+            <>
+              {activePartyQuests.map(a => {
+                const q = QUESTS.find(x => x.id === a.questId)
+                if (!q) return null
+                return (
+                  <QuestCard key={q.id} quest={q} activeQuest={a}
+                    onComplete={setCompletingQuest} onAbandon={abandonQuest} isParty={true} />
+                )
+              })}
+              <Link href="/quests"
+                className="flex items-center justify-center gap-2 w-full rounded-2xl border-2 border-dashed border-white/15 py-3.5 text-sm font-extrabold text-[var(--stone)] hover:border-[var(--magic)] hover:text-[var(--magic-light)] transition-all">
+                <Hammer size={15} /> {activePartyQuests.length ? 'Forge more party quests' : 'Forge your first party quest'}
+              </Link>
+            </>
+          ) : (
+            activePartyQuests.length === 0 && (
+              <p className="text-xs font-semibold text-[var(--stone-light)] text-center py-3">
+                Waiting on {onlineParty.members.find(m => m.id === onlineParty.leaderId)?.name ?? 'the leader'} to pick the next quest…
+              </p>
+            )
+          )}
         </div>
+
+        {/* Completed together */}
+        {history && history.length > 0 && (
+          <div className="space-y-2">
+            <p className="font-display font-semibold text-[var(--ink)]">Completed Together</p>
+            {history.map(c => {
+              const q = getQuestById(c.questId)
+              if (!q) return null
+              return (
+                <div key={c.id} className="bg-[var(--surface-2)] rounded-2xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.5)] space-y-1">
+                  <div className="flex items-center gap-2">
+                    <p className="flex-1 text-sm font-bold truncate">{q.title}</p>
+                    <Badge variant="gold" icon={<Zap size={11} className="fill-amber-500 text-amber-500" />}>+{c.xp}</Badge>
+                  </div>
+                  {c.note && <p className="text-xs font-medium text-[var(--stone)] leading-relaxed">{c.note}</p>}
+                  <p className="text-[0.65rem] font-bold text-[var(--stone-light)]">
+                    {c.completedByName} · {new Date(c.completedAt).toLocaleDateString()}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        )}
 
         <Button variant="danger" size="sm" className="w-full" onClick={handleLeave} loading={busy}>
           {isLeader ? 'Disband Party' : 'Leave Party'}
