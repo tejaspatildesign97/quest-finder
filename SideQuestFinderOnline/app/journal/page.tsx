@@ -256,7 +256,11 @@ export default function JournalPage() {
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold truncate">{q.title}</p>
-                    <p className="text-xs font-semibold text-[var(--stone-light)]">Dared {new Date(d.createdAt).toLocaleDateString()}</p>
+                    <p className="text-xs font-semibold text-[var(--stone-light)]">
+                      {d.acceptedName
+                        ? <>Taken by <span className="text-[var(--quest-gold)]">{d.acceptedName}</span> · {new Date(d.createdAt).toLocaleDateString()}</>
+                        : <>Awaiting a taker · {new Date(d.createdAt).toLocaleDateString()}</>}
+                    </p>
                   </div>
                   <Badge variant={st.variant} icon={<st.Icon size={11} />}>{st.label}</Badge>
                 </div>

@@ -85,7 +85,9 @@ export async function fetchChallenge(id: string): Promise<Challenge | null> {
 
 export async function acceptChallenge(id: string, character: Character): Promise<string> {
   const uid = await ensureProfile(character) // signs in, so the update passes RLS
-  await supabase().from('challenges').update({ status: 'accepted' }).eq('id', id)
+  await supabase().from('challenges')
+    .update({ status: 'accepted', accepted_by: uid, accepted_name: character.name })
+    .eq('id', id)
   return uid
 }
 
@@ -98,14 +100,24 @@ export interface SentChallenge {
   questId: string
   status: 'pending' | 'accepted' | 'completed' | 'declined'
   createdAt: string
+  acceptedName: string | null
 }
 
 export async function fetchSentChallenges(userId: string): Promise<SentChallenge[]> {
-  const { data } = await supabase().from('challenges')
-    .select('id, quest_id, status, created_at')
-    .eq('from_user', userId)
-    .order('created_at', { ascending: false })
-  return (data ?? []).map(c => ({ id: c.id, questId: c.quest_id, status: c.status, createdAt: c.created_at }))
+  const sb = supabase()
+  const query = (cols: string) => sb.from('challenges')
+    .select(cols).eq('from_user', userId).order('created_at', { ascending: false })
+
+  // Try the v4 shape (with accepted_name); fall back if that column isn't migrated yet.
+  let res = await query('id, quest_id, status, created_at, accepted_name')
+  if (res.error) res = await query('id, quest_id, status, created_at')
+
+  const rows = (res.data ?? []) as unknown as Record<string, unknown>[]
+  return rows.map(c => ({
+    id: c.id as string, questId: c.quest_id as string,
+    status: c.status as SentChallenge['status'], createdAt: c.created_at as string,
+    acceptedName: (c.accepted_name as string | undefined) ?? null,
+  }))
 }
 
 // ── XP events + leaderboard ──────────────────────────────────────────────────
