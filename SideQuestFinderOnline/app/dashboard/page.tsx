@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users } from 'lucide-react'
+import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { ACHIEVEMENTS } from '@/lib/achievements'
@@ -11,10 +11,11 @@ import { getCategoryStyle } from '@/lib/categories'
 import CharacterCard from '@/components/ui/CharacterCard'
 import StreakCounter from '@/components/ui/StreakCounter'
 import StatCard from '@/components/ui/StatCard'
-import QuestCard from '@/components/ui/QuestCard'
 import AchievementCard from '@/components/ui/AchievementCard'
+// QuestCard removed — Active Quests moved to the Quests tab
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
+import EditProfileModal from '@/components/EditProfileModal'
 
 function dayOfYear() {
   const now = new Date()
@@ -30,7 +31,8 @@ function hoursLeftToday() {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, abandonQuest, updateStreak, party, onlineParty, _hasHydrated } = useStore()
+  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, resetCharacter, _hasHydrated } = useStore()
+  const [editing, setEditing] = useState(false)
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -66,7 +68,17 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Character hero */}
-      <CharacterCard character={character} />
+      <div className="relative">
+        <CharacterCard character={character} />
+        <button
+          onClick={() => setEditing(true)}
+          className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink)] bg-white/15 backdrop-blur-sm hover:bg-white/25 rounded-full px-3 py-1.5 transition-all"
+        >
+          <Pencil size={12} /> Edit
+        </button>
+      </div>
+
+      <EditProfileModal open={editing} onClose={() => setEditing(false)} />
 
       {/* Streak + stats */}
       <div className="scroll-border p-4 space-y-4">
@@ -149,21 +161,6 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Active quests */}
-      {activeList.length > 0 && (
-        <div className="space-y-3">
-          <p className="font-display font-semibold text-[var(--ink)]">Active Quests</p>
-          {activeList.map(aq => {
-            const q = QUESTS.find(x => x.id === aq.questId)
-            if (!q) return null
-            return (
-              <QuestCard key={aq.questId} quest={q} activeQuest={aq}
-                onComplete={setCompletingQuest} onAbandon={abandonQuest} isParty={!!party} />
-            )
-          })}
-        </div>
-      )}
-
       {/* Party bonus promo */}
       {!party && (
         <Link href="/party" className="block rounded-3xl p-5 text-white shadow-lg shadow-violet-500/30 hover:scale-[1.01] transition-transform"
@@ -199,6 +196,19 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Reset character */}
+      <div className="pt-2 border-t border-[var(--ink)]/8">
+        <Button variant="danger" size="sm" className="w-full" onClick={() => {
+          if (confirm('Start over? This will delete your character and all progress.')) {
+            resetCharacter()
+            router.replace('/character/create')
+          }
+        }} icon={<RotateCcw size={14} />}>
+          Reset Character
+        </Button>
+        <p className="text-xs font-semibold text-center text-[var(--stone-light)] mt-1.5">This will permanently delete all progress</p>
+      </div>
     </div>
   )
 }

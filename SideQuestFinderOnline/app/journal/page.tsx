@@ -3,26 +3,15 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Share2, Zap, Compass, Loader2, Swords, Hourglass, Check, Flag } from 'lucide-react'
+import { BookOpen, Share2, Zap, Compass, Loader2 } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { getQuestById } from '@/lib/quests'
 import type { ActiveQuest } from '@/lib/types'
 import { getCategoryStyle } from '@/lib/categories'
 import { getMediaURL } from '@/lib/media'
 import { generateStoryCard, shareCard, shareText, PLATFORM_LINKS } from '@/lib/share'
-import QuestCard from '@/components/ui/QuestCard'
 import Badge from '@/components/ui/Badge'
 import MediaThumb from '@/components/MediaThumb'
-import { fetchSentChallenges, type SentChallenge } from '@/lib/community'
-
-const DARE_STATUS: Record<string, { label: string; variant: 'stone' | 'gold' | 'forest' | 'danger'; Icon: typeof Check }> = {
-  pending:   { label: 'Waiting',   variant: 'stone',  Icon: Hourglass },
-  accepted:  { label: 'Accepted',  variant: 'gold',   Icon: Swords },
-  completed: { label: 'Completed', variant: 'forest', Icon: Check },
-  declined:  { label: 'Declined',  variant: 'danger', Icon: Flag },
-}
-
-const TABS = ['Diary', 'Active', 'Dares'] as const
 
 function DiaryEntry({ entry }: { entry: ActiveQuest }) {
   const { character, addToast } = useStore()
@@ -113,10 +102,8 @@ function DiaryEntry({ entry }: { entry: ActiveQuest }) {
 
 export default function JournalPage() {
   const router = useRouter()
-  const { character, activeQuests, setCompletingQuest, abandonQuest, party, _hasHydrated,
-          onlineParty, myUserId, claimedCompletionIds, claimCompletion } = useStore()
-  const [tab, setTab] = useState<typeof TABS[number]>('Diary')
-  const [dares, setDares] = useState<SentChallenge[] | null>(null)
+  const { character, activeQuests, _hasHydrated,
+          onlineParty, myUserId, claimCompletion } = useStore()
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -147,127 +134,39 @@ export default function JournalPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onlineParty?.id, myUserId])
 
-  useEffect(() => {
-    if (tab !== 'Dares' || !myUserId) return
-    fetchSentChallenges(myUserId).then(setDares).catch(() => setDares([]))
-  }, [tab, myUserId])
-
   if (!_hasHydrated || !character) return null
 
   const completed = activeQuests
     .filter(q => q.status === 'completed')
     .sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))
-  const active = activeQuests.filter(q => q.status === 'active')
 
   return (
     <div className="space-y-5">
       <div className="text-center">
         <h2 className="text-2xl">Quest Diary</h2>
         <p className="text-sm font-semibold text-[var(--stone)]">
-          {completed.length} memories · {active.length} in progress
+          {completed.length} {completed.length === 1 ? 'memory' : 'memories'}
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 bg-[var(--ink)]/5 rounded-2xl p-1">
-        {TABS.map(t => (
-          <button key={t} onClick={() => setTab(t)}
-            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all
-              ${tab === t ? 'bg-[var(--surface-2)] text-[var(--ink)] shadow-sm' : 'text-[var(--stone)] hover:text-[var(--ink)]'}`}>
-            {t === 'Diary' ? `Diary (${completed.length})` : t === 'Active' ? `Active (${active.length})` : 'Dares ⚔'}
-          </button>
-        ))}
-      </div>
-
       {/* Diary feed */}
-      {tab === 'Diary' && (
-        completed.length === 0 ? (
-          <div className="text-center py-14 space-y-3">
-            <div className="w-16 h-16 mx-auto rounded-3xl bg-white/5 flex items-center justify-center">
-              <BookOpen size={28} className="text-[var(--stone-light)]" />
-            </div>
-            <p className="text-sm font-bold text-[var(--stone)]">Your diary is empty.</p>
-            <p className="text-xs font-semibold text-[var(--stone-light)] max-w-xs mx-auto">
-              Complete a quest and write about the experience — every adventure becomes a page here.
-            </p>
-            <Link href="/quests" className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--quest-gold)]">
-              <Compass size={14} /> Find a quest
-            </Link>
+      {completed.length === 0 ? (
+        <div className="text-center py-14 space-y-3">
+          <div className="w-16 h-16 mx-auto rounded-3xl bg-white/5 flex items-center justify-center">
+            <BookOpen size={28} className="text-[var(--stone-light)]" />
           </div>
-        ) : (
-          <div className="space-y-4">
-            {completed.map((entry, i) => <DiaryEntry key={`${entry.questId}-${i}`} entry={entry} />)}
-          </div>
-        )
-      )}
-
-      {/* Active quests */}
-      {tab === 'Active' && (
-        active.length === 0 ? (
-          <div className="text-center py-14 space-y-3">
-            <div className="w-16 h-16 mx-auto rounded-3xl bg-white/5 flex items-center justify-center">
-              <Compass size={28} className="text-[var(--stone-light)]" />
-            </div>
-            <p className="text-sm font-bold text-[var(--stone)]">No active quests.</p>
-            <Link href="/quests" className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--quest-gold)]">
-              <Compass size={14} /> Visit the Quest Board
-            </Link>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {active.map(aq => {
-              const q = getQuestById(aq.questId)
-              if (!q) return null
-              return (
-                <QuestCard key={aq.questId} quest={q} activeQuest={aq}
-                  onComplete={setCompletingQuest} onAbandon={abandonQuest} isParty={!!party} />
-              )
-            })}
-          </div>
-        )
-      )}
-
-      {/* Sent dares */}
-      {tab === 'Dares' && (
-        !myUserId ? (
-          <div className="text-center py-14 space-y-2">
-            <Swords size={28} className="mx-auto text-[var(--stone-light)]" />
-            <p className="text-sm font-bold text-[var(--stone)]">No dares sent yet.</p>
-            <p className="text-xs font-semibold text-[var(--stone-light)] max-w-xs mx-auto">Hit "Dare" on any quest card to challenge a friend — your sent dares and their fate show up here.</p>
-          </div>
-        ) : dares === null ? (
-          <div className="text-center py-14"><Loader2 size={26} className="animate-spin mx-auto text-[var(--stone)]" /></div>
-        ) : dares.length === 0 ? (
-          <div className="text-center py-14 space-y-2">
-            <Swords size={28} className="mx-auto text-[var(--stone-light)]" />
-            <p className="text-sm font-bold text-[var(--stone)]">No dares sent yet.</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {dares.map(d => {
-              const q = getQuestById(d.questId)
-              if (!q) return null
-              const cat = getCategoryStyle(q.category)
-              const st = DARE_STATUS[d.status]
-              return (
-                <div key={d.id} className="flex items-center gap-3 bg-[var(--surface-2)] rounded-2xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
-                  <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${cat.tile}`}>
-                    <cat.Icon size={17} className={cat.iconColor} />
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold truncate">{q.title}</p>
-                    <p className="text-xs font-semibold text-[var(--stone-light)]">
-                      {d.acceptedName
-                        ? <>Taken by <span className="text-[var(--quest-gold)]">{d.acceptedName}</span> · {new Date(d.createdAt).toLocaleDateString()}</>
-                        : <>Awaiting a taker · {new Date(d.createdAt).toLocaleDateString()}</>}
-                    </p>
-                  </div>
-                  <Badge variant={st.variant} icon={<st.Icon size={11} />}>{st.label}</Badge>
-                </div>
-              )
-            })}
-          </div>
-        )
+          <p className="text-sm font-bold text-[var(--stone)]">Your diary is empty.</p>
+          <p className="text-xs font-semibold text-[var(--stone-light)] max-w-xs mx-auto">
+            Complete a quest and write about the experience — every adventure becomes a page here.
+          </p>
+          <Link href="/quests" className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--quest-gold)]">
+            <Compass size={14} /> Find a quest
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {completed.map((entry, i) => <DiaryEntry key={`${entry.questId}-${i}`} entry={entry} />)}
+        </div>
       )}
     </div>
   )

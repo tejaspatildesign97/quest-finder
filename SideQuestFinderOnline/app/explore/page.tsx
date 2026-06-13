@@ -193,7 +193,7 @@ export default function ExplorePage() {
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <h2 className="text-2xl">Explore</h2>
+        <h2 className="text-2xl">Community</h2>
         <p className="text-sm font-semibold text-[var(--stone)]">Real quests, completed by real adventurers</p>
       </div>
 
