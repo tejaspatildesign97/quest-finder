@@ -60,9 +60,11 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
           <p className="text-xs font-semibold text-[var(--stone)] leading-relaxed mb-1">{quest.description}</p>
           <p className="text-xs italic text-[var(--stone-light)] leading-relaxed">"{quest.lore}"</p>
 
-          {/* Quest type (category) + tags — grouped in the central area */}
+          {/* Quest type (category) + tags — grouped in the central area, matching pill styling */}
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
-            <Badge variant="stone">{quest.category}</Badge>
+            <span className="text-[0.65rem] font-bold px-2 py-0.5 bg-[var(--ink)]/5 rounded-full text-[var(--stone)] capitalize">
+              {quest.category}
+            </span>
             {quest.tags.map(tag => (
               <span key={tag} className="text-[0.65rem] font-bold px-2 py-0.5 bg-[var(--ink)]/5 rounded-full text-[var(--stone)] capitalize">
                 {tag}
