@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { ArrowLeft } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { ACHIEVEMENTS } from '@/lib/achievements'
 import AchievementCard from '@/components/ui/AchievementCard'
@@ -32,9 +33,18 @@ export default function AchievementsPage() {
 
   return (
     <div className="space-y-4">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold">Achievements</h2>
-        <p className="text-sm text-[var(--stone)]">{unlockedCount} / {ACHIEVEMENTS.length} unlocked</p>
+      <div className="relative flex items-center justify-center">
+        <button
+          onClick={() => router.back()}
+          aria-label="Back"
+          className="absolute left-0 w-9 h-9 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-all"
+        >
+          <ArrowLeft size={18} className="text-[var(--ink)]" />
+        </button>
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">Achievements</h2>
+          <p className="text-sm text-[var(--stone)]">{unlockedCount} / {ACHIEVEMENTS.length} unlocked</p>
+        </div>
       </div>
 
       {/* Progress bar */}
