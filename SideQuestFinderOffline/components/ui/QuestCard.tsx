@@ -1,6 +1,6 @@
 'use client'
 
-import { Zap, Timer, Check, Users, User, Heart } from 'lucide-react'
+import { Zap, Timer, Check, Users } from 'lucide-react'
 import type { Quest, ActiveQuest } from '@/lib/types'
 import { getCategoryStyle } from '@/lib/categories'
 import Badge from './Badge'
@@ -46,13 +46,6 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
             {isParty && <Badge variant="magic" icon={<Users size={11} />}>+20% XP</Badge>}
             <Badge variant="stone" icon={<Timer size={11} />}>{quest.duration >= 120 ? '2h+' : quest.duration >= 60 ? `${Math.round(quest.duration / 60)}h` : `${quest.duration}m`}</Badge>
             {quest.timeLimit && <Badge variant="danger" icon={<Timer size={11} />}>⏱ {quest.timeLimit}m limit</Badge>}
-            <Badge variant="stone">{quest.category}</Badge>
-            <span title={quest.mode.join(' · ')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--ink)]/8 text-[var(--stone)]">
-              {quest.mode.includes('solo') && <User size={11} />}
-              {quest.mode.includes('couple') && <Heart size={11} className="text-pink-400" />}
-              {quest.mode.includes('friends') && <Users size={11} className="text-violet-400" />}
-            </span>
             {isCompleted && <Badge variant="forest" icon={<Check size={11} />}>Done</Badge>}
             {isAbandoned && <Badge variant="stone">Abandoned</Badge>}
           </div>
@@ -71,6 +64,7 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
           <div className="flex items-center justify-between mt-3">
             <div className="flex gap-1.5">
               <Badge variant="gold" icon={<Zap size={11} className="fill-amber-500 text-amber-500" />}>+{quest.xp} XP</Badge>
+              <Badge variant="stone">{quest.category}</Badge>
             </div>
             <div className="flex gap-1.5">
               {!activeQuest && onAccept && (
