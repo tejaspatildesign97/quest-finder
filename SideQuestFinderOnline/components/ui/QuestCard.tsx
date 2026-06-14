@@ -47,6 +47,12 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
             {isParty && <Badge variant="magic" icon={<Users size={11} />}>+20% XP</Badge>}
             <Badge variant="stone" icon={<Timer size={11} />}>{quest.duration >= 120 ? '2h+' : quest.duration >= 60 ? `${Math.round(quest.duration / 60)}h` : `${quest.duration}m`}</Badge>
             {quest.timeLimit && <Badge variant="danger" icon={<Timer size={11} />}>⏱ {quest.timeLimit}m limit</Badge>}
+            <span title={quest.mode.join(' · ')}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--ink)]/8 text-[var(--stone)]">
+              {quest.mode.includes('solo') && <User size={11} />}
+              {quest.mode.includes('couple') && <Heart size={11} className="text-pink-400" />}
+              {quest.mode.includes('friends') && <Users size={11} className="text-violet-400" />}
+            </span>
             {isCompleted && <Badge variant="forest" icon={<Check size={11} />}>Done</Badge>}
             {isAbandoned && <Badge variant="stone">Abandoned</Badge>}
           </div>
@@ -54,15 +60,9 @@ export default function QuestCard({ quest, activeQuest, onAccept, onComplete, on
           <p className="text-xs font-semibold text-[var(--stone)] leading-relaxed mb-1">{quest.description}</p>
           <p className="text-xs italic text-[var(--stone-light)] leading-relaxed">"{quest.lore}"</p>
 
-          {/* Quest type + mode + tags — grouped in the central area */}
+          {/* Quest type (category) + tags — grouped in the central area */}
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             <Badge variant="stone">{quest.category}</Badge>
-            <span title={quest.mode.join(' · ')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--ink)]/8 text-[var(--stone)]">
-              {quest.mode.includes('solo') && <User size={11} />}
-              {quest.mode.includes('couple') && <Heart size={11} className="text-pink-400" />}
-              {quest.mode.includes('friends') && <Users size={11} className="text-violet-400" />}
-            </span>
             {quest.tags.map(tag => (
               <span key={tag} className="text-[0.65rem] font-bold px-2 py-0.5 bg-[var(--ink)]/5 rounded-full text-[var(--stone)] capitalize">
                 {tag}
