@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw } from 'lucide-react'
+import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw, UsersRound } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { ACHIEVEMENTS } from '@/lib/achievements'
@@ -31,14 +31,31 @@ function hoursLeftToday() {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, resetCharacter, _hasHydrated } = useStore()
+  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, resetCharacter, setMyUserId, _hasHydrated } = useStore()
   const [editing, setEditing] = useState(false)
+  const [friendCount, setFriendCount] = useState<number | null>(null)
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) { router.replace('/character/create'); return }
     updateStreak()
   }, [_hasHydrated, character])
+
+  // Ensure profile/username and load friend count
+  useEffect(() => {
+    if (!_hasHydrated || !character) return
+    import('@/lib/supabase').then(({ supabaseConfigured }) => {
+      if (!supabaseConfigured()) return
+      import('@/lib/friends').then(async ({ ensureUsername, fetchFriendCount }) => {
+        try {
+          const { userId } = await ensureUsername(character)
+          setMyUserId(userId)
+          setFriendCount(await fetchFriendCount(userId))
+        } catch { /* offline or schema not migrated */ }
+      })
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_hasHydrated, character?.id])
 
   // Play mode is derived from party status: no party = solo
   useEffect(() => {
@@ -83,13 +100,17 @@ export default function DashboardPage() {
       {/* Streak + stats */}
       <div className="scroll-border p-4 space-y-4">
         <StreakCounter streak={character.streak} />
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <StatCard label="Quests" value={completed.length} tile="bg-emerald-400/15"
             icon={<CheckCircle2 size={18} className="text-emerald-400" />} />
           <StatCard label="Active" value={activeList.length} tile="bg-amber-400/15"
             icon={<Swords size={18} className="text-amber-400" />} />
           <StatCard label="Awards" value={unlockedAchievements.length} tile="bg-violet-400/15"
             icon={<Trophy size={18} className="text-violet-400" />} />
+          <button onClick={() => router.push('/friends')} className="text-left">
+            <StatCard label="Friends" value={friendCount ?? '—'} tile="bg-cyan-400/15"
+              icon={<UsersRound size={18} className="text-cyan-300" />} />
+          </button>
         </div>
       </div>
 
