@@ -67,3 +67,24 @@ export async function fetchFriendCount(userId: string): Promise<number> {
     .eq('user_id', userId)
   return count ?? 0
 }
+
+/** People who added you (you are the friend_id). */
+export async function fetchFollowers(userId: string): Promise<FriendProfile[]> {
+  const { data } = await supabase()
+    .from('friends')
+    .select('user_id, profiles!friends_user_id_fkey(id, name, avatar, username)')
+    .eq('friend_id', userId)
+    .order('created_at', { ascending: false })
+  return (data ?? [])
+    .map((r) => r.profiles as unknown as FriendProfile)
+    .filter(Boolean)
+}
+
+export async function fetchFollowCounts(userId: string): Promise<{ following: number; followers: number }> {
+  const sb = supabase()
+  const [following, followers] = await Promise.all([
+    sb.from('friends').select('*', { count: 'exact', head: true }).eq('user_id', userId),
+    sb.from('friends').select('*', { count: 'exact', head: true }).eq('friend_id', userId),
+  ])
+  return { following: following.count ?? 0, followers: followers.count ?? 0 }
+}

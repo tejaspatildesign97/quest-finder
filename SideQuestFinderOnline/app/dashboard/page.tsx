@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Trophy, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw, UsersRound } from 'lucide-react'
+import { CheckCircle2, Swords, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { ACHIEVEMENTS } from '@/lib/achievements'
@@ -33,7 +33,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, resetCharacter, setMyUserId, _hasHydrated } = useStore()
   const [editing, setEditing] = useState(false)
-  const [friendCount, setFriendCount] = useState<number | null>(null)
+  const [follow, setFollow] = useState<{ following: number; followers: number } | null>(null)
 
   useEffect(() => {
     if (!_hasHydrated) return
@@ -46,11 +46,11 @@ export default function DashboardPage() {
     if (!_hasHydrated || !character) return
     import('@/lib/supabase').then(({ supabaseConfigured }) => {
       if (!supabaseConfigured()) return
-      import('@/lib/friends').then(async ({ ensureUsername, fetchFriendCount }) => {
+      import('@/lib/friends').then(async ({ ensureUsername, fetchFollowCounts }) => {
         try {
           const { userId } = await ensureUsername(character)
           setMyUserId(userId)
-          setFriendCount(await fetchFriendCount(userId))
+          setFollow(await fetchFollowCounts(userId))
         } catch { /* offline or schema not migrated */ }
       })
     })
@@ -97,6 +97,14 @@ export default function DashboardPage() {
 
       <EditProfileModal open={editing} onClose={() => setEditing(false)} />
 
+      {/* Following / Followers — low-key, under the profile card */}
+      <button onClick={() => router.push('/friends')}
+        className="w-full flex items-center justify-center gap-6 -mt-2 py-1 text-[var(--stone)] hover:text-[var(--ink)] transition-colors">
+        <span><span className="font-extrabold text-[var(--ink)]">{follow?.following ?? '—'}</span> <span className="text-xs font-bold">Following</span></span>
+        <span className="w-px h-3.5 bg-white/10" />
+        <span><span className="font-extrabold text-[var(--ink)]">{follow?.followers ?? '—'}</span> <span className="text-xs font-bold">Followers</span></span>
+      </button>
+
       {/* Streak + stats */}
       <div className="scroll-border p-4 space-y-4">
         <StreakCounter streak={character.streak} />
@@ -105,12 +113,6 @@ export default function DashboardPage() {
             icon={<CheckCircle2 size={18} className="text-emerald-400" />} />
           <StatCard label="Active" value={activeList.length} tile="bg-amber-400/15"
             icon={<Swords size={18} className="text-amber-400" />} />
-          <StatCard label="Awards" value={unlockedAchievements.length} tile="bg-violet-400/15"
-            icon={<Trophy size={18} className="text-violet-400" />} />
-          <button onClick={() => router.push('/friends')} className="text-left">
-            <StatCard label="Friends" value={friendCount ?? '—'} tile="bg-cyan-400/15"
-              icon={<UsersRound size={18} className="text-cyan-300" />} />
-          </button>
         </div>
       </div>
 

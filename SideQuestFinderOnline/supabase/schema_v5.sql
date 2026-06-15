@@ -21,6 +21,7 @@ create table if not exists friends (
 
 alter table friends enable row level security;
 
-create policy "friends read own"   on friends for select using (auth.uid() = user_id);
-create policy "friends add own"    on friends for insert with check (auth.uid() = user_id);
-create policy "friends remove own" on friends for delete using (auth.uid() = user_id);
+create policy "friends read own"       on friends for select using (auth.uid() = user_id);
+create policy "friends read as friend" on friends for select using (auth.uid() = friend_id);
+create policy "friends add own"        on friends for insert with check (auth.uid() = user_id);
+create policy "friends remove own"     on friends for delete using (auth.uid() = user_id);
