@@ -21,12 +21,11 @@ export function supabaseConfigured(): boolean {
   return !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!key && key !== 'PASTE_ANON_KEY_HERE'
 }
 
-/** Signs in anonymously (device identity) and returns the user id. */
+/** Returns the signed-in user id. Auth is required app-wide (the AuthGate
+ *  guarantees a real session before any feature code runs). */
 export async function ensureUser(): Promise<string> {
   const sb = supabase()
   const { data: { session } } = await sb.auth.getSession()
-  if (session) return session.user.id
-  const { data, error } = await sb.auth.signInAnonymously()
-  if (error || !data.user) throw error ?? new Error('Anonymous sign-in failed')
-  return data.user.id
+  if (!session || session.user.is_anonymous) throw new Error('Not signed in')
+  return session.user.id
 }

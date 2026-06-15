@@ -4,11 +4,12 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   ArrowLeft, ChevronRight, Pencil, AtSign, Globe2, Lock, Bell, Star,
-  MessageSquare, Camera, Hash, FileText, ShieldCheck, LogOut, Trash2, Loader2,
+  MessageSquare, Camera, Hash, FileText, ShieldCheck, LogOut, Trash2, Loader2, Mail,
 } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { ensureUsername } from '@/lib/friends'
 import { supabaseConfigured } from '@/lib/supabase'
+import { getSession, signOut } from '@/lib/auth'
 import EditProfileModal from '@/components/EditProfileModal'
 import type { Settings } from '@/lib/store'
 
@@ -62,25 +63,38 @@ export default function SettingsPage() {
   const { character, settings, updateSettings, resetCharacter, _hasHydrated } = useStore()
   const [editing, setEditing] = useState(false)
   const [username, setUsername] = useState<string | null>(null)
+  const [email, setEmail] = useState<string | null>(null)
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) { router.replace('/character/create'); return }
     if (supabaseConfigured()) {
       ensureUsername(character).then(({ username }) => setUsername(username)).catch(() => {})
+      getSession().then(s => setEmail(s?.user.email ?? null)).catch(() => {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_hasHydrated, character])
+
+  const handleSignOut = async () => {
+    await signOut().catch(() => {})
+    router.replace('/signin')
+  }
 
   if (!_hasHydrated || !character) return null
 
   const set = (patch: Partial<Settings>) => updateSettings(patch)
 
-  const handleReset = () => {
-    if (confirm('Start over? This permanently deletes your character and all progress.')) {
-      resetCharacter()
-      router.replace('/character/create')
-    }
+  const handleReset = async () => {
+    if (!confirm('Delete your character and all progress? This cannot be undone.')) return
+    resetCharacter()
+    // Wipe the cloud copy too, then sign out → back to the sign-in screen.
+    try {
+      const { supabase } = await import('@/lib/supabase')
+      const s = await getSession()
+      if (s) await supabase().from('game_state').delete().eq('user_id', s.user.id)
+    } catch { /* ignore */ }
+    await signOut().catch(() => {})
+    router.replace('/signin')
   }
 
   return (
@@ -97,6 +111,7 @@ export default function SettingsPage() {
       <EditProfileModal open={editing} onClose={() => setEditing(false)} />
 
       <Section title="Account">
+        {email && <Row icon={<Mail size={17} />} label="Email" value={email} />}
         <Row icon={<AtSign size={17} />} label="Username" value={username ? `@${username}` : <Loader2 size={14} className="animate-spin" />} />
         <Row icon={<Pencil size={17} />} label="Edit Profile" onClick={() => setEditing(true)} />
       </Section>
@@ -140,7 +155,7 @@ export default function SettingsPage() {
       </Section>
 
       <Section title="Danger Zone">
-        <Row icon={<LogOut size={17} />} label="Leave Party & Reset Mode" onClick={() => { useStore.getState().leaveParty(); router.push('/dashboard') }} />
+        <Row icon={<LogOut size={17} />} label="Sign Out" onClick={handleSignOut} danger />
         <Row icon={<Trash2 size={17} />} label="Delete Character" onClick={handleReset} danger />
       </Section>
 
