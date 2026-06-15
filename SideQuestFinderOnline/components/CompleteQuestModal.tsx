@@ -16,12 +16,12 @@ interface Draft {
 }
 
 export default function CompleteQuestModal() {
-  const { completingQuestId, setCompletingQuest, completeQuest } = useStore()
+  const { completingQuestId, setCompletingQuest, completeQuest, settings } = useStore()
   const [note, setNote] = useState('')
   const [drafts, setDrafts] = useState<Draft[]>([])
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
-  const [shareToCommunity, setShareToCommunity] = useState(true)
+  const [shareToCommunity, setShareToCommunity] = useState(settings.appearInCommunity)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const quest = completingQuestId ? getQuestById(completingQuestId) : undefined

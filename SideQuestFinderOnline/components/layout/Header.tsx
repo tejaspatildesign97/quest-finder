@@ -1,6 +1,7 @@
 'use client'
 
-import { Map, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { Map, Settings } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { getLevelInfo } from '@/lib/levels'
 
@@ -25,10 +26,10 @@ export default function Header() {
           </div>
         </div>
         {character && (
-          <div className="flex items-center gap-1 bg-[var(--pastel-orange)] rounded-full px-3 py-1.5 shadow-sm">
-            <Zap size={13} className="text-amber-400 fill-amber-500" />
-            <span className="text-xs font-extrabold text-amber-300">{character.xp.toLocaleString()} XP</span>
-          </div>
+          <Link href="/settings" aria-label="Settings"
+            className="w-9 h-9 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-all">
+            <Settings size={18} className="text-[var(--stone)]" />
+          </Link>
         )}
       </div>
     </header>

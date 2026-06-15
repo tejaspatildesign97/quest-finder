@@ -15,6 +15,22 @@ interface Toast {
   icon: string
 }
 
+export interface Settings {
+  appearInCommunity: boolean
+  publicProfile: boolean
+  notifyFollowers: boolean
+  notifyLikes: boolean
+  dailyReminders: boolean
+}
+
+export const DEFAULT_SETTINGS: Settings = {
+  appearInCommunity: true,
+  publicProfile: true,
+  notifyFollowers: true,
+  notifyLikes: true,
+  dailyReminders: true,
+}
+
 interface StoreState {
   character: Character | null
   activeQuests: ActiveQuest[]
@@ -25,6 +41,10 @@ interface StoreState {
   pendingLevelUp: string | null
   _hasHydrated: boolean
   setHasHydrated: (v: boolean) => void
+
+  // Settings
+  settings: Settings
+  updateSettings: (patch: Partial<Settings>) => void
 
   // Character
   setCharacter: (c: Character) => void
@@ -83,6 +103,9 @@ export const useStore = create<StoreState>()(
       pendingLevelUp: null,
       _hasHydrated: false,
       setHasHydrated: (v) => set({ _hasHydrated: v }),
+
+      settings: DEFAULT_SETTINGS,
+      updateSettings: (patch) => set(s => ({ settings: { ...s.settings, ...patch } })),
 
       setCharacter: (c) => set({ character: c }),
       updateCharacter: (patch) => {
@@ -331,6 +354,7 @@ export const useStore = create<StoreState>()(
         myUserId: s.myUserId,
         claimedCompletionIds: s.claimedCompletionIds,
         acceptedChallenges: s.acceptedChallenges,
+        settings: s.settings,
       }) as StoreState,
     }
   )
