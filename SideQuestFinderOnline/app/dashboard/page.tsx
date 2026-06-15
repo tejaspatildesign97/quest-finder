@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil, RotateCcw } from 'lucide-react'
+import { CheckCircle2, Swords, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { QUESTS } from '@/lib/quests'
 import { ACHIEVEMENTS } from '@/lib/achievements'
@@ -31,7 +31,7 @@ function hoursLeftToday() {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, resetCharacter, setMyUserId, _hasHydrated } = useStore()
+  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, setMyUserId, _hasHydrated } = useStore()
   const [editing, setEditing] = useState(false)
   const [follow, setFollow] = useState<{ following: number; followers: number } | null>(null)
 
@@ -219,19 +219,6 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-
-      {/* Reset character */}
-      <div className="pt-2 border-t border-[var(--ink)]/8">
-        <Button variant="danger" size="sm" className="w-full" onClick={() => {
-          if (confirm('Start over? This will delete your character and all progress.')) {
-            resetCharacter()
-            router.replace('/character/create')
-          }
-        }} icon={<RotateCcw size={14} />}>
-          Reset Character
-        </Button>
-        <p className="text-xs font-semibold text-center text-[var(--stone-light)] mt-1.5">This will permanently delete all progress</p>
-      </div>
     </div>
   )
 }
