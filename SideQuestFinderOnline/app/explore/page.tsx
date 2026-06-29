@@ -60,6 +60,22 @@ function PostCard({ post, onCheer, onTry, tried }: {
         {/* Story */}
         {post.note && <p className="text-sm font-medium text-[var(--ink)]/90 leading-relaxed">{post.note}</p>}
 
+        {/* Photos & videos */}
+        {post.imageUrls.length > 0 && (
+          <div className={`grid gap-1.5 ${post.imageUrls.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+            {post.imageUrls.map((url, i) => (
+              <div key={i} className={`relative overflow-hidden rounded-2xl bg-black/40 ${
+                post.imageUrls.length === 1 ? 'aspect-[4/3]' :
+                post.imageUrls.length === 3 && i === 0 ? 'col-span-2 aspect-[16/9]' : 'aspect-square'
+              }`}>
+                {/\.(mp4|webm|mov|m4v)$/i.test(url)
+                  ? <video src={url} className="w-full h-full object-cover" controls playsInline preload="metadata" />
+                  : <img src={url} alt="" loading="lazy" className="w-full h-full object-cover" />}
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Actions */}
         <div className="flex items-center gap-2 pt-1 border-t border-white/5">
           <button onClick={() => onCheer(post)}

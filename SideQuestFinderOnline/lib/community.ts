@@ -15,6 +15,7 @@ export interface CommunityPost {
   createdAt: string
   cheers: number
   cheeredByMe: boolean
+  imageUrls: string[]
 }
 
 export interface Challenge {
@@ -27,13 +28,41 @@ export interface Challenge {
 
 // ── Community feed ────────────────────────────────────────────────────────────
 
-export async function sharePost(character: Character, questId: string, note: string, xp: number): Promise<void> {
+/** Upload quest photos/videos to public storage and return their URLs. */
+export async function uploadPostMedia(
+  character: Character,
+  items: { blob: Blob; type: string }[],
+): Promise<string[]> {
+  if (!items.length) return []
   const uid = await ensureProfile(character)
-  const { error } = await supabase().from('shared_posts').insert({
+  const sb = supabase()
+  const urls: string[] = []
+  for (const it of items) {
+    const ext = it.type.startsWith('video/') ? (it.type.split('/')[1] || 'mp4') : 'jpg'
+    const path = `${uid}/${crypto.randomUUID()}.${ext}`
+    const { error } = await sb.storage.from('post-media').upload(path, it.blob, {
+      contentType: it.type, upsert: false,
+    })
+    if (error) throw error
+    urls.push(sb.storage.from('post-media').getPublicUrl(path).data.publicUrl)
+  }
+  return urls
+}
+
+export async function sharePost(
+  character: Character, questId: string, note: string, xp: number, imageUrls: string[] = [],
+): Promise<void> {
+  const uid = await ensureProfile(character)
+  const base = {
     user_id: uid, user_name: character.name, user_avatar: character.avatar,
     quest_id: questId, note, xp,
-  })
-  if (error) throw error
+  }
+  // Try with image_urls; fall back if that column isn't migrated yet.
+  let { error } = await supabase().from('shared_posts').insert({ ...base, image_urls: imageUrls })
+  if (error) {
+    const retry = await supabase().from('shared_posts').insert(base)
+    if (retry.error) throw retry.error
+  }
 }
 
 export async function fetchPosts(myUserId: string | null): Promise<CommunityPost[]> {
@@ -51,6 +80,7 @@ export async function fetchPosts(myUserId: string | null): Promise<CommunityPost
   return posts.map(p => ({
     id: p.id, userId: p.user_id, userName: p.user_name, userAvatar: p.user_avatar,
     questId: p.quest_id, note: p.note, xp: p.xp, createdAt: p.created_at,
+    imageUrls: Array.isArray(p.image_urls) ? p.image_urls : [],
     cheers: (cheers ?? []).filter(c => c.post_id === p.id).length,
     cheeredByMe: !!myUserId && (cheers ?? []).some(c => c.post_id === p.id && c.user_id === myUserId),
   }))

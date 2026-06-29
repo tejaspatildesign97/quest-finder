@@ -16,7 +16,7 @@ interface Draft {
 }
 
 export default function CompleteQuestModal() {
-  const { completingQuestId, setCompletingQuest, completeQuest, settings } = useStore()
+  const { completingQuestId, setCompletingQuest, completeQuest, settings, character } = useStore()
   const [note, setNote] = useState('')
   const [drafts, setDrafts] = useState<Draft[]>([])
   const [error, setError] = useState('')
@@ -69,8 +69,18 @@ export default function CompleteQuestModal() {
     try {
       const mediaIds: string[] = []
       for (const d of drafts) mediaIds.push(await saveMedia(d.blob))
+
+      // If sharing publicly, upload the media to cloud storage so it shows on the feed.
+      let imageUrls: string[] = []
+      if (shareToCommunity && drafts.length && character) {
+        try {
+          const { uploadPostMedia } = await import('@/lib/community')
+          imageUrls = await uploadPostMedia(character, drafts.map(d => ({ blob: d.blob, type: d.type })))
+        } catch { imageUrls = [] } // best effort — still complete & share the story
+      }
+
       drafts.forEach(d => URL.revokeObjectURL(d.previewUrl))
-      completeQuest(quest.id, note.trim(), mediaIds, shareToCommunity)
+      completeQuest(quest.id, note.trim(), mediaIds, shareToCommunity, imageUrls)
       reset()
     } catch {
       setError('Could not save your media — try again or remove a file.')
@@ -150,13 +160,14 @@ export default function CompleteQuestModal() {
           <input type="checkbox" checked={shareToCommunity} onChange={e => setShareToCommunity(e.target.checked)}
             className="accent-[var(--forest)] w-4 h-4" />
           <span className="text-xs font-bold text-[var(--ink)]">Share to Community feed
-            <span className="block font-semibold text-[var(--stone-light)]">Your story (no photos) appears on the Explore tab</span>
+            <span className="block font-semibold text-[var(--stone-light)]">Your story and photos appear on the Community tab</span>
           </span>
         </label>
         </div>
 
         {/* Footer — pinned */}
-        <div className="p-5 pt-3 shrink-0 space-y-2 safe-area-bottom">
+        <div className="px-5 pt-3 shrink-0 space-y-2"
+          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.5rem)' }}>
           {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
           <Button variant="secondary" size="lg" className="w-full" onClick={submit} loading={saving} icon={<Check size={18} />}>
             Complete Quest & Save Memory

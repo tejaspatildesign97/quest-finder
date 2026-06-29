@@ -56,7 +56,7 @@ interface StoreState {
 
   // Quests
   acceptQuest: (questId: string) => void
-  completeQuest: (questId: string, note?: string, mediaIds?: string[], shareToCommunity?: boolean) => void
+  completeQuest: (questId: string, note?: string, mediaIds?: string[], shareToCommunity?: boolean, imageUrls?: string[]) => void
   abandonQuest: (questId: string) => void
   /** quest id currently in the completion modal */
   completingQuestId: string | null
@@ -127,7 +127,7 @@ export const useStore = create<StoreState>()(
       completingQuestId: null,
       setCompletingQuest: (id) => set({ completingQuestId: id }),
 
-      completeQuest: (questId, note, mediaIds, shareToCommunity) => {
+      completeQuest: (questId, note, mediaIds, shareToCommunity, imageUrls) => {
         const { activeQuests, character, party } = get()
         const quest = QUESTS.find(q => q.id === questId)
         if (!quest || !character) return
@@ -162,7 +162,7 @@ export const useStore = create<StoreState>()(
         // Share to the public community feed (Explore tab)
         if (shareToCommunity && note) {
           import('./community').then(({ sharePost }) =>
-            sharePost(updatedCharacter, questId, note, earned)
+            sharePost(updatedCharacter, questId, note, earned, imageUrls ?? [])
           ).catch(err => console.error('community share failed:', err))
         }
 
