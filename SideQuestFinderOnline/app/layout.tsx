@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Anton, Space_Grotesk } from 'next/font/google'
+import { Anton, Space_Grotesk, Bricolage_Grotesque, Plus_Jakarta_Sans, Titan_One } from 'next/font/google'
 import './globals.css'
 import AuthGate from '@/components/AuthGate'
 
@@ -15,6 +15,25 @@ const grotesk = Space_Grotesk({
   weight: ['400', '500', '600', '700'],
 })
 
+// Quest-Pop design system fonts (new surfaces only; old screens keep Anton/Grotesk)
+const bricolage = Bricolage_Grotesque({
+  variable: '--font-bricolage',
+  subsets: ['latin'],
+  weight: '800',
+})
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: '--font-jakarta',
+  subsets: ['latin'],
+  weight: ['500', '700', '800'],
+})
+
+const titan = Titan_One({
+  variable: '--font-titan',
+  subsets: ['latin'],
+  weight: '400',
+})
+
 export const metadata: Metadata = {
   title: 'Side Quest Finder (Online)',
   description: 'Discover your next adventure',
@@ -22,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${anton.variable} ${grotesk.variable}`}>
+    <html lang="en" className={`${anton.variable} ${grotesk.variable} ${bricolage.variable} ${jakarta.variable} ${titan.variable}`}>
       <body className="min-h-screen">
         <AuthGate>{children}</AuthGate>
       </body>

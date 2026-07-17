@@ -1,56 +1,39 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Swords, Zap, Clock, ChevronRight, PartyPopper, User, Heart, Users, Pencil } from 'lucide-react'
+import { Compass, ChevronRight } from 'lucide-react'
 import { useStore } from '@/lib/store'
-import { QUESTS } from '@/lib/quests'
-import { ACHIEVEMENTS } from '@/lib/achievements'
-import { getCategoryStyle } from '@/lib/categories'
-import CharacterCard from '@/components/ui/CharacterCard'
-import StreakCounter from '@/components/ui/StreakCounter'
-import StatCard from '@/components/ui/StatCard'
-import AchievementCard from '@/components/ui/AchievementCard'
-// QuestCard removed — Active Quests moved to the Quests tab
-import Badge from '@/components/ui/Badge'
-import Button from '@/components/ui/Button'
-import EditProfileModal from '@/components/EditProfileModal'
-
-function dayOfYear() {
-  const now = new Date()
-  return Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000)
-}
-
-function hoursLeftToday() {
-  const now = new Date()
-  const midnight = new Date(now); midnight.setHours(24, 0, 0, 0)
-  const mins = Math.floor((midnight.getTime() - now.getTime()) / 60000)
-  return `${Math.floor(mins / 60)}h ${mins % 60}m left`
-}
+import { getDailyQuests } from '@/lib/dailyQuests'
+import { getQuestById } from '@/lib/quests'
+import HomeHeader from '@/components/home/HomeHeader'
+import QuestRail from '@/components/home/QuestRail'
+import RailQuestCard from '@/components/home/RailQuestCard'
+import ForYouFeed from '@/components/home/ForYouFeed'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { character, activeQuests, unlockedAchievements, playMode, setPlayMode, acceptQuest, setCompletingQuest, updateStreak, party, onlineParty, setMyUserId, _hasHydrated } = useStore()
-  const [editing, setEditing] = useState(false)
-  const [follow, setFollow] = useState<{ following: number; followers: number } | null>(null)
+  const { character, activeQuests, playMode, setPlayMode, acceptQuest, setCompletingQuest,
+          updateStreak, onlineParty, setMyUserId, _hasHydrated } = useStore()
 
   useEffect(() => {
     if (!_hasHydrated) return
     if (!character) { router.replace('/character/create'); return }
     updateStreak()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_hasHydrated, character])
 
-  // Ensure profile/username and load friend count
+  // Ensure profile/username exists and seed myUserId (feed, notifications and
+  // chat all depend on it) — load-bearing, keep on home.
   useEffect(() => {
     if (!_hasHydrated || !character) return
     import('@/lib/supabase').then(({ supabaseConfigured }) => {
       if (!supabaseConfigured()) return
-      import('@/lib/friends').then(async ({ ensureUsername, fetchFollowCounts }) => {
+      import('@/lib/friends').then(async ({ ensureUsername }) => {
         try {
           const { userId } = await ensureUsername(character)
           setMyUserId(userId)
-          setFollow(await fetchFollowCounts(userId))
         } catch { /* offline or schema not migrated */ }
       })
     })
@@ -67,158 +50,61 @@ export default function DashboardPage() {
 
   if (!_hasHydrated || !character) return null
 
+  const suggested = getDailyQuests(playMode, 5)
   const activeList = activeQuests.filter(q => q.status === 'active')
-  const completed  = activeQuests.filter(q => q.status === 'completed')
-  const recentAchs = unlockedAchievements.slice(-3).reverse()
-
-  // Daily quests — 3 deterministic picks per day: one quick easy, one medium, one wildcard
-  const day = dayOfYear()
-  const modePool = QUESTS.filter(q => q.mode.includes(playMode))
-  const pickDaily = (pool: typeof QUESTS, salt: number) => pool.length ? pool[(day * 7 + salt * 13) % pool.length] : undefined
-  const dailyQuests = [
-    pickDaily(modePool.filter(q => q.difficulty === 'Easy'), 1),
-    pickDaily(modePool.filter(q => q.difficulty === 'Medium'), 2),
-    pickDaily(modePool.filter(q => q.difficulty === 'Hard' || q.difficulty === 'Legendary'), 3),
-  ].filter((q, i, arr): q is NonNullable<typeof q> => !!q && arr.findIndex(x => x?.id === q.id) === i)
-  const dailyDoneCount = dailyQuests.filter(q => activeQuests.find(a => a.questId === q.id)?.status === 'completed').length
 
   return (
-    <div className="space-y-6">
-      {/* Character hero */}
-      <div className="relative">
-        <CharacterCard character={character} />
-        <button
-          onClick={() => setEditing(true)}
-          className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink)] bg-white/15 backdrop-blur-sm hover:bg-white/25 rounded-full px-3 py-1.5 transition-all"
-        >
-          <Pencil size={12} /> Edit
-        </button>
-      </div>
+    <div className="qp-screen space-y-5">
+      <HomeHeader />
 
-      <EditProfileModal open={editing} onClose={() => setEditing(false)} />
+      {/* Suggested Quest Challenge */}
+      <section className="space-y-2">
+        <span className="qp-overline">Suggested Quest Challenge</span>
+        <QuestRail>
+          {suggested.map(q => {
+            const state = activeQuests.find(a => a.questId === q.id && a.status !== 'abandoned')
+            return (
+              <RailQuestCard key={q.id} quest={q} state={state}
+                onStart={() => acceptQuest(q.id)}
+                onDone={() => setCompletingQuest(q.id)} />
+            )
+          })}
+        </QuestRail>
+      </section>
 
-      {/* Following / Followers — low-key, under the profile card */}
-      <button onClick={() => router.push('/friends')}
-        className="w-full flex items-center justify-center gap-6 -mt-2 py-1 text-[var(--stone)] hover:text-[var(--ink)] transition-colors">
-        <span><span className="font-extrabold text-[var(--ink)]">{follow?.following ?? '—'}</span> <span className="text-xs font-bold">Following</span></span>
-        <span className="w-px h-3.5 bg-white/10" />
-        <span><span className="font-extrabold text-[var(--ink)]">{follow?.followers ?? '—'}</span> <span className="text-xs font-bold">Followers</span></span>
-      </button>
-
-      {/* Streak + stats */}
-      <div className="scroll-border p-4 space-y-4">
-        <StreakCounter streak={character.streak} />
-        <div className="grid grid-cols-2 gap-2">
-          <StatCard label="Quests" value={completed.length} tile="bg-emerald-400/15"
-            icon={<CheckCircle2 size={18} className="text-emerald-400" />} />
-          <StatCard label="Active" value={activeList.length} tile="bg-amber-400/15"
-            icon={<Swords size={18} className="text-amber-400" />} />
-        </div>
-      </div>
-
-      {/* Play mode — auto from party status */}
-      <Link href="/party" className="flex items-center gap-3 bg-[var(--surface-2)] rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] hover:bg-white/8 transition-all">
-        <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-          playMode === 'solo' ? 'bg-amber-400/15' : playMode === 'couple' ? 'bg-pink-400/15' : 'bg-violet-400/15'}`}>
-          {playMode === 'solo' ? <User size={17} className="text-amber-300" />
-            : playMode === 'couple' ? <Heart size={17} className="text-pink-300" />
-            : <Users size={17} className="text-violet-300" />}
-        </span>
-        <span className="flex-1">
-          <span className="font-display block text-sm">
-            {playMode === 'solo' ? 'Solo Mode' : playMode === 'couple' ? `Couples Mode${onlineParty ? ` · ${onlineParty.name}` : ''}` : `Friends Mode${onlineParty ? ` · ${onlineParty.name}` : ''}`}
-          </span>
-          <span className="text-xs font-semibold text-[var(--stone)]">
-            {onlineParty ? 'Set by your party' : 'Join or create a party to unlock Couples & Friends quests'}
-          </span>
-        </span>
-        <ChevronRight size={16} className="text-[var(--stone)]" />
-      </Link>
-
-      {/* Daily quests — 3 per day */}
-      {dailyQuests.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="font-display font-semibold text-[var(--ink)]">Daily Quests <span className="text-[var(--quest-gold)]">{dailyDoneCount}/{dailyQuests.length}</span></p>
-            <span className="flex items-center gap-1 text-xs font-bold text-[var(--stone)]">
-              <Clock size={12} /> {hoursLeftToday()}
+      {/* Active Quests */}
+      <section className="space-y-2">
+        <span className="qp-overline">Active Quests</span>
+        {activeList.length === 0 ? (
+          <Link href="/quests" className="qp-card flex items-center gap-3 p-4">
+            <span className="qp-inset w-10 h-10 flex items-center justify-center shrink-0">
+              <Compass size={19} className="text-[var(--qp-pink-text)]" strokeWidth={2.2} />
             </span>
-          </div>
-          <div className="space-y-2">
-            {dailyQuests.map(dq => {
-              const state = activeQuests.find(a => a.questId === dq.id)
-              const done = state?.status === 'completed'
-              const cat = getCategoryStyle(dq.category)
+            <span className="flex-1">
+              <span className="qp-title block text-sm">No active quests</span>
+              <span className="qp-body text-xs">Pick an adventure from the quest board.</span>
+            </span>
+            <ChevronRight size={16} className="text-[var(--qp-gray)]" />
+          </Link>
+        ) : (
+          <QuestRail>
+            {activeList.map(aq => {
+              const quest = getQuestById(aq.questId)
+              if (!quest) return null
               return (
-                <div key={dq.id} className={`rounded-3xl p-3.5 ${done ? 'bg-[var(--pastel-mint)] opacity-80' : 'bg-[var(--surface-2)] shadow-[0_1px_3px_rgba(0,0,0,0.5),0_8px_24px_rgba(0,0,0,0.5)]'}`}>
-                  <div className="flex items-start gap-3">
-                    <span className="w-11 h-11 flex items-center justify-center rounded-2xl shadow-md shrink-0"
-                      style={{ background: cat.gradient }}>
-                      <cat.Icon size={20} className="text-white" strokeWidth={2.2} />
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-display text-sm">{dq.title}</div>
-                      <p className="text-xs font-semibold text-[var(--stone)] leading-relaxed mt-0.5">{dq.description}</p>
-                      <p className="text-xs italic text-[var(--stone-light)] mt-0.5">"{dq.lore}"</p>
-                      <div className="flex flex-wrap gap-1.5 mt-1.5">
-                        <Badge variant={dq.difficulty === 'Easy' ? 'forest' : dq.difficulty === 'Medium' ? 'gold' : dq.difficulty === 'Hard' ? 'danger' : 'magic'}>{dq.difficulty}</Badge>
-                        <Badge variant="gold" icon={<Zap size={11} className="fill-amber-500 text-amber-500" />}>+{dq.xp}</Badge>
-                        <Badge variant="stone" icon={<Clock size={11} />}>{dq.duration >= 120 ? '2h+' : dq.duration >= 60 ? `${Math.round(dq.duration / 60)}h` : `${dq.duration}m`}</Badge>
-                        <Badge variant="stone">{dq.category}</Badge>
-                      </div>
-                    </div>
-                    <div className="shrink-0">
-                      {done ? (
-                        <CheckCircle2 size={26} className="text-emerald-500" />
-                      ) : state?.status === 'active' ? (
-                        <Button size="sm" variant="primary" onClick={() => setCompletingQuest(dq.id)}>Done!</Button>
-                      ) : (
-                        <Button size="sm" variant="secondary" onClick={() => acceptQuest(dq.id)}>Start</Button>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <RailQuestCard key={aq.id ?? aq.questId} quest={quest} state={aq}
+                  onDone={() => setCompletingQuest(aq.questId)} />
               )
             })}
-          </div>
-        </div>
-      )}
+          </QuestRail>
+        )}
+      </section>
 
-      {/* Party bonus promo */}
-      {!party && (
-        <Link href="/party" className="block rounded-3xl p-5 text-white shadow-lg shadow-violet-500/30 hover:scale-[1.01] transition-transform"
-          style={{ background: 'var(--grad-purple)' }}>
-          <div className="flex items-center gap-3">
-            <span className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
-              <PartyPopper size={24} />
-            </span>
-            <div className="flex-1">
-              <div className="font-display font-semibold">Party Bonus</div>
-              <div className="text-sm font-bold text-white/85">+20% XP on all quests with friends</div>
-            </div>
-            <ChevronRight size={20} className="opacity-80" />
-          </div>
-        </Link>
-      )}
-
-      {/* Recent achievements */}
-      {recentAchs.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="font-display font-semibold text-[var(--ink)]">Recent Achievements</p>
-            <Link href="/achievements" className="flex items-center text-xs font-extrabold text-[var(--quest-gold)]">
-              View all <ChevronRight size={14} />
-            </Link>
-          </div>
-          <div className="grid grid-cols-3 gap-2">
-            {recentAchs.map(id => {
-              const ach = ACHIEVEMENTS.find(a => a.id === id)
-              if (!ach) return null
-              return <AchievementCard key={id} achievement={ach} unlocked={true} />
-            })}
-          </div>
-        </div>
-      )}
+      {/* For You Feed */}
+      <section className="space-y-2 pb-4">
+        <span className="qp-overline">For You Feed</span>
+        <ForYouFeed />
+      </section>
     </div>
   )
 }

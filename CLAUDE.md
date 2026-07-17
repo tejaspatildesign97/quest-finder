@@ -47,8 +47,10 @@ One hosted project (URL above) shared across machines — no local DB to run.
 - `schema_v5.sql` — friends / usernames (follows)
 - `schema_v6.sql` — `game_state` table (cloud-synced progress; **email confirmation OFF** in Auth)
 - `schema_v7.sql` — `image_urls` on shared_posts + public `post-media` storage bucket (photos on the feed)
+- `schema_v8.sql` — notifications table + RLS + security-definer triggers (follow/cheer/dare events) + realtime
+- `schema_v9.sql` — messages table for 1:1 chat + RLS + realtime
 
-All seven are currently applied to the live project. RLS is enabled and enforced (verified: anon can't write `shared_posts`, can't read others' `game_state`).
+Schemas v1–v7 are applied to the live project; v8–v9 pending (the client fails gracefully until they're applied). RLS is enabled and enforced (verified: anon can't write `shared_posts`, can't read others' `game_state`).
 
 ### Auth
 - Required sign-in (email/password or Google) → progress cloud-synced via `game_state`.

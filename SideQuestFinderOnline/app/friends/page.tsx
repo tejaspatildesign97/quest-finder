@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Search, UserPlus, Users, Loader2, X, Copy, Check } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeft, Search, UserPlus, Users, Loader2, X, Copy, Check, MessageCircle } from 'lucide-react'
 import { useStore } from '@/lib/store'
 import { ensureUsername, fetchFriends, fetchFollowers, removeFriend, type FriendProfile } from '@/lib/friends'
 import { supabaseConfigured } from '@/lib/supabase'
@@ -143,6 +144,10 @@ export default function FriendsPage() {
                 <p className="text-sm font-extrabold truncate">{f.name}</p>
                 <p className="text-xs font-bold text-[var(--stone-light)] truncate">@{f.username}</p>
               </div>
+              <Link href={`/chat/${f.id}`} aria-label={`Message ${f.name}`}
+                className="w-8 h-8 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-all">
+                <MessageCircle size={15} className="text-[var(--stone)]" />
+              </Link>
               {tab === 'Following' && (
                 <button onClick={() => handleRemove(f)} aria-label="Unfollow"
                   className="w-8 h-8 rounded-full bg-white/8 hover:bg-rose-500/20 flex items-center justify-center transition-all group">

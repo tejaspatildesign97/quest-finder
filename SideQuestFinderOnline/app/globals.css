@@ -138,3 +138,125 @@ h1, h2, h3, .font-display {
 
 .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
 main { padding-bottom: 7rem; }
+
+/* ============================================================
+   Quest-Pop design system (new surfaces only — home, profile,
+   map, chat, nav). Old screens keep the vars/classes above.
+   Rule zero: every color pairs with primary pink #FA4E85.
+   ============================================================ */
+:root {
+  --qp-ink: #121212;         /* screen background */
+  --qp-paper: #241C21;       /* cards (warm dark) */
+  --qp-inset: #1A1418;       /* panels inside cards */
+  --qp-cream: #FFF4E4;       /* primary text */
+  --qp-gray: #B9B4A9;        /* secondary text / icons */
+  --qp-pink: #FA4E85;        /* PRIMARY action */
+  --qp-pink-ledge: #B32752;  /* 3D button ledge */
+  --qp-pink-text: #FF8FB3;   /* pink text on dark (AA) */
+  --qp-grape: #8636F8;       /* select / info accent */
+  --qp-lavender: #C9A6FF;    /* grape text on dark (AA) */
+  --qp-coral: #FF5D6C;       /* destructive · timers */
+  --qp-gold: #FFB640;        /* XP, streak, rewards */
+  --qp-rose: #EAC6BE;        /* quiet accent (Common) */
+  --qp-peach: #FF9E64;       /* perk highlights */
+}
+
+.qp-screen {
+  background: var(--qp-ink);
+  padding: 1.25rem 1.25rem 0;   /* 20px sides */
+  min-height: 100vh;
+}
+
+.qp-card {
+  background: var(--qp-paper);
+  border: 1px solid rgba(255, 244, 228, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+}
+
+.qp-inset {
+  background: var(--qp-inset);
+  border-radius: 14px;
+}
+
+/* Quiet tinted glass badge — set color via inline style:
+   style={{ color, background: `${c}1A`, borderColor: `${c}38` }} */
+.qp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-jakarta), sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.qp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: var(--qp-pink);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--font-jakarta), sans-serif;
+  font-weight: 800;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 4px 0 var(--qp-pink-ledge), 0 14px 26px rgba(0, 0, 0, 0.35);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.qp-btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.3), 0 1px 0 var(--qp-pink-ledge);
+}
+.qp-btn-primary:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.qp-title {
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  color: var(--qp-cream);
+  text-transform: none;
+  letter-spacing: 0;
+  font-synthesis: none;
+}
+
+.qp-body {
+  font-family: var(--font-jakarta), sans-serif;
+  font-weight: 500;
+  color: var(--qp-gray);
+}
+
+.qp-overline {
+  font-family: var(--font-jakarta), sans-serif;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qp-gray);
+}
+
+.qp-num {
+  font-family: var(--font-grotesk), monospace;
+  font-weight: 700;
+}
+
+/* Floating glass nav dock */
+.qp-dock {
+  background: rgba(42, 33, 38, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 244, 228, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Active nav icon: white glow */
+.qp-nav-glow {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
+}
+
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
