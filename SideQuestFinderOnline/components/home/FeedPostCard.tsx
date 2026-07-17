@@ -24,8 +24,7 @@ export default function FeedPostCard({ post, onCheer }: Props) {
   const quest = getQuestById(post.questId)
 
   return (
-    // Speech-bubble shape: one tight corner where the avatar sits
-    <article className="qp-card space-y-3 !rounded-[26px] !rounded-tl-[8px] p-4">
+    <article className="qp-card space-y-3 !rounded-[24px] p-4">
       {/* Header */}
       <div className="flex items-center gap-3">
         <span className="block w-11 h-11 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)] shrink-0">

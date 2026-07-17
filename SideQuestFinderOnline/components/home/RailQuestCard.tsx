@@ -50,10 +50,11 @@ export default function RailQuestCard({ quest, state, onStart, onDone }: Props) 
   const active = state?.status === 'active'
 
   return (
-    <div className="qp-ticket snap-start shrink-0 w-[82%] flex flex-col">
-      <div className="p-5 pb-4 flex flex-col gap-3.5 flex-1">
-        <div className="flex items-center gap-4">
-          <span className="qp-diamond w-11 h-11 shrink-0 ml-1">
+    <div className="qp-ticket snap-start shrink-0 w-[80%] flex flex-col">
+      <div className="p-5 pb-4 flex flex-col gap-3 flex-1">
+        <div className="flex items-center gap-3.5">
+          <span className="w-11 h-11 rounded-[14px] flex items-center justify-center shrink-0"
+            style={{ background: `color-mix(in srgb, ${accent} 14%, transparent)` }}>
             <cat.Icon size={20} strokeWidth={2.2} style={{ color: accent }} />
           </span>
           <div className="flex-1 min-w-0">
@@ -64,8 +65,10 @@ export default function RailQuestCard({ quest, state, onStart, onDone }: Props) 
         <p className="qp-body text-[0.8rem] leading-relaxed line-clamp-2">{quest.description}</p>
       </div>
 
-      {/* Ticket stub */}
-      <div className="qp-perforation flex items-center gap-2.5 px-5 py-3.5">
+      {/* Tear-off stub */}
+      <div className="qp-stub flex items-center gap-2.5 px-5 py-3.5">
+        <span className="qp-notch left" />
+        <span className="qp-notch right" />
         <span className="qp-badge qp-num text-[0.7rem] px-2.5 py-1"
           style={{ color: 'var(--qp-gold)', background: 'rgba(255,182,64,0.1)', borderColor: 'rgba(255,182,64,0.22)' }}>
           <Zap size={11} className="fill-[var(--qp-gold)]" /> +{quest.xp}

@@ -35,9 +35,8 @@ export default function Nav() {
                 <span className={active ? 'qp-nav-glow' : ''}>
                   <Icon
                     size={24}
-                    strokeWidth={2.2}
+                    strokeWidth={active ? 2.5 : 2.2}
                     className={active ? 'text-white' : 'text-[var(--qp-gray)]'}
-                    fill={active ? 'rgba(255,255,255,0.18)' : 'none'}
                   />
                 </span>
               ) : (
