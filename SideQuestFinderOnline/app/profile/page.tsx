@@ -48,7 +48,7 @@ export default function ProfilePage() {
       <div className="flex items-center justify-between pt-7">
         <h1 className="qp-title text-[1.7rem]">Profile</h1>
         <Link href="/settings"
-          className="w-11 h-11 rounded-full flex items-center justify-center bg-[var(--qp-paper)] border border-[rgba(255,244,228,0.1)]">
+          className="w-11 h-11 rounded-full flex items-center justify-center bg-[var(--qp-paper)] border border-[var(--fg-hairline)]">
           <Settings size={18} className="text-[var(--qp-gray)]" strokeWidth={2.2} />
         </Link>
       </div>
@@ -107,7 +107,7 @@ export default function ProfilePage() {
             { value: active, label: 'Active' },
           ].map((s, i) => (
             <button key={s.label} onClick={s.onClick} disabled={!s.onClick}
-              className={`text-center ${i > 0 ? 'border-l border-[rgba(255,244,228,0.08)]' : ''}`}>
+              className={`text-center ${i > 0 ? 'border-l border-[var(--fg-hairline)]' : ''}`}>
               <span className="qp-num block text-xl text-[var(--qp-cream)]">{s.value}</span>
               <span className="qp-overline text-[0.58rem]">{s.label}</span>
             </button>
@@ -121,7 +121,7 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between">
             <span className="qp-overline">Achievements</span>
             <Link href="/achievements" className="flex items-center text-xs font-extrabold text-[var(--qp-pink-text)]"
-              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}>
+              style={{ fontFamily: 'var(--font-fsans), sans-serif' }}>
               View all <ChevronRight size={14} />
             </Link>
           </div>

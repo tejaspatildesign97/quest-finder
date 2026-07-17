@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Anton, Space_Grotesk, Bricolage_Grotesque, Plus_Jakarta_Sans, Titan_One } from 'next/font/google'
+import { Anton, Space_Grotesk, Bricolage_Grotesque, Plus_Jakarta_Sans, Titan_One, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import AuthGate from '@/components/AuthGate'
 
@@ -34,6 +34,19 @@ const titan = Titan_One({
   weight: '400',
 })
 
+// DESIGN-figma.md system fonts: Inter ≈ figmaSans (variable weights),
+// JetBrains Mono ≈ figmaMono (eyebrows/captions only)
+const fsans = Inter({
+  variable: '--font-fsans',
+  subsets: ['latin'],
+})
+
+const fmono = JetBrains_Mono({
+  variable: '--font-fmono',
+  subsets: ['latin'],
+  weight: ['400'],
+})
+
 export const metadata: Metadata = {
   title: 'Side Quest Finder (Online)',
   description: 'Discover your next adventure',
@@ -41,7 +54,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${anton.variable} ${grotesk.variable} ${bricolage.variable} ${jakarta.variable} ${titan.variable}`}>
+    <html lang="en" className={`${anton.variable} ${grotesk.variable} ${bricolage.variable} ${jakarta.variable} ${titan.variable} ${fsans.variable} ${fmono.variable}`}>
       <body className="min-h-screen">
         <AuthGate>{children}</AuthGate>
       </body>

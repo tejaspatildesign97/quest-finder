@@ -64,7 +64,7 @@ export default function ChatListPage() {
           ) : contacts.map(c => (
             <Link key={c.id} href={`/chat/${c.id}`}
               className="flex items-center gap-3 px-1.5 py-2 rounded-[14px] hover:bg-[var(--qp-inset)] transition-colors">
-              <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)]">
+              <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[var(--fg-hairline)]">
                 <Avatar value={c.avatar} size={36} />
               </span>
               <span className="qp-title text-sm flex-1 truncate">{c.name}</span>
@@ -101,20 +101,20 @@ export default function ChatListPage() {
           {convos.map(c => (
             <Link key={c.peerId} href={`/chat/${c.peerId}`}
               className="flex items-center gap-3 px-2 py-2.5 rounded-[14px] hover:bg-[var(--qp-inset)] transition-colors">
-              <span className="block w-11 h-11 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)] shrink-0">
+              <span className="block w-11 h-11 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[var(--fg-hairline)] shrink-0">
                 <Avatar value={c.peerAvatar} size={44} />
               </span>
               <span className="flex-1 min-w-0">
                 <span className="qp-title block text-sm truncate">{c.peerName}</span>
                 <span className={`block text-xs truncate ${c.unread ? 'text-[var(--qp-cream)] font-bold' : 'text-[var(--qp-gray)]'}`}
-                  style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}>
+                  style={{ fontFamily: 'var(--font-fsans), sans-serif' }}>
                   {c.lastFromMe ? 'You: ' : ''}{c.lastBody}
                 </span>
               </span>
               <span className="flex flex-col items-end gap-1 shrink-0">
                 <span className="qp-num text-[0.6rem] text-[var(--qp-gray)]">{relativeTime(c.lastAt)}</span>
                 {c.unread > 0 && (
-                  <span className="qp-num min-w-[18px] h-[18px] px-1 rounded-full bg-[var(--qp-pink)] text-white text-[0.6rem] flex items-center justify-center">
+                  <span className="qp-num min-w-[18px] h-[18px] px-1 rounded-full bg-[var(--fg-magenta)] text-white text-[0.6rem] flex items-center justify-center">
                     {c.unread > 9 ? '9+' : c.unread}
                   </span>
                 )}

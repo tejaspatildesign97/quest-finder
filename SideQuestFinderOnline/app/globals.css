@@ -1,101 +1,117 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN-figma.md system: a monochrome editorial frame (white
+   canvas, black ink, pill CTAs, mono eyebrows) interrupted by
+   oversized pastel color blocks. Inter ≈ figmaSans, JetBrains
+   Mono ≈ figmaMono.
+
+   The legacy variable names below are kept so every existing
+   screen re-skins itself; their VALUES now map into the new
+   system (no dark surfaces, no gradients, no neon).
+   ============================================================ */
 :root {
-  /* Dark surfaces */
-  --parchment: #0c0c10;        /* app background — near black */
-  --parchment-dark: #16161c;   /* card surface */
-  --surface: #16161c;
-  --surface-2: #1f1f27;        /* raised surface */
-  --ink: #f5f5f7;              /* primary text — near white */
+  /* System core */
+  --fg-canvas: #ffffff;
+  --fg-ink: #000000;
+  --fg-hairline: #e6e6e6;
+  --fg-hairline-soft: #f1f1f1;
+  --fg-surface-soft: #f7f7f5;
+  --fg-magenta: #ff3d8b;
+  --fg-success: #1ea64a;
 
-  /* Neon accents */
-  --quest-gold: #fbbf24;       /* amber */
-  --quest-gold-light: #fde047;
-  --forest: #a3e635;           /* acid green (Letterboxd vibe) */
-  --forest-light: #bef264;
-  --danger: #f43f5e;           /* hot rose */
-  --danger-light: #fb7185;
-  --stone: #9b9ba6;            /* muted gray */
-  --stone-light: #6b6b76;
-  --magic: #a855f7;            /* neon purple */
-  --magic-light: #c084fc;
-  --neon-pink: #ec4899;
-  --neon-cyan: #22d3ee;
+  /* Pastel color blocks */
+  --block-lime: #dceeb1;
+  --block-lilac: #c5b0f4;
+  --block-cream: #f4ecd6;
+  --block-pink: #efd4d4;
+  --block-mint: #c8e6cd;
+  --block-coral: #f3c9b6;
+  --block-navy: #1f1d3d;
 
-  /* Translucent neon tints (used where pastels were) */
-  --pastel-orange: rgba(251, 191, 36, 0.14);
-  --pastel-pink:   rgba(236, 72, 153, 0.14);
-  --pastel-purple: rgba(168, 85, 247, 0.16);
-  --pastel-mint:   rgba(163, 230, 53, 0.14);
-  --pastel-blue:   rgba(34, 211, 238, 0.14);
+  /* ── Legacy tokens, remapped (old dark theme names → new values) ── */
+  --parchment: var(--fg-canvas);        /* app background */
+  --parchment-dark: var(--fg-surface-soft);
+  --surface: var(--fg-canvas);
+  --surface-2: var(--fg-surface-soft);  /* raised surface */
+  --ink: var(--fg-ink);                 /* primary text */
 
-  /* Gradients */
-  --grad-hero: linear-gradient(135deg, #2e1065 0%, #701a75 45%, #0e7490 100%);
-  --grad-orange: linear-gradient(135deg, #fbbf24 0%, #f97316 60%, #ec4899 100%);
-  --grad-purple: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  --grad-synth: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #22d3ee 100%);
-  --grad-acid: linear-gradient(135deg, #a3e635 0%, #22c55e 100%);
+  --quest-gold: var(--fg-ink);          /* old accent → ink (accents are scarce now) */
+  --quest-gold-light: var(--fg-ink);
+  --forest: var(--fg-success);
+  --forest-light: var(--fg-success);
+  --danger: #d92d20;
+  --danger-light: #d92d20;
+  --stone: #3d3d3d;                     /* legacy secondary text */
+  --stone-light: #6e6e6e;
+  --magic: #7a5fd0;                     /* deep lilac glyph tone */
+  --magic-light: #7a5fd0;
+  --neon-pink: var(--fg-magenta);
+  --neon-cyan: var(--fg-success);
+
+  /* Legacy tints → pastel block surfaces */
+  --pastel-orange: var(--block-cream);
+  --pastel-pink:   var(--block-pink);
+  --pastel-purple: var(--block-lilac);
+  --pastel-mint:   var(--block-mint);
+  --pastel-blue:   var(--block-mint);
+
+  /* Legacy gradients → flat pastel panels (gradients are banned) */
+  --grad-hero: var(--block-lilac);
+  --grad-orange: var(--block-coral);
+  --grad-purple: var(--block-lilac);
+  --grad-synth: var(--block-pink);
+  --grad-acid: var(--block-lime);
 }
 
 @theme inline {
-  --color-background: var(--parchment);
-  --color-foreground: var(--ink);
-  --font-sans: var(--font-grotesk);
-  --font-display: var(--font-anton);
+  --color-background: var(--fg-canvas);
+  --color-foreground: var(--fg-ink);
+  --font-sans: var(--font-fsans);
+  --font-display: var(--font-fsans);
 }
 
 body {
-  background: var(--parchment);
-  color: var(--ink);
-  font-family: var(--font-grotesk), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--fg-canvas);
+  color: var(--fg-ink);
+  font-family: var(--font-fsans), 'SF Pro Display', system-ui, helvetica, sans-serif;
+  font-weight: 380;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Film-grain overlay for the poster look */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 50;
-  mix-blend-mode: overlay;
-}
-
+/* Editorial display: Inter at heavy-tight, sentence case */
 h1, h2, h3, .font-display {
-  font-family: var(--font-anton), Impact, sans-serif;
-  letter-spacing: 0.015em;
-  text-transform: uppercase;
-  /* Anton ships a single weight (400). Tailwind bold utilities on these
-     elements would otherwise trigger faux-bold synthesis, which smears the
-     condensed glyphs and reads as blur. Disable it so the real 400 renders. */
+  font-family: var(--font-fsans), system-ui, sans-serif;
+  font-weight: 640;
+  letter-spacing: -0.02em;
+  text-transform: none;
   font-synthesis: none;
 }
 
-/* Dark glass card */
+/* Legacy card: white with hairline (elevation level 1) */
 .scroll-border {
-  background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 1.5rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  background: var(--fg-canvas);
+  border: 1px solid var(--fg-hairline);
+  border-radius: 24px;
+  box-shadow: none;
   position: relative;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--fg-hairline);
 }
 
 .quest-divider {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--ink);
+  color: var(--fg-ink);
   font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 640;
 }
 .quest-divider::before { display: none; }
 .quest-divider::after { content: ''; flex: 1; height: 0; }
@@ -106,12 +122,10 @@ h1, h2, h3, .font-display {
 }
 
 .shimmer-text {
-  background: var(--grad-synth);
-  background-size: 200% auto;
+  background: var(--fg-ink);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
 }
 
 @keyframes float {
@@ -121,8 +135,8 @@ h1, h2, h3, .font-display {
 .float { animation: float 3s ease-in-out infinite; }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 16px 2px rgba(168, 85, 247, 0.35); }
-  50%       { box-shadow: 0 0 32px 10px rgba(236, 72, 153, 0.45); }
+  0%, 100% { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); }
+  50%       { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10); }
 }
 .glow { animation: pulse-glow 2.4s ease-in-out infinite; }
 
@@ -131,132 +145,147 @@ h1, h2, h3, .font-display {
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Neon ring used on active/selected elements */
+/* Selection ring — black, editorial */
 .neon-ring {
-  box-shadow: 0 0 0 2px rgba(163, 230, 53, 0.9), 0 0 24px rgba(163, 230, 53, 0.35);
+  box-shadow: 0 0 0 2px var(--fg-ink);
 }
 
 .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
 main { padding-bottom: 7rem; }
 
 /* ============================================================
-   Quest-Pop design system (new surfaces only — home, profile,
-   map, chat, nav). Old screens keep the vars/classes above.
-   Rule zero: every color pairs with primary pink #FA4E85.
+   App surface classes (qp-*), restyled to the DESIGN-figma.md
+   system. Names kept so components don't churn.
    ============================================================ */
 :root {
-  --qp-ink: #121212;         /* screen background */
-  --qp-paper: #241C21;       /* cards (warm dark) */
-  --qp-inset: #1A1418;       /* panels inside cards */
-  --qp-cream: #FFF4E4;       /* primary text */
-  --qp-gray: #B9B4A9;        /* secondary text / icons */
-  --qp-pink: #FA4E85;        /* PRIMARY action */
-  --qp-pink-ledge: #B32752;  /* 3D button ledge */
-  --qp-pink-text: #FF8FB3;   /* pink text on dark (AA) */
-  --qp-grape: #8636F8;       /* select / info accent */
-  --qp-lavender: #C9A6FF;    /* grape text on dark (AA) */
-  --qp-coral: #FF5D6C;       /* destructive · timers */
-  --qp-gold: #FFB640;        /* XP, streak, rewards */
-  --qp-rose: #EAC6BE;        /* quiet accent (Common) */
-  --qp-peach: #FF9E64;       /* perk highlights */
+  --qp-ink: var(--fg-canvas);         /* screen background (white) */
+  --qp-paper: var(--fg-canvas);       /* cards */
+  --qp-inset: var(--fg-surface-soft); /* soft tiles inside cards */
+  --qp-cream: var(--fg-ink);          /* primary text (black) */
+  --qp-gray: #6e6e6e;                 /* secondary text / inactive icons */
+  --qp-pink: var(--fg-ink);           /* primary action = black */
+  --qp-pink-ledge: var(--fg-ink);
+  --qp-pink-text: var(--fg-ink);
+  --qp-grape: var(--block-lilac);
+  --qp-lavender: var(--block-lilac);
+  --qp-coral: var(--block-coral);
+  --qp-gold: var(--fg-ink);
+  --qp-rose: var(--block-pink);
+  --qp-peach: var(--block-cream);
 }
 
 .qp-screen {
-  background: var(--qp-ink);
-  padding: 1.25rem 1.25rem 0;   /* 20px sides */
+  background: var(--fg-canvas);
+  padding: 1.25rem 1.25rem 0;
   min-height: 100vh;
 }
 
 .qp-card {
-  background: var(--qp-paper);
-  border: 1px solid rgba(255, 244, 228, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+  background: var(--fg-canvas);
+  border: 1px solid var(--fg-hairline);
+  border-radius: 24px;
+  box-shadow: none;
 }
 
 .qp-inset {
-  background: var(--qp-inset);
-  border-radius: 14px;
+  background: var(--fg-surface-soft);
+  border-radius: 12px;
 }
 
-/* Quiet tinted glass badge — set color via inline style:
-   style={{ color, background: `${c}1A`, borderColor: `${c}38` }} */
+/* Caption chip: mono taxonomy on a hairline pill */
 .qp-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  border: 1px solid;
+  gap: 0.3rem;
+  border: 1px solid var(--fg-hairline);
   border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  font-family: var(--font-jakarta), sans-serif;
-  font-weight: 700;
-  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-fmono), menlo, monospace;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg-ink);
+  background: var(--fg-canvas);
 }
 
+/* Primary action: the black pill */
 .qp-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  background: var(--qp-pink);
-  color: #fff;
+  background: var(--fg-ink);
+  color: #ffffff;
   border-radius: 999px;
-  font-family: var(--font-jakarta), sans-serif;
-  font-weight: 800;
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 4px 0 var(--qp-pink-ledge), 0 14px 26px rgba(0, 0, 0, 0.35);
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  font-family: var(--font-fsans), sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: transform 0.08s ease, opacity 0.08s ease;
 }
-.qp-btn-primary:active {
-  transform: translateY(3px);
-  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.3), 0 1px 0 var(--qp-pink-ledge);
-}
-.qp-btn-primary:disabled {
-  opacity: 0.45;
-  box-shadow: none;
-}
+.qp-btn-primary:active { transform: scale(0.97); }
+.qp-btn-primary:disabled { opacity: 0.35; }
 
 .qp-title {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  color: var(--qp-cream);
+  font-family: var(--font-fsans), sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--fg-ink);
   text-transform: none;
-  letter-spacing: 0;
   font-synthesis: none;
 }
 
 .qp-body {
-  font-family: var(--font-jakarta), sans-serif;
-  font-weight: 500;
-  color: var(--qp-gray);
+  font-family: var(--font-fsans), sans-serif;
+  font-weight: 380;
+  letter-spacing: -0.005em;
+  color: #3d3d3d;
 }
 
+/* Eyebrow: mono, uppercase, positive tracking */
 .qp-overline {
-  font-family: var(--font-jakarta), sans-serif;
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-fmono), menlo, monospace;
+  font-weight: 400;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--qp-gray);
+  color: var(--fg-ink);
 }
 
-/* Section header: quiet Bricolage title */
+/* Numerals & captions: mono */
+.qp-num {
+  font-family: var(--font-fmono), menlo, monospace;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 .qp-section-title {
-  font-family: var(--font-bricolage), sans-serif;
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--qp-cream);
-  font-synthesis: none;
+  font-family: var(--font-fsans), sans-serif;
+  font-weight: 550;
+  font-size: 1.3rem;
+  letter-spacing: -0.015em;
+  color: var(--fg-ink);
   text-transform: none;
-  letter-spacing: 0;
+  font-synthesis: none;
 }
 
-/* Folder-tab card (the signature shape): tab grows from the body's top edge */
+/* Nav dock: white pill, soft elevation; selected = primary (black) surface */
+.qp-dock {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--fg-hairline);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.qp-nav-glow { filter: none; }
+
+/* Folder-tab card (signature shape) */
 .qp-folder-tab {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: var(--qp-paper);
-  border: 1px solid rgba(255, 244, 228, 0.08);
+  background: var(--fg-canvas);
+  border: 1px solid var(--fg-hairline);
   border-bottom: none;
   border-radius: 12px 12px 0 0;
   padding: 0.45rem 0.9rem calc(0.45rem + 1px);
@@ -266,23 +295,22 @@ main { padding-bottom: 7rem; }
   z-index: 1;
 }
 .qp-folder-body {
-  background: var(--qp-paper);
-  border: 1px solid rgba(255, 244, 228, 0.08);
+  background: var(--fg-canvas);
+  border: 1px solid var(--fg-hairline);
   border-radius: 24px;
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
 }
 
-/* Ticket card: clean 24px shell; the stub carries the ticket idea */
+/* Ticket card + tear-off stub */
 .qp-ticket {
-  background: var(--qp-paper);
-  border: 1px solid rgba(255, 244, 228, 0.08);
+  background: var(--fg-canvas);
+  border: 1px solid var(--fg-hairline);
   border-radius: 24px;
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
 }
-/* Tear-off stub: darker panel, inset perforation, punched side notches */
 .qp-stub {
   position: relative;
-  background: var(--qp-inset);
+  background: var(--fg-surface-soft);
   border-radius: 0 0 23px 23px;
 }
 .qp-stub::before {
@@ -291,38 +319,34 @@ main { padding-bottom: 7rem; }
   top: -1px;
   left: 20px;
   right: 20px;
-  border-top: 2px dashed rgba(255, 244, 228, 0.14);
+  border-top: 2px dashed var(--fg-hairline);
 }
+/* Notch color follows the surface the card sits on (default: canvas) */
 .qp-notch {
   position: absolute;
   top: 0;
   width: 16px;
   height: 16px;
   border-radius: 999px;
-  background: var(--qp-ink);
+  background: var(--block-bg, var(--fg-canvas));
+  border: 1px solid var(--fg-hairline);
   transform: translateY(-50%);
 }
 .qp-notch.left { left: -9px; }
 .qp-notch.right { right: -9px; }
 
-.qp-num {
-  font-family: var(--font-grotesk), monospace;
-  font-weight: 700;
+/* ── Color-block sections (the signature surface) ───────────── */
+.fg-block {
+  border-radius: 24px;
+  padding: 1.5rem 1.25rem;
 }
-
-/* Floating glass nav dock */
-.qp-dock {
-  background: rgba(42, 33, 38, 0.92);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 244, 228, 0.12);
-  border-radius: 999px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* Active nav icon: white glow */
-.qp-nav-glow {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
-}
+.fg-lime  { background: var(--block-lime);  --block-bg: var(--block-lime); }
+.fg-lilac { background: var(--block-lilac); --block-bg: var(--block-lilac); }
+.fg-cream { background: var(--block-cream); --block-bg: var(--block-cream); }
+.fg-pink  { background: var(--block-pink);  --block-bg: var(--block-pink); }
+.fg-mint  { background: var(--block-mint);  --block-bg: var(--block-mint); }
+.fg-coral { background: var(--block-coral); --block-bg: var(--block-coral); }
+.fg-navy  { background: var(--block-navy);  --block-bg: var(--block-navy); color: #ffffff; }
 
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }

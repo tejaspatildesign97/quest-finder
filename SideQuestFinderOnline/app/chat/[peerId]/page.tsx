@@ -78,7 +78,7 @@ export default function ChatThreadPage() {
   if (!valid) {
     return (
       <div className="qp-screen flex flex-col items-center justify-center gap-3 text-center">
-        <AlertCircle size={28} className="text-[var(--qp-coral)]" />
+        <AlertCircle size={28} className="text-[var(--danger)]" />
         <p className="qp-body text-sm">Adventurer not found.</p>
         <Link href="/chat" className="qp-btn-primary px-6 py-2.5 text-sm">Back to messages</Link>
       </div>
@@ -88,11 +88,11 @@ export default function ChatThreadPage() {
   return (
     <div className="qp-screen flex flex-col !p-0 h-screen">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 pt-6 pb-3 border-b border-[rgba(255,244,228,0.08)]">
+      <div className="flex items-center gap-3 px-5 pt-6 pb-3 border-b border-[var(--fg-hairline)]">
         <Link href="/chat" className="qp-inset w-9 h-9 flex items-center justify-center shrink-0">
           <ArrowLeft size={16} className="text-[var(--qp-gray)]" />
         </Link>
-        <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)] shrink-0">
+        <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[var(--fg-hairline)] shrink-0">
           {peer && <Avatar value={peer.avatar} size={36} />}
         </span>
         <h1 className="qp-title text-base truncate">{peer?.name ?? 'Adventurer'}</h1>
@@ -118,8 +118,8 @@ export default function ChatThreadPage() {
                     mine
                       ? 'bg-[var(--qp-pink)] text-white rounded-[18px] rounded-br-[5px]'
                       : 'bg-[var(--qp-inset)] text-[var(--qp-cream)] rounded-[18px] rounded-bl-[5px]'
-                  } ${m.pending ? 'opacity-60' : ''} ${m.failed ? 'opacity-60 ring-1 ring-[var(--qp-coral)]' : ''}`}
-                    style={{ fontFamily: 'var(--font-jakarta), sans-serif', fontWeight: 500 }}>
+                  } ${m.pending ? 'opacity-60' : ''} ${m.failed ? 'opacity-60 ring-1 ring-[var(--danger)]' : ''}`}
+                    style={{ fontFamily: 'var(--font-fsans), sans-serif', fontWeight: 500 }}>
                     {m.body}
                     <span className={`qp-num block text-right text-[0.55rem] mt-1 ${mine ? 'text-white/70' : 'text-[var(--qp-gray)]'}`}>
                       {m.failed ? 'failed' : m.pending ? 'sending…' : hhmm(m.createdAt)}
@@ -142,7 +142,7 @@ export default function ChatThreadPage() {
             onKeyDown={e => e.key === 'Enter' && send()}
             placeholder="Send a message…"
             className="flex-1 bg-transparent text-sm text-[var(--qp-cream)] placeholder:text-[var(--qp-gray)] focus:outline-none"
-            style={{ fontFamily: 'var(--font-jakarta), sans-serif', fontWeight: 500 }}
+            style={{ fontFamily: 'var(--font-fsans), sans-serif', fontWeight: 500 }}
           />
           <button onClick={send} disabled={!draft.trim() || sending} aria-label="Send"
             className="qp-btn-primary w-9 h-9 !p-0">

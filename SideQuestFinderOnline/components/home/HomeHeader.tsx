@@ -28,7 +28,7 @@ export default function HomeHeader() {
           <span className="qp-num text-xs text-[var(--qp-gold)] tracking-wide">
             LV {String(level.level).padStart(2, '0')}
           </span>
-          <span className="w-px h-3 bg-[rgba(255,244,228,0.14)] mx-1" />
+          <span className="w-px h-3 bg-[var(--fg-hairline)] mx-1" />
           <Flame size={12} className="text-[var(--qp-gold)] fill-[var(--qp-gold)]" />
           <span className="qp-num text-xs text-[var(--qp-gold)]">{character.streak}</span>
         </div>

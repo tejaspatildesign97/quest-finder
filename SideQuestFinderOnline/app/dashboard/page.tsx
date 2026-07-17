@@ -57,8 +57,8 @@ export default function DashboardPage() {
     <div className="qp-screen space-y-8">
       <HomeHeader />
 
-      {/* Suggested Quest Challenge */}
-      <section className="space-y-3.5">
+      {/* Suggested Quest Challenge — lime color block (the signature surface) */}
+      <section className="fg-block fg-lime -mx-5 rounded-none px-5 py-6 space-y-4 sm:mx-0 sm:rounded-[24px]">
         <h2 className="qp-section-title">Suggested Quest Challenge</h2>
         <QuestRail>
           {suggested.map(q => {
@@ -100,8 +100,8 @@ export default function DashboardPage() {
         )}
       </section>
 
-      {/* For You Feed */}
-      <section className="space-y-3.5 pb-6">
+      {/* For You Feed — cream color block */}
+      <section className="fg-block fg-cream -mx-5 rounded-none px-5 py-6 space-y-4 sm:mx-0 sm:rounded-[24px] mb-6">
         <h2 className="qp-section-title">For You Feed</h2>
         <ForYouFeed />
       </section>

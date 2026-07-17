@@ -32,26 +32,30 @@ export default function Nav() {
               className="flex flex-col items-center gap-0.5 px-1.5 py-1.5 transition-all duration-150"
             >
               {Icon ? (
-                <span className={active ? 'qp-nav-glow' : ''}>
+                <span className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
+                  active ? 'bg-[var(--fg-ink)]' : ''
+                }`}>
                   <Icon
-                    size={24}
-                    strokeWidth={active ? 2.5 : 2.2}
+                    size={20}
+                    strokeWidth={2.2}
                     className={active ? 'text-white' : 'text-[var(--qp-gray)]'}
                   />
                 </span>
               ) : (
-                <span
-                  className={`w-6 h-6 rounded-full overflow-hidden bg-[var(--qp-inset)] ${
-                    active ? 'ring-2 ring-white qp-nav-glow' : 'ring-1 ring-[rgba(255,244,228,0.2)]'
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={avatarUrl(character.avatar, 48)} alt="Profile" className="w-full h-full" />
+                <span className={`w-9 h-9 rounded-full flex items-center justify-center ${
+                  active ? 'bg-[var(--fg-ink)]' : ''
+                }`}>
+                  <span className={`w-6 h-6 rounded-full overflow-hidden bg-[var(--qp-inset)] ${
+                    active ? 'ring-2 ring-white' : 'ring-1 ring-[var(--fg-hairline)]'
+                  }`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={avatarUrl(character.avatar, 48)} alt="Profile" className="w-full h-full" />
+                  </span>
                 </span>
               )}
               <span
-                className={`text-[0.6rem] font-extrabold ${active ? 'text-white' : 'text-[var(--qp-gray)]'}`}
-                style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+                className={`text-[0.6rem] font-semibold ${active ? 'text-[var(--fg-ink)]' : 'text-[var(--qp-gray)]'}`}
+                style={{ fontFamily: 'var(--font-fsans), sans-serif' }}
               >
                 {label}
               </span>

@@ -17,12 +17,12 @@ const TIMES: { label: string; minutes: number }[] = [
 ]
 
 const MOODS: { value: ForgeMood; label: string; Icon: LucideIcon; active: string }[] = [
-  { value: 'chill',       label: 'Chill',       Icon: Snowflake,      active: 'bg-cyan-400 text-[#0c0c10] shadow-md shadow-cyan-400/40' },
-  { value: 'social',      label: 'Social',      Icon: MessagesSquare, active: 'bg-pink-400 text-[#0c0c10] shadow-md shadow-pink-400/40' },
-  { value: 'creative',    label: 'Creative',    Icon: Palette,        active: 'bg-violet-400 text-[#0c0c10] shadow-md shadow-violet-400/40' },
-  { value: 'adventurous', label: 'Adventurous', Icon: Mountain,       active: 'bg-emerald-400 text-[#0c0c10] shadow-md shadow-emerald-400/40' },
-  { value: 'curious',     label: 'Curious',     Icon: Search,         active: 'bg-blue-400 text-[#0c0c10] shadow-md shadow-blue-400/40' },
-  { value: 'chaotic',     label: 'Chaotic',     Icon: Shuffle,        active: 'bg-amber-400 text-[#0c0c10] shadow-md shadow-amber-400/40' },
+  { value: 'chill',       label: 'Chill',       Icon: Snowflake,      active: 'bg-[var(--fg-ink)] text-white' },
+  { value: 'social',      label: 'Social',      Icon: MessagesSquare, active: 'bg-[var(--fg-ink)] text-white' },
+  { value: 'creative',    label: 'Creative',    Icon: Palette,        active: 'bg-[var(--fg-ink)] text-white' },
+  { value: 'adventurous', label: 'Adventurous', Icon: Mountain,       active: 'bg-[var(--fg-ink)] text-white' },
+  { value: 'curious',     label: 'Curious',     Icon: Search,         active: 'bg-[var(--fg-ink)] text-white' },
+  { value: 'chaotic',     label: 'Chaotic',     Icon: Shuffle,        active: 'bg-[var(--fg-ink)] text-white' },
 ]
 
 const CATEGORIES = ['Any', ...Object.keys(CATEGORY_STYLES)]
@@ -67,7 +67,7 @@ export default function QuestForge() {
           {TIMES.map(t => (
             <button key={t.label} onClick={() => setTime(t.minutes)}
               className={`py-2 text-sm font-bold rounded-xl transition-all
-                ${time === t.minutes ? 'bg-[var(--forest)] text-[#0c0c10] shadow-md shadow-lime-400/40' : 'bg-white/8 text-[var(--stone)] hover:text-[var(--ink)]'}`}>
+                ${time === t.minutes ? 'bg-[var(--fg-ink)] text-white' : 'bg-[var(--fg-surface-soft)] text-[var(--stone)] hover:text-[var(--ink)]'}`}>
               {t.label}
             </button>
           ))}
@@ -81,7 +81,7 @@ export default function QuestForge() {
           {MOODS.map(m => (
             <button key={m.value} onClick={() => setMood(m.value)}
               className={`flex items-center justify-center gap-1.5 py-2 text-xs font-bold rounded-xl transition-all
-                ${mood === m.value ? m.active : 'bg-white/8 text-[var(--stone)] hover:text-[var(--ink)]'}`}>
+                ${mood === m.value ? m.active : 'bg-[var(--fg-surface-soft)] text-[var(--stone)] hover:text-[var(--ink)]'}`}>
               <m.Icon size={13} /> {m.label}
             </button>
           ))}
@@ -95,7 +95,7 @@ export default function QuestForge() {
           {CATEGORIES.map(c => (
             <button key={c} onClick={() => setCategory(c)}
               className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all
-                ${category === c ? 'bg-[var(--magic)] text-white shadow-md shadow-violet-500/30' : 'bg-white/8 text-[var(--stone)] hover:text-[var(--ink)]'}`}>
+                ${category === c ? 'bg-[var(--fg-ink)] text-white' : 'bg-[var(--fg-surface-soft)] text-[var(--stone)] hover:text-[var(--ink)]'}`}>
               {c}
             </button>
           ))}

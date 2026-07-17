@@ -76,7 +76,7 @@ export default function NotificationPanel({ open, onClose }: { open: boolean; on
               <button key={n.id}
                 onClick={() => { onClose(); router.push(LINK[n.type]) }}
                 className="w-full flex items-center gap-3 px-2 py-2.5 rounded-[14px] hover:bg-[var(--qp-inset)] transition-colors text-left">
-                <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)] shrink-0">
+                <span className="block w-9 h-9 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[var(--fg-hairline)] shrink-0">
                   <Avatar value={n.actorAvatar} size={36} />
                 </span>
                 <span className="flex-1 min-w-0">
@@ -85,7 +85,7 @@ export default function NotificationPanel({ open, onClose }: { open: boolean; on
                   </span>
                   <span className="qp-num text-[0.62rem] text-[var(--qp-gray)]">{relativeTime(n.createdAt)}</span>
                 </span>
-                {!n.readAt && <span className="w-2 h-2 rounded-full bg-[var(--qp-pink)] shrink-0" />}
+                {!n.readAt && <span className="w-2 h-2 rounded-full bg-[var(--fg-magenta)] shrink-0" />}
               </button>
             ))}
           </div>

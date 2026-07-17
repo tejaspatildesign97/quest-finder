@@ -13,17 +13,19 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
+// DESIGN-figma.md: the primary action is always the black pill; the secondary
+// is the white pill. Colored buttons are gone from the system.
 const variantStyles: Record<Variant, string> = {
   primary:
-    'bg-[var(--quest-gold)] text-[#0c0c10] hover:bg-[var(--quest-gold-light)] active:scale-[0.98] shadow-lg shadow-amber-500/30',
+    'bg-[var(--fg-ink)] text-white active:scale-[0.97]',
   secondary:
-    'bg-[var(--forest)] text-[#0c0c10] hover:bg-[var(--forest-light)] active:scale-[0.98] shadow-lg shadow-emerald-500/30',
+    'bg-[var(--fg-canvas)] text-[var(--fg-ink)] border border-[var(--fg-hairline)] active:scale-[0.97]',
   danger:
-    'bg-[var(--danger)] text-white hover:bg-[var(--danger-light)] active:scale-[0.98] shadow-lg shadow-red-500/30',
+    'bg-[var(--danger)] text-white active:scale-[0.97]',
   ghost:
-    'bg-[var(--ink)]/5 text-[var(--ink)] hover:bg-[var(--ink)]/10 active:scale-[0.98]',
+    'bg-[var(--fg-surface-soft)] text-[var(--fg-ink)] hover:bg-[var(--fg-hairline-soft)] active:scale-[0.97]',
   magic:
-    'bg-[var(--magic)] text-white hover:bg-[var(--magic-light)] active:scale-[0.98] shadow-lg shadow-violet-500/30',
+    'bg-[var(--fg-ink)] text-white active:scale-[0.97]',
 };
 
 const sizeStyles: Record<Size, string> = {
@@ -45,8 +47,8 @@ export default function Button({
   return (
     <button
       className={`
-        inline-flex items-center justify-center gap-2 font-bold tracking-wide
-        rounded-2xl transition-all duration-150 cursor-pointer
+        inline-flex items-center justify-center gap-2 font-medium tracking-tight
+        rounded-full transition-all duration-150 cursor-pointer
         disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none
         ${variantStyles[variant]} ${sizeStyles[size]} ${className}
       `}

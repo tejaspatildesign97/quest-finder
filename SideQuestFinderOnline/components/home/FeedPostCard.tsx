@@ -27,7 +27,7 @@ export default function FeedPostCard({ post, onCheer }: Props) {
     <article className="qp-card space-y-3 !rounded-[24px] p-4">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <span className="block w-11 h-11 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[rgba(255,244,228,0.2)] shrink-0">
+        <span className="block w-11 h-11 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-1 ring-[var(--fg-hairline)] shrink-0">
           <Avatar value={post.userAvatar} size={44} />
         </span>
         <div className="flex-1 min-w-0">
@@ -36,9 +36,8 @@ export default function FeedPostCard({ post, onCheer }: Props) {
             {quest?.title ?? 'A side quest'} · <span className="qp-num">{relativeTime(post.createdAt)}</span>
           </p>
         </div>
-        <span className="qp-badge qp-num text-[0.65rem] px-2.5 py-1 shrink-0"
-          style={{ color: 'var(--qp-gold)', background: 'rgba(255,182,64,0.1)', borderColor: 'rgba(255,182,64,0.22)' }}>
-          <Zap size={10} className="fill-[var(--qp-gold)]" /> +{post.xp}
+        <span className="qp-badge shrink-0">
+          <Zap size={9} className="fill-[var(--fg-ink)]" /> +{post.xp}
         </span>
       </div>
 
@@ -53,11 +52,12 @@ export default function FeedPostCard({ post, onCheer }: Props) {
       {/* Actions */}
       <div className="flex items-center pt-1">
         <button onClick={onCheer}
-          className="flex items-center gap-1.5 rounded-full px-3.5 py-2 border transition-colors"
-          style={post.cheeredByMe
-            ? { color: 'var(--qp-pink-text)', background: 'rgba(250,78,133,0.1)', borderColor: 'rgba(250,78,133,0.3)' }
-            : { color: 'var(--qp-gray)', background: 'rgba(255,244,228,0.05)', borderColor: 'rgba(255,244,228,0.1)' }}>
-          <Heart size={14} className={post.cheeredByMe ? 'fill-[var(--qp-pink-text)]' : ''} />
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 border transition-colors ${
+            post.cheeredByMe
+              ? 'bg-[var(--fg-ink)] text-white border-[var(--fg-ink)]'
+              : 'bg-[var(--fg-canvas)] text-[var(--qp-gray)] border-[var(--fg-hairline)]'
+          }`}>
+          <Heart size={14} className={post.cheeredByMe ? 'fill-white' : ''} />
           <span className="qp-num text-[0.75rem]">{post.cheers}</span>
         </button>
       </div>

@@ -74,7 +74,7 @@ export default function ForYouFeed() {
       {posts.map(p => <FeedPostCard key={p.id} post={p} onCheer={() => cheer(p)} />)}
       <Link href="/explore"
         className="qp-card flex items-center justify-center gap-1 py-3 text-xs font-extrabold text-[var(--qp-pink-text)]"
-        style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}>
+        style={{ fontFamily: 'var(--font-fsans), sans-serif' }}>
         View the full feed <ChevronRight size={14} />
       </Link>
     </div>
