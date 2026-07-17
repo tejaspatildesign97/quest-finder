@@ -8,6 +8,28 @@ import { getLevelInfo, getNextLevelInfo, calcXP } from './levels'
 import { ACHIEVEMENTS } from './achievements'
 import { QUESTS } from './quests'
 
+const newId = () =>
+  (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `q-${Date.now()}-${Math.random().toString(36).slice(2)}`
+
+/**
+ * Collapse exact-duplicate completed records (same quest + completion time +
+ * note) that a past bug could have produced, and backfill missing instance ids.
+ * Runs on every hydration so historical duplicates self-heal on next load.
+ */
+export function dedupeActiveQuests(quests: ActiveQuest[]): ActiveQuest[] {
+  const seen = new Set<string>()
+  const out: ActiveQuest[] = []
+  for (const q of quests) {
+    if (q.status === 'completed') {
+      const key = `${q.questId}|${q.completedAt ?? ''}|${q.note ?? ''}`
+      if (seen.has(key)) continue
+      seen.add(key)
+    }
+    out.push(q.id ? q : { ...q, id: newId() })
+  }
+  return out
+}
+
 interface Toast {
   id: string
   type: 'achievement' | 'levelup' | 'xp'
@@ -117,10 +139,13 @@ export const useStore = create<StoreState>()(
       setPlayMode: (m) => set({ playMode: m }),
 
       acceptQuest: (questId) => {
-        const { activeQuests } = get()
-        const alreadyActive = activeQuests.find(q => q.questId === questId && q.status === 'active')
-        if (alreadyActive) return
-        set({ activeQuests: [...activeQuests, { questId, status: 'active', acceptedAt: new Date().toISOString() }] })
+        // Functional update reads live state atomically, so two rapid accepts
+        // (or accepts fired from different screens) can't both slip past the
+        // guard and add duplicate active copies of the same quest.
+        set(state => {
+          if (state.activeQuests.some(q => q.questId === questId && q.status === 'active')) return state
+          return { activeQuests: [...state.activeQuests, { id: newId(), questId, status: 'active', acceptedAt: new Date().toISOString() }] }
+        })
         get().checkAchievements()
       },
 
@@ -131,6 +156,11 @@ export const useStore = create<StoreState>()(
         const { activeQuests, character, party } = get()
         const quest = QUESTS.find(q => q.id === questId)
         if (!quest || !character) return
+
+        // Complete ONLY the specific active instance. Matching by questId alone
+        // would re-stamp older completed copies too, cloning them in the diary.
+        const target = activeQuests.find(q => q.questId === questId && q.status === 'active')
+        if (!target) return
 
         const isParty = !!party
         const earned = calcXP(quest.xp, quest.difficulty as Difficulty, isParty)
@@ -147,7 +177,7 @@ export const useStore = create<StoreState>()(
         }
 
         const updatedQuests = activeQuests.map(q =>
-          q.questId === questId ? { ...q, status: 'completed' as const, completedAt: new Date().toISOString(), xpEarned: earned, note, mediaIds } : q
+          q === target ? { ...q, status: 'completed' as const, completedAt: new Date().toISOString(), xpEarned: earned, note, mediaIds } : q
         )
 
         set({ character: updatedCharacter, activeQuests: updatedQuests, completingQuestId: null })
@@ -189,11 +219,14 @@ export const useStore = create<StoreState>()(
       },
 
       abandonQuest: (questId) => {
-        const { activeQuests } = get()
-        set({
-          activeQuests: activeQuests.map(q =>
-            q.questId === questId ? { ...q, status: 'abandoned' as const } : q
-          )
+        set(state => {
+          const target = state.activeQuests.find(q => q.questId === questId && q.status === 'active')
+          if (!target) return state
+          return {
+            activeQuests: state.activeQuests.map(q =>
+              q === target ? { ...q, status: 'abandoned' as const } : q
+            )
+          }
         })
       },
 
@@ -220,6 +253,7 @@ export const useStore = create<StoreState>()(
           character: { ...character, xp: newXP, level: newLevel.level, xpToNextLevel: nextLevel?.xpRequired ?? character.xpToNextLevel },
           claimedCompletionIds: [...claimedCompletionIds, c.id],
           activeQuests: [...activeQuests, {
+            id: newId(),
             questId: c.questId,
             status: 'completed',
             acceptedAt: c.completedAt,
@@ -343,7 +377,12 @@ export const useStore = create<StoreState>()(
         if (s?.playMode === 'group') s.playMode = 'friends'
         return s as unknown as StoreState
       },
-      onRehydrateStorage: () => (state) => { state?.setHasHydrated(true) },
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          if (Array.isArray(state.activeQuests)) state.activeQuests = dedupeActiveQuests(state.activeQuests)
+          state.setHasHydrated(true)
+        }
+      },
       partialize: (s) => ({
         character: s.character,
         activeQuests: s.activeQuests,

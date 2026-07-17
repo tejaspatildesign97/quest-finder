@@ -43,6 +43,8 @@ export interface Quest {
 export type ActiveQuestStatus = 'active' | 'completed' | 'abandoned'
 
 export interface ActiveQuest {
+  /** unique per-instance id — distinguishes two board copies of the same quest */
+  id?: string
   questId: string
   status: ActiveQuestStatus
   acceptedAt: string

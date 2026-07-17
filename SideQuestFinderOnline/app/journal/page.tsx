@@ -165,7 +165,7 @@ export default function JournalPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {completed.map((entry, i) => <DiaryEntry key={`${entry.questId}-${i}`} entry={entry} />)}
+          {completed.map((entry, i) => <DiaryEntry key={entry.id ?? `${entry.questId}-${i}`} entry={entry} />)}
         </div>
       )}
     </div>

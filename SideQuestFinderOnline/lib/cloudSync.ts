@@ -1,7 +1,8 @@
 'use client'
 
 import { supabase } from './supabase'
-import { useStore } from './store'
+import { useStore, dedupeActiveQuests } from './store'
+import type { ActiveQuest } from './types'
 
 // The slice of store state that is synced to the cloud (per account).
 const SYNC_KEYS = [
@@ -22,6 +23,9 @@ export function hydrate(state: SyncSlice) {
   // Only set keys we actually sync, so transient store fields are untouched.
   const patch: SyncSlice = {}
   for (const k of SYNC_KEYS) if (k in state) patch[k] = state[k]
+  // Collapse any historical duplicate completions on the way in; the debounced
+  // autosave then writes the cleaned state back to the cloud automatically.
+  if (Array.isArray(patch.activeQuests)) patch.activeQuests = dedupeActiveQuests(patch.activeQuests as ActiveQuest[])
   useStore.setState(patch as never)
 }
 
@@ -37,6 +41,9 @@ export async function saveGameState(userId: string, state: SyncSlice): Promise<v
 /** Debounced autosave: pushes store changes to the cloud while signed in. */
 export function startAutoSave(userId: string): () => void {
   let timer: ReturnType<typeof setTimeout> | null = null
+  // Push once on start so hydration-time normalization (e.g. duplicate cleanup)
+  // is persisted to the cloud even if nothing else changes this session.
+  saveGameState(userId, snapshot()).catch(() => {})
   const unsub = useStore.subscribe(() => {
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => { saveGameState(userId, snapshot()).catch(() => {}) }, 1500)
