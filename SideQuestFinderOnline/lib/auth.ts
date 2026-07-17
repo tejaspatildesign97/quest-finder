@@ -33,6 +33,18 @@ export async function signInGoogle(): Promise<void> {
   if (error) throw error
 }
 
+/** Emails a one-time recovery code (requires {{ .Token }} in the Reset Password email template). */
+export async function requestPasswordReset(email: string): Promise<void> {
+  const { error } = await supabase().auth.resetPasswordForEmail(email)
+  if (error) throw error
+}
+
+/** Verifies the emailed code; on success the user is signed in and may set a new password. */
+export async function verifyResetCode(email: string, code: string): Promise<void> {
+  const { error } = await supabase().auth.verifyOtp({ email, token: code, type: 'recovery' })
+  if (error) throw error
+}
+
 export async function signOut(): Promise<void> {
   await supabase().auth.signOut()
 }

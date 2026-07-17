@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Map, Mail, Lock, Loader2 } from 'lucide-react'
-import { getSession, isRealSession, signInEmail, signUpEmail, signInGoogle } from '@/lib/auth'
+import { Map, Mail, Lock, Loader2, KeyRound, ArrowLeft } from 'lucide-react'
+import { getSession, isRealSession, signInEmail, signUpEmail, signInGoogle,
+         requestPasswordReset, verifyResetCode, changePassword } from '@/lib/auth'
 import { supabaseConfigured } from '@/lib/supabase'
 import Button from '@/components/ui/Button'
 
@@ -15,6 +16,10 @@ export default function SignInPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
+  // Forgot-password flow: null = normal sign-in, 'request' = enter email, 'verify' = enter code + new password
+  const [resetStep, setResetStep] = useState<'request' | 'verify' | null>(null)
+  const [code, setCode] = useState('')
+  const [newPassword, setNewPassword] = useState('')
 
   // If already signed in, bounce to the app.
   useEffect(() => {
@@ -48,6 +53,38 @@ export default function SignInPage() {
     }
   }
 
+  const sendResetCode = async () => {
+    setError(''); setInfo('')
+    if (!email.trim()) { setError('Enter your account email first.'); return }
+    setBusy(true)
+    try {
+      await requestPasswordReset(email.trim())
+      setResetStep('verify')
+      setInfo(`We emailed a one-time code to ${email.trim()}.`)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not send the code')
+    } finally { setBusy(false) }
+  }
+
+  const confirmReset = async () => {
+    setError(''); setInfo('')
+    if (code.trim().length < 6) { setError('Enter the one-time code from the email.'); return }
+    if (newPassword.length < 6) { setError('New password must be at least 6 characters.'); return }
+    setBusy(true)
+    try {
+      await verifyResetCode(email.trim(), code.trim())
+      await changePassword(newPassword)
+      router.replace('/dashboard')  // verifyOtp signs the user in
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not reset the password')
+      setBusy(false)
+    }
+  }
+
+  const exitReset = () => {
+    setResetStep(null); setCode(''); setNewPassword(''); setError(''); setInfo('')
+  }
+
   const google = async () => {
     setError(''); setBusy(true)
     try { await signInGoogle() } // redirects away
@@ -68,6 +105,70 @@ export default function SignInPage() {
 
       {/* Card */}
       <div className="w-full scroll-border p-6 space-y-4">
+        {resetStep ? (
+          <>
+            <button onClick={exitReset}
+              className="flex items-center gap-1.5 text-xs font-bold text-[var(--stone)] hover:text-[var(--ink)] transition-colors">
+              <ArrowLeft size={14} /> Back to sign in
+            </button>
+
+            <div className="text-center space-y-1">
+              <h2 className="text-lg font-display">Reset password</h2>
+              <p className="text-xs font-semibold text-[var(--stone)]">
+                {resetStep === 'request'
+                  ? "Enter your account email and we'll send a one-time code."
+                  : 'Enter the code from the email and pick a new password.'}
+              </p>
+            </div>
+
+            {resetStep === 'request' ? (
+              <>
+                <div className="relative">
+                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--stone-light)]" />
+                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"
+                    onKeyDown={e => e.key === 'Enter' && sendResetCode()}
+                    className="w-full bg-[var(--surface-2)] text-[var(--ink)] border-2 border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm placeholder:text-[var(--stone-light)] focus:outline-none focus:border-[var(--quest-gold)]" />
+                </div>
+
+                {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
+
+                <Button variant="primary" size="lg" className="w-full" onClick={sendResetCode} loading={busy}>
+                  Send code
+                </Button>
+              </>
+            ) : (
+              <>
+                <div className="space-y-2.5">
+                  <div className="relative">
+                    <KeyRound size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--stone-light)]" />
+                    <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={10}
+                      value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ''))} placeholder="One-time code"
+                      className="w-full bg-[var(--surface-2)] text-[var(--ink)] border-2 border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm tracking-[0.3em] placeholder:tracking-normal placeholder:text-[var(--stone-light)] focus:outline-none focus:border-[var(--quest-gold)]" />
+                  </div>
+                  <div className="relative">
+                    <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--stone-light)]" />
+                    <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="New password"
+                      onKeyDown={e => e.key === 'Enter' && confirmReset()}
+                      className="w-full bg-[var(--surface-2)] text-[var(--ink)] border-2 border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm placeholder:text-[var(--stone-light)] focus:outline-none focus:border-[var(--quest-gold)]" />
+                  </div>
+                </div>
+
+                {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
+                {info && <p className="text-xs font-bold text-emerald-400">{info}</p>}
+
+                <Button variant="primary" size="lg" className="w-full" onClick={confirmReset} loading={busy}>
+                  Reset password
+                </Button>
+
+                <button onClick={sendResetCode} disabled={busy}
+                  className="block mx-auto text-xs font-bold text-[var(--quest-gold)] hover:underline disabled:opacity-50">
+                  Resend code
+                </button>
+              </>
+            )}
+          </>
+        ) : (
+          <>
         {/* Tabs */}
         <div className="flex gap-1 bg-[var(--ink)]/5 rounded-2xl p-1">
           {(['signin', 'signup'] as const).map(m => (
@@ -91,6 +192,12 @@ export default function SignInPage() {
               onKeyDown={e => e.key === 'Enter' && submit()}
               className="w-full bg-[var(--surface-2)] text-[var(--ink)] border-2 border-white/10 rounded-2xl pl-10 pr-4 py-3 text-sm placeholder:text-[var(--stone-light)] focus:outline-none focus:border-[var(--quest-gold)]" />
           </div>
+          {mode === 'signin' && (
+            <button onClick={() => { setResetStep('request'); setError(''); setInfo('') }}
+              className="block ml-auto text-xs font-bold text-[var(--quest-gold)] hover:underline">
+              Forgot password?
+            </button>
+          )}
         </div>
 
         {error && <p className="text-xs font-bold text-[var(--danger)]">⚠ {error}</p>}
@@ -111,6 +218,8 @@ export default function SignInPage() {
           {busy ? <Loader2 size={16} className="animate-spin" /> : <GoogleIcon />}
           Continue with Google
         </button>
+          </>
+        )}
       </div>
 
       <p className="text-xs font-semibold text-[var(--stone-light)] mt-5 text-center">
