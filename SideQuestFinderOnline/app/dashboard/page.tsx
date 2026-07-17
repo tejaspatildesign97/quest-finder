@@ -54,12 +54,12 @@ export default function DashboardPage() {
   const activeList = activeQuests.filter(q => q.status === 'active')
 
   return (
-    <div className="qp-screen space-y-5">
+    <div className="qp-screen space-y-8">
       <HomeHeader />
 
       {/* Suggested Quest Challenge */}
-      <section className="space-y-2">
-        <span className="qp-overline">Suggested Quest Challenge</span>
+      <section className="space-y-3.5">
+        <h2 className="qp-section-title">Suggested Quest Challenge</h2>
         <QuestRail>
           {suggested.map(q => {
             const state = activeQuests.find(a => a.questId === q.id && a.status !== 'abandoned')
@@ -73,8 +73,8 @@ export default function DashboardPage() {
       </section>
 
       {/* Active Quests */}
-      <section className="space-y-2">
-        <span className="qp-overline">Active Quests</span>
+      <section className="space-y-3.5">
+        <h2 className="qp-section-title">Active Quests</h2>
         {activeList.length === 0 ? (
           <Link href="/quests" className="qp-card flex items-center gap-3 p-4">
             <span className="qp-inset w-10 h-10 flex items-center justify-center shrink-0">
@@ -101,8 +101,8 @@ export default function DashboardPage() {
       </section>
 
       {/* For You Feed */}
-      <section className="space-y-2 pb-4">
-        <span className="qp-overline">For You Feed</span>
+      <section className="space-y-3.5 pb-6">
+        <h2 className="qp-section-title">For You Feed</h2>
         <ForYouFeed />
       </section>
     </div>

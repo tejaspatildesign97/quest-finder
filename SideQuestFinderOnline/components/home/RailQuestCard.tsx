@@ -41,6 +41,7 @@ interface Props {
   onDone?: () => void
 }
 
+/** Ticket-shaped quest card: asymmetric corners + perforated stat stub. */
 export default function RailQuestCard({ quest, state, onStart, onDone }: Props) {
   const cat = getCategoryStyle(quest.category)
   const accent = CATEGORY_ACCENT[quest.category] ?? 'var(--qp-pink)'
@@ -49,38 +50,40 @@ export default function RailQuestCard({ quest, state, onStart, onDone }: Props) 
   const active = state?.status === 'active'
 
   return (
-    <div className="qp-card snap-start shrink-0 w-[78%] p-4 flex flex-col gap-3">
-      <div className="flex items-center gap-3">
-        <span className="qp-inset w-10 h-10 flex items-center justify-center shrink-0">
-          <cat.Icon size={19} strokeWidth={2.2} style={{ color: accent }} />
-        </span>
-        <div className="flex-1 min-w-0">
-          <h3 className="qp-title text-[0.95rem] leading-tight line-clamp-2">{quest.title}</h3>
-          <p className="qp-overline mt-0.5">{quest.category}</p>
+    <div className="qp-ticket snap-start shrink-0 w-[82%] flex flex-col">
+      <div className="p-5 pb-4 flex flex-col gap-3.5 flex-1">
+        <div className="flex items-center gap-4">
+          <span className="qp-diamond w-11 h-11 shrink-0 ml-1">
+            <cat.Icon size={20} strokeWidth={2.2} style={{ color: accent }} />
+          </span>
+          <div className="flex-1 min-w-0">
+            <h3 className="qp-title text-[1.05rem] leading-snug line-clamp-2">{quest.title}</h3>
+            <p className="qp-overline mt-1" style={{ color: accent }}>{quest.category}</p>
+          </div>
         </div>
+        <p className="qp-body text-[0.8rem] leading-relaxed line-clamp-2">{quest.description}</p>
       </div>
 
-      <p className="qp-body text-xs leading-relaxed line-clamp-2 flex-1">{quest.description}</p>
-
-      <div className="qp-inset flex items-center gap-2 px-3 py-2.5">
-        <span className="qp-badge qp-num text-[0.65rem]"
+      {/* Ticket stub */}
+      <div className="qp-perforation flex items-center gap-2.5 px-5 py-3.5">
+        <span className="qp-badge qp-num text-[0.7rem] px-2.5 py-1"
           style={{ color: 'var(--qp-gold)', background: 'rgba(255,182,64,0.1)', borderColor: 'rgba(255,182,64,0.22)' }}>
-          <Zap size={10} className="fill-[var(--qp-gold)]" /> +{quest.xp}
+          <Zap size={11} className="fill-[var(--qp-gold)]" /> +{quest.xp}
         </span>
-        <span className="qp-badge text-[0.65rem]"
+        <span className="qp-badge text-[0.7rem] px-2.5 py-1"
           style={{ color: diffColor, background: 'rgba(255,244,228,0.06)', borderColor: 'rgba(255,244,228,0.14)' }}>
           {quest.difficulty}
         </span>
-        <span className="flex items-center gap-1 qp-num text-[0.65rem] text-[var(--qp-gray)]">
-          <Clock size={11} /> {fmtDuration(quest.duration)}
+        <span className="flex items-center gap-1 qp-num text-[0.7rem] text-[var(--qp-gray)]">
+          <Clock size={12} /> {fmtDuration(quest.duration)}
         </span>
         <span className="flex-1" />
         {done ? (
-          <CheckCircle2 size={22} className="text-[var(--qp-gold)]" />
+          <CheckCircle2 size={24} className="text-[var(--qp-gold)]" />
         ) : active ? (
-          <button onClick={onDone} className="qp-btn-primary px-4 py-1.5 text-xs">Done!</button>
+          <button onClick={onDone} className="qp-btn-primary px-5 py-2 text-[0.8rem]">Done!</button>
         ) : (
-          <button onClick={onStart} className="qp-btn-primary px-4 py-1.5 text-xs">Start</button>
+          <button onClick={onStart} className="qp-btn-primary px-5 py-2 text-[0.8rem]">Start</button>
         )}
       </div>
     </div>

@@ -9,7 +9,7 @@ import type { ReactNode } from 'react'
  */
 export default function QuestRail({ children }: { children: ReactNode }) {
   return (
-    <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-5 px-5 pb-1 no-scrollbar">
+    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-5 px-5 pb-2 no-scrollbar">
       {children}
     </div>
   )

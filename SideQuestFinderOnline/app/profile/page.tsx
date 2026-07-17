@@ -45,36 +45,35 @@ export default function ProfilePage() {
   return (
     <div className="qp-screen space-y-5">
       {/* Title row */}
-      <div className="flex items-center justify-between pt-6">
-        <h1 className="qp-title text-2xl">Profile</h1>
-        <Link href="/settings" className="qp-inset w-10 h-10 flex items-center justify-center">
+      <div className="flex items-center justify-between pt-7">
+        <h1 className="qp-title text-[1.7rem]">Profile</h1>
+        <Link href="/settings"
+          className="w-11 h-11 rounded-full flex items-center justify-center bg-[var(--qp-paper)] border border-[rgba(255,244,228,0.1)]">
           <Settings size={18} className="text-[var(--qp-gray)]" strokeWidth={2.2} />
         </Link>
       </div>
 
-      {/* Summary card */}
-      <div className="qp-card p-4 space-y-4">
+      {/* Summary card — folder tab, like home */}
+      <div>
+        <div className="qp-folder-tab">
+          <span className="qp-num text-[0.7rem] text-[var(--qp-gold)] tracking-wide">
+            LV {String(level.level).padStart(2, '0')}
+          </span>
+          <Flame size={11} className="text-[var(--qp-gold)] fill-[var(--qp-gold)]" />
+          <span className="qp-num text-[0.7rem] text-[var(--qp-gold)]">{character.streak} day streak</span>
+        </div>
+        <div className="qp-folder-body p-5 space-y-4">
         <div className="flex items-center gap-4">
-          <div className="relative shrink-0">
-            <span className="block w-[72px] h-[72px] rounded-full overflow-hidden bg-[var(--qp-inset)] ring-2 ring-[var(--qp-pink)]">
-              <Avatar value={character.avatar} size={72} />
-            </span>
-            <span className="qp-badge qp-num absolute -bottom-1 -right-1 text-[0.6rem] px-1.5 py-0.5"
-              style={{ color: 'var(--qp-gold)', background: '#3a2c14', borderColor: 'rgba(255,182,64,0.45)' }}>
-              LV {String(level.level).padStart(2, '0')}
-            </span>
-          </div>
+          <span className="block w-20 h-20 rounded-full overflow-hidden bg-[var(--qp-inset)] ring-2 ring-[var(--qp-pink)] ring-offset-2 ring-offset-[var(--qp-paper)] shrink-0">
+            <Avatar value={character.avatar} size={80} />
+          </span>
           <div className="flex-1 min-w-0">
-            <h2 className="qp-title text-lg leading-tight truncate">{character.name}</h2>
-            <p className="qp-body text-xs mt-0.5">{level.title} · {character.class}</p>
-            <div className="flex items-center gap-1.5 mt-1.5">
-              <Flame size={13} className="text-[var(--qp-gold)] fill-[var(--qp-gold)]" />
-              <span className="qp-num text-xs text-[var(--qp-gold)]">{character.streak} day streak</span>
-            </div>
+            <h2 className="qp-title text-xl leading-tight truncate">{character.name}</h2>
+            <p className="qp-body text-[0.8rem] mt-1">{level.title} · {character.class}</p>
           </div>
           <button onClick={() => setEditing(true)}
-            className="qp-inset w-9 h-9 flex items-center justify-center shrink-0">
-            <Pencil size={14} className="text-[var(--qp-gray)]" />
+            className="qp-inset w-10 h-10 !rounded-full flex items-center justify-center shrink-0">
+            <Pencil size={15} className="text-[var(--qp-gray)]" />
           </button>
         </div>
 
@@ -92,44 +91,27 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {character.bio && <p className="qp-body text-xs leading-relaxed">{character.bio}</p>}
+        {character.bio && <p className="qp-body text-[0.8rem] leading-relaxed">{character.bio}</p>}
+        </div>
       </div>
 
       <EditProfileModal open={editing} onClose={() => setEditing(false)} />
 
-      {/* Follows + stats */}
-      <div className="grid grid-cols-2 gap-3">
-        <button onClick={() => router.push('/friends')} className="qp-card p-3.5 text-left">
-          <div className="flex items-center justify-around">
-            <span className="text-center">
-              <span className="qp-num block text-lg text-[var(--qp-cream)]">{follow?.following ?? '—'}</span>
-              <span className="qp-overline">Following</span>
-            </span>
-            <span className="w-px h-7 bg-[rgba(255,244,228,0.08)]" />
-            <span className="text-center">
-              <span className="qp-num block text-lg text-[var(--qp-cream)]">{follow?.followers ?? '—'}</span>
-              <span className="qp-overline">Followers</span>
-            </span>
-          </div>
-        </button>
-        <div className="qp-card p-3.5">
-          <div className="flex items-center justify-around">
-            <span className="text-center">
-              <span className="flex items-center justify-center gap-1">
-                <CheckCircle2 size={13} className="text-[var(--qp-gold)]" />
-                <span className="qp-num text-lg text-[var(--qp-cream)]">{completed}</span>
-              </span>
-              <span className="qp-overline">Quests</span>
-            </span>
-            <span className="w-px h-7 bg-[rgba(255,244,228,0.08)]" />
-            <span className="text-center">
-              <span className="flex items-center justify-center gap-1">
-                <Swords size={13} className="text-[var(--qp-pink-text)]" />
-                <span className="qp-num text-lg text-[var(--qp-cream)]">{active}</span>
-              </span>
-              <span className="qp-overline">Active</span>
-            </span>
-          </div>
+      {/* Follows + stats — one roomy strip */}
+      <div className="qp-card !rounded-[26px] px-2 py-4">
+        <div className="grid grid-cols-4">
+          {[
+            { value: follow?.following ?? '—', label: 'Following', onClick: () => router.push('/friends') },
+            { value: follow?.followers ?? '—', label: 'Followers', onClick: () => router.push('/friends') },
+            { value: completed, label: 'Quests' },
+            { value: active, label: 'Active' },
+          ].map((s, i) => (
+            <button key={s.label} onClick={s.onClick} disabled={!s.onClick}
+              className={`text-center ${i > 0 ? 'border-l border-[rgba(255,244,228,0.08)]' : ''}`}>
+              <span className="qp-num block text-xl text-[var(--qp-cream)]">{s.value}</span>
+              <span className="qp-overline text-[0.58rem]">{s.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 

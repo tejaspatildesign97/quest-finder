@@ -233,10 +233,78 @@ main { padding-bottom: 7rem; }
 .qp-overline {
   font-family: var(--font-jakarta), sans-serif;
   font-weight: 700;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--qp-gray);
+}
+
+/* Section header: Bricolage title with a pink diamond tick */
+.qp-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-bricolage), sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--qp-cream);
+  font-synthesis: none;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.qp-section-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--qp-pink);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Diamond icon tile: rotated rounded square (icon counter-rotated inside) */
+.qp-diamond {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--qp-inset);
+  border: 1px solid rgba(255, 244, 228, 0.08);
+  border-radius: 12px;
+  transform: rotate(45deg);
+}
+.qp-diamond > * { transform: rotate(-45deg); }
+
+/* Folder-tab card: body + a tab that sticks up from the top edge */
+.qp-folder-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--qp-paper);
+  border: 1px solid rgba(255, 244, 228, 0.08);
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  padding: 0.3rem 0.85rem 0.55rem;
+  margin-bottom: -1px;
+  margin-left: 1.1rem;
+}
+.qp-folder-body {
+  background: var(--qp-paper);
+  border: 1px solid rgba(255, 244, 228, 0.08);
+  border-radius: 24px;
+  border-top-left-radius: 8px;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* Ticket card: big asymmetric radius + perforated stub divider */
+.qp-ticket {
+  background: var(--qp-paper);
+  border: 1px solid rgba(255, 244, 228, 0.08);
+  border-radius: 28px;
+  border-top-left-radius: 10px;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+}
+.qp-perforation {
+  border-top: 2px dashed rgba(255, 244, 228, 0.12);
 }
 
 .qp-num {
